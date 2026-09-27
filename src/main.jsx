@@ -5,6 +5,7 @@ import './index.css'
 
 import '@fontsource/big-shoulders-display/700'
 import '@fontsource/big-shoulders-display/800'
+import '@fontsource/cormorant-garamond/500'
 import '@fontsource/ibm-plex-sans/400.css'
 import '@fontsource/ibm-plex-sans/500.css'
 import '@fontsource/ibm-plex-sans/600.css'

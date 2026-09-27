@@ -3,7 +3,7 @@ import { useLocation } from 'wouter'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAuth } from '../context/Auth'
 import { NotificationFeed } from './NotificationFeed.jsx'
-import { Seal } from './home/Seal.jsx'
+import { Logo } from './Logo.jsx'
 
 const LANGS = [
   { code: 'EN', label: 'EN', name: 'English' },
@@ -70,12 +70,8 @@ export default function Nav({ setPage, lang, setLang, t }) {
         .nx-nav[data-scrolled="true"] { border-bottom-color: var(--rule); }
         .nx-nav__row { height: 64px; display: flex; align-items: center; gap: 40px; }
         .nx-brand {
-          display: flex; align-items: center; gap: 10px;
+          display: flex; align-items: center; min-height: 44px;
           background: none; border: 0; padding: 0; color: var(--ink);
-        }
-        .nx-brand span {
-          font-family: var(--font-display); font-weight: 800; font-size: 26px;
-          letter-spacing: 0.01em; line-height: 1;
         }
         .nx-links { display: flex; gap: 28px; flex: 1; }
         .nx-links button {
@@ -134,8 +130,7 @@ export default function Nav({ setPage, lang, setLang, t }) {
       <nav className="nx-nav" data-scrolled={scrolled || menuOpen} aria-label="Main">
         <div className="nx-wrap nx-nav__row">
           <button className="nx-brand" onClick={() => { setPage('home'); window.scrollTo(0, 0) }} aria-label="Nexallure home">
-            <Seal size={30} />
-            <span>Nexallure</span>
+            <Logo size={28} />
           </button>
 
           <div className="nx-links">

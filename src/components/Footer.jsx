@@ -1,4 +1,4 @@
-import { Seal } from './home/Seal.jsx'
+import { Logo } from './Logo.jsx'
 
 export default function Footer({ t, setPage, hasDeviceToken }) {
   const statusItems = [
@@ -53,9 +53,8 @@ export default function Footer({ t, setPage, hasDeviceToken }) {
       <div className="nx-wrap">
         <div className="nx-ft">
           <div className="nx-ft__brand">
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <Seal size={34} ink="var(--ink)" color="var(--seal-on-ink)" />
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 30, color: 'var(--on-ink)', lineHeight: 1 }}>Nexallure</span>
+            <div>
+              <Logo size={34} color="var(--on-ink)" />
             </div>
             <p style={{ fontSize: 15, lineHeight: 1.6, maxWidth: 340 }}>{t.footer_tagline}</p>
             <a href="mailto:hello@nexallure.com" className="nx-link" style={{ color: 'var(--on-ink)', alignSelf: 'flex-start', fontSize: 15 }}>
