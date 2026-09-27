@@ -66,13 +66,13 @@ export function NotificationFeed({ userId }) {
           setIsOpen(!isOpen);
           if (!isOpen) markAllAsRead();
         }}
-        className="relative p-2 text-white/70 hover:text-[#C9A84C] transition-colors focus:outline-none"
+        className="relative p-2 text-white/70 hover:text-[#E8826A] transition-colors focus:outline-none"
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
         </svg>
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 w-2 h-2 bg-[#C9A84C] rounded-full" />
+          <span className="absolute top-1 right-1 w-2 h-2 bg-[#E8826A] rounded-full" />
         )}
       </button>
 
@@ -84,12 +84,12 @@ export function NotificationFeed({ userId }) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="absolute right-0 mt-2 w-80 bg-[#141820] border border-white/10 shadow-2xl z-50 overflow-hidden"
+              className="absolute right-0 mt-2 w-80 bg-[#1D2027] border border-white/10 shadow-2xl z-50 overflow-hidden"
             >
-              <div className="p-3 border-b border-white/10 flex justify-between items-center bg-[#0F1117]">
+              <div className="p-3 border-b border-white/10 flex justify-between items-center bg-[#15171C]">
                 <span className="font-mono text-[10px] tracking-widest text-white/40 uppercase">ALERTS</span>
                 {unreadCount > 0 && (
-                  <span className="font-mono text-[9px] text-[#C9A84C] bg-[#C9A84C]/10 px-1.5 py-0.5 uppercase tracking-wider">
+                  <span className="font-mono text-[9px] text-[#E8826A] bg-[#E8826A]/10 px-1.5 py-0.5 uppercase tracking-wider">
                     {unreadCount} NEW
                   </span>
                 )}
@@ -101,7 +101,7 @@ export function NotificationFeed({ userId }) {
                   </div>
                 ) : (
                   notifications.map((n) => (
-                    <div key={n.id} className={`p-3 transition-colors ${n.is_read ? 'bg-transparent' : 'bg-[#C9A84C]/5'}`}>
+                    <div key={n.id} className={`p-3 transition-colors ${n.is_read ? 'bg-transparent' : 'bg-[#E8826A]/5'}`}>
                       <p className="text-white text-xs font-sans mb-1">{n.message}</p>
                       <span className="font-mono text-[9px] text-white/40 block uppercase">
                         {new Date(n.created_at).toLocaleDateString()}

@@ -1,320 +1,224 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'wouter'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useAuth } from '../context/Auth'
 import { NotificationFeed } from './NotificationFeed.jsx'
+import { Seal } from './home/Seal.jsx'
+
+const LANGS = [
+  { code: 'EN', label: 'EN', name: 'English' },
+  { code: 'ZH', label: '简', name: '简体中文' },
+  { code: 'TW', label: '繁', name: '繁體中文' },
+]
 
 export default function Nav({ setPage, lang, setLang, t }) {
-  const [langOpen, setLangOpen] = useState(false)
-  const langRef = useRef(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [location] = useLocation()
   const { session, signOut } = useAuth()
 
-  const scrollTo = (id) => {
-    if (id === 'marketGuide') {
-      setPage('marketGuide')
-      window.scrollTo(0, 0)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => setMenuOpen(false), [location])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false) }
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
+  const go = (target) => {
+    setMenuOpen(false)
+    if (target === 'marketGuide' || target === 'monitor' || target === 'buyers') {
+      setPage(target)
       return
     }
-    if (id === 'monitor') { // <--- Add this switch case interception loop
-      setPage('monitor')
-      window.scrollTo(0, 0)
-      return
-    }
-    if (id === 'buyers') {
-      setPage('buyers')
-      window.scrollTo(0, 0)
-      return
-    }
-    // For section ids: go home first, then scroll to the section.
+    // Section ids live on the home page: go home first, then scroll.
     setPage('home')
     setTimeout(() => {
-      const el = document.getElementById(id)
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }, 60)
   }
 
-  useEffect(() => {
-    const handleClick = (e) => {
-      if (langRef.current && !langRef.current.contains(e.target)) {
-        setLangOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [])
-
-  const navLinks = [
-    { label: t.nav_market_guide, target: 'marketGuide' },
-    { label: t.nav_monitor || 'MONITOR', target: 'monitor' },
+  const links = [
+    { label: t.nav_market_guide, target: 'marketGuide', path: '/market-guide' },
+    { label: t.nav_monitor, target: 'monitor', path: '/monitor' },
     { label: t.nav_compliance, target: 'compliance' },
-    { label: t.nav_about,      target: 'footer' },
+    { label: t.nav_buyers, target: 'buyers', path: '/buyers' },
   ]
-
-  // Language options — Chinese-only labels, no English qualifier.
-  const langOptions = [
-    { code: 'EN', label: 'English' },
-    { code: 'ZH', label: '简体中文' },
-    { code: 'TW', label: '繁體中文' },
-  ]
-
-  const currentLangLabel = langOptions.find(o => o.code === lang)?.label || '简体中文'
 
   return (
     <>
       <style>{`
-        .nav-container {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
+        .nx-nav {
+          position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           height: 64px;
-          z-index: 100;
-          background: rgba(10,15,30,0.95);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          border-bottom: 1px solid var(--border-dark);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 48px;
-          gap: 24px;
+          background: var(--paper);
+          border-bottom: 1px solid transparent;
+          transition: border-color 200ms ease;
         }
-        .nav-logo {
-          background: none;
-          border: none;
-          box-shadow: none;
-          font-family: 'Playfair Display', serif;
-          font-size: 22px;
-          font-weight: 700;
-          color: var(--warm-white);
-          letter-spacing: -0.02em;
-          cursor: pointer;
-          flex-shrink: 0;
-          white-space: nowrap;
+        .nx-nav[data-scrolled="true"] { border-bottom-color: var(--rule); }
+        .nx-nav__row { height: 64px; display: flex; align-items: center; gap: 40px; }
+        .nx-brand {
+          display: flex; align-items: center; gap: 10px;
+          background: none; border: 0; padding: 0; color: var(--ink);
         }
-        .nav-links {
-          display: flex;
-          gap: 40px;
-          align-items: center;
-          flex: 1;
-          justify-content: center;
+        .nx-brand span {
+          font-family: var(--font-display); font-weight: 800; font-size: 26px;
+          letter-spacing: 0.01em; line-height: 1;
         }
-        .nav-link-btn {
-          background: none;
-          border: none;
-          box-shadow: none;
-          color: #94A3B8;
-          font-size: 13px;
-          font-family: 'IBM Plex Sans', sans-serif;
-          font-weight: 500;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          cursor: pointer;
-          padding: 4px 0;
+        .nx-links { display: flex; gap: 28px; flex: 1; }
+        .nx-links button {
+          position: relative; background: none; border: 0; padding: 8px 0;
+          font-size: 14px; font-weight: 500; color: var(--ink-2);
           transition: color 150ms ease;
-          white-space: nowrap;
         }
-        .nav-link-btn:hover {
-          color: #F7F6F2;
+        .nx-links button::after {
+          content: ''; position: absolute; left: 0; right: 0; bottom: 2px; height: 2px;
+          background: var(--seal); transform: scaleX(0); transform-origin: left;
+          transition: transform 260ms var(--ease-out);
         }
-        .nav-right {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-          flex-shrink: 0;
+        .nx-links button:hover { color: var(--ink); }
+        .nx-links button:hover::after, .nx-links button[aria-current="page"]::after { transform: scaleX(1); }
+        .nx-links button[aria-current="page"] { color: var(--ink); }
+        .nx-right { display: flex; align-items: center; gap: 16px; }
+        .nx-lang {
+          display: flex; padding: 3px; gap: 2px;
+          border: 1px solid var(--rule); border-radius: 4px;
         }
-        .lang-button {
-          background: transparent;
-          border: 1px solid #2A3348;
-          color: #94A3B8;
-          padding: 8px 14px;
-          font-size: 13px;
-          font-family: 'IBM Plex Mono', monospace;
-          cursor: pointer;
-          min-width: 110px;
-          text-align: left;
-          white-space: nowrap;
+        .nx-lang button {
+          min-width: 36px; height: 32px; border: 0; border-radius: 2px;
+          background: transparent; color: var(--ink-2);
+          font-family: var(--font-mono); font-size: 13px;
+          transition: background-color 150ms ease, color 150ms ease;
         }
-        .lang-dropdown {
-          position: absolute;
-          top: 44px;
-          right: 0;
-          min-width: 180px;
-          background: #1C2333;
-          border: 1px solid #2A3348;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-          z-index: 200;
+        .nx-lang button:hover { color: var(--ink); }
+        .nx-lang button[aria-pressed="true"] { background: var(--ink); color: var(--paper-light); }
+        .nx-plain {
+          background: none; border: 0; font-size: 14px; font-weight: 500; color: var(--ink);
+          min-height: 44px; padding: 0 4px;
         }
-
-        /* Mobile: 768px and below */
-        @media (max-width: 768px) {
-          .nav-container {
-            padding: 0 20px;
-            height: 56px;
-            gap: 12px;
-          }
-          .nav-links {
-            display: none;
-          }
-          .nav-logo {
-            font-size: 20px;
-          }
-          .lang-button {
-            min-width: 100px;
-            padding: 7px 12px;
-            font-size: 12px;
-          }
-          .lang-dropdown {
-            min-width: 160px;
-            right: -8px;
-          }
+        .nx-plain:hover { color: var(--seal); }
+        .nx-burger { display: none; }
+        .nx-sheet {
+          position: fixed; inset: 64px 0 0 0; z-index: 99; background: var(--paper);
+          display: flex; flex-direction: column; padding: 24px var(--gutter) 40px; gap: 4px;
+          overflow-y: auto;
         }
-
-        /* Small mobile: 414px, 390px, 375px */
-        @media (max-width: 414px) {
-          .nav-container {
-            padding: 0 16px;
-          }
-          .nav-logo {
-            font-size: 19px;
-            letter-spacing: -0.01em;
-          }
-          .lang-button {
-            min-width: 92px;
-            padding: 6px 10px;
-            font-size: 12px;
-          }
+        .nx-sheet > button {
+          text-align: left; background: none; border: 0; border-bottom: 1px solid var(--rule);
+          padding: 18px 0; font-family: var(--font-display); font-weight: 800;
+          font-size: 40px; line-height: 1; color: var(--ink);
         }
-
-        @media (max-width: 390px) {
-          .nav-container {
-            padding: 0 14px;
-          }
-        }
-
-        @media (max-width: 375px) {
-          .nav-container {
-            padding: 0 12px;
-          }
-          .nav-logo {
-            font-size: 18px;
-          }
-          .lang-button {
-            min-width: 88px;
-            padding: 6px 9px;
+        @media (max-width: 900px) {
+          .nx-links, .nx-right .nx-hide-sm { display: none; }
+          .nx-nav__row { justify-content: space-between; gap: 12px; }
+          .nx-burger {
+            display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px;
+            border: 1px solid var(--ink); border-radius: 4px; background: transparent;
+            color: var(--ink); font-size: 14px; font-weight: 500;
           }
         }
       `}</style>
 
-<nav className="nav-container">
-        <button
-          className="nav-logo"
-          onClick={() => { setPage('home'); window.scrollTo(0, 0) }}
-        >
-          Nexallure
-        </button>
+      <nav className="nx-nav" data-scrolled={scrolled || menuOpen} aria-label="Main">
+        <div className="nx-wrap nx-nav__row">
+          <button className="nx-brand" onClick={() => { setPage('home'); window.scrollTo(0, 0) }} aria-label="Nexallure home">
+            <Seal size={30} />
+            <span>Nexallure</span>
+          </button>
 
-        <div className="nav-links">
-          {navLinks.map((link) => (
-            <button
-              key={link.label}
-              className="nav-link-btn"
-              onClick={() => scrollTo(link.target)}
-            >
-              {link.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="nav-right">
-          {/* Inject the live real-time bell drop component if user session is active */}
-          {session && <NotificationFeed userId={session.user?.id} />}
-
-          {session ? (
-            <button
-              onClick={signOut}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#94A3B8',
-                fontSize: '13px',
-                fontFamily: "'IBM Plex Sans', sans-serif",
-                cursor: 'pointer',
-                letterSpacing: '0.04em'
-              }}
-            >
-              SIGN OUT
-            </button>
-          ) : (
-            <button
-              onClick={() => setPage('login')}
-              style={{
-                background: 'none',
-                border: '1px solid #2A3348',
-                color: '#94A3B8',
-                fontSize: '13px',
-                padding: '8px 14px',
-                fontFamily: "'IBM Plex Sans', sans-serif",
-                cursor: 'pointer'
-              }}
-            >
-              {t.nav_signin}
-            </button>
-          )}
-          <div ref={langRef} style={{ position: 'relative' }}>
-            <button
-              className="lang-button"
-              aria-haspopup="menu"
-              aria-expanded={langOpen}
-              onClick={(e) => {
-                e.stopPropagation()
-                setLangOpen(prev => !prev)
-              }}
-            >
-              {currentLangLabel} ▾
-            </button>
-
-            {langOpen && (
-              <div
-                role="menu"
-                className="lang-dropdown"
+          <div className="nx-links">
+            {links.map((link) => (
+              <button
+                key={link.target}
+                onClick={() => go(link.target)}
+                aria-current={link.path && location === link.path ? 'page' : undefined}
               >
-                {langOptions.map((opt, i) => (
-                  <button
-                    key={opt.code}
-                    role="menuitem"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      setLang(opt.code)
-                      setLangOpen(false)
-                    }}
-                    style={{
-                      width: '100%',
-                      height: '44px',
-                      padding: '0 16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      cursor: 'pointer',
-                      fontSize: '14px',
-                      color: '#F7F6F2',
-                      fontFamily: "'IBM Plex Sans', sans-serif",
-                      borderTop: 'none',
-                      borderRight: 'none',
-                      borderBottom: i < langOptions.length - 1 ? '1px solid #2A3348' : 'none',
-                      borderLeft:
-                        lang === opt.code ? '2px solid #C9A84C' : '2px solid transparent',
-                      background: 'transparent',
-                      textAlign: 'left',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
+                {link.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="nx-right">
+            <div className="nx-lang nx-hide-sm" role="group" aria-label={t.nav_lang}>
+              {LANGS.map((l) => (
+                <button key={l.code} aria-pressed={lang === l.code} aria-label={l.name} onClick={() => setLang(l.code)}>
+                  {l.label}
+                </button>
+              ))}
+            </div>
+            {session && <NotificationFeed userId={session.user?.id} />}
+            {session ? (
+              <button className="nx-plain nx-hide-sm" onClick={signOut}>{t.nav_signout}</button>
+            ) : (
+              <button className="nx-plain nx-hide-sm" onClick={() => setPage('login')}>{t.nav_signin}</button>
             )}
+            {!session && (
+              <button className="nx-btn nx-btn--ink nx-hide-sm" style={{ minHeight: 40, padding: '0 16px', fontSize: 14 }} onClick={() => setPage('register')}>
+                {t.mg_blur_signup}
+              </button>
+            )}
+            <button
+              className="nx-burger"
+              aria-expanded={menuOpen}
+              aria-controls="nx-sheet"
+              onClick={() => setMenuOpen((o) => !o)}
+            >
+              {menuOpen ? t.nav_close : t.nav_menu}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                {menuOpen
+                  ? <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.6" />
+                  : <path d="M2 5h12M2 11h12" stroke="currentColor" strokeWidth="1.6" />}
+              </svg>
+            </button>
           </div>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            id="nx-sheet"
+            className="nx-sheet"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {links.map((link) => (
+              <button key={link.target} onClick={() => go(link.target)}>{link.label}</button>
+            ))}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 32 }}>
+              <div className="nx-lang" role="group" aria-label={t.nav_lang} style={{ alignSelf: 'flex-start' }}>
+                {LANGS.map((l) => (
+                  <button key={l.code} aria-pressed={lang === l.code} aria-label={l.name} onClick={() => setLang(l.code)} style={{ minWidth: 56, height: 40 }}>
+                    {l.label}
+                  </button>
+                ))}
+              </div>
+              {session ? (
+                <button className="nx-btn nx-btn--line" onClick={signOut}>{t.nav_signout}</button>
+              ) : (
+                <>
+                  <button className="nx-btn nx-btn--seal" onClick={() => { setMenuOpen(false); setPage('register') }}>{t.mg_blur_signup}</button>
+                  <button className="nx-btn nx-btn--line" onClick={() => { setMenuOpen(false); setPage('login') }}>{t.nav_signin}</button>
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

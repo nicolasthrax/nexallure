@@ -8,31 +8,33 @@ export default function PreLaunchBanner({ t }) {
         left: 0,
         right: 0,
         zIndex: 95,
-        background: 'rgba(184,146,46,0.96)',
-        color: '#0A0F1E',
-        padding: '8px 32px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '12px',
-        fontFamily: "'IBM Plex Mono', monospace",
-        fontSize: '12px',
-        textAlign: 'center',
-        borderBottom: '1px solid rgba(0,0,0,0.15)',
+        height: '36px',
+        background: 'var(--paper-deep)',
+        borderTop: '1px solid var(--rule)',
+        borderBottom: '1px solid var(--rule)',
+        color: 'var(--ink-2)',
+        fontSize: '13px',
       }}
     >
-      <span
-        style={{
-          background: '#0A0F1E',
-          color: '#C9A84C',
-          padding: '2px 8px',
-          letterSpacing: '0.1em',
-          fontWeight: 600,
-        }}
+      <div
+        className="nx-wrap"
+        style={{ height: '100%', display: 'flex', alignItems: 'center', gap: '12px', whiteSpace: 'nowrap', overflow: 'hidden' }}
       >
-        {t.prelaunch_badge}
-      </span>
-      <span style={{ opacity: 0.92 }}>{t.prelaunch_text}</span>
+        <span
+          style={{
+            flexShrink: 0,
+            fontFamily: 'var(--font-mono)',
+            fontSize: '12px',
+            color: 'var(--seal)',
+            border: '1px solid var(--seal)',
+            borderRadius: '2px',
+            padding: '1px 6px',
+          }}
+        >
+          {t.prelaunch_badge}
+        </span>
+        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{t.prelaunch_text}</span>
+      </div>
     </div>
   )
 }

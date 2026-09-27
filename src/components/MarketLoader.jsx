@@ -123,7 +123,7 @@ export default function MarketLoader({ text = "Analyzing export markets..." }) {
         <p style={{
           fontFamily: "'IBM Plex Mono', monospace",
           fontSize: "12px",
-          color: "rgba(240,230,204,0.7)",
+          color: "rgba(238,233,221,0.7)",
           letterSpacing: "0.1em",
           textTransform: "uppercase",
           margin: 0,

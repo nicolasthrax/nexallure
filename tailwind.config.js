@@ -5,7 +5,12 @@ export default {
     './src/**/*.{js,jsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        display: ['"Big Shoulders Display"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'monospace'],
+      },
+    },
   },
   plugins: [],
 }

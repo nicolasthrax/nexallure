@@ -1,3 +1,5 @@
+import { Seal } from './home/Seal.jsx'
+
 export default function Footer({ t, setPage, hasDeviceToken }) {
   const statusItems = [
     { label: t.footer_status_hosting_label,  value: t.footer_status_hosting },
@@ -6,19 +8,18 @@ export default function Footer({ t, setPage, hasDeviceToken }) {
     { label: t.footer_status_data_label,     value: t.footer_status_consent },
   ]
 
-  function navigateAndScroll(id) {
-    setPage?.('home')
-    setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-    }, 50)
-  }
+  const platformLinks = [
+    { label: t.nav_market_guide, onClick: () => setPage?.('marketGuide') },
+    { label: t.nav_monitor,      onClick: () => setPage?.('monitor') },
+    { label: t.nav_buyers,       onClick: () => setPage?.('buyers') },
+  ]
 
   const legalLinks = [
     { label: t.footer_link_privacy, onClick: () => setPage?.('privacy') },
     { label: t.footer_link_terms,   onClick: () => setPage?.('terms') },
   ]
 
-  const handleSignOut = () => {
+  const handleForgetDevice = () => {
     try {
       localStorage.removeItem('nexallure_device_token')
       localStorage.removeItem('nexallure_lang')
@@ -29,224 +30,70 @@ export default function Footer({ t, setPage, hasDeviceToken }) {
   }
 
   return (
-    <footer
-      id="footer"
-      style={{
-        background: 'var(--off-white)',
-        borderTop: '1px solid var(--border)',
-        padding: '80px 0 40px',
-      }}
-    >
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px' }}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '48px',
-            marginBottom: '48px',
-          }}
-        >
-          {/* Col 1 */}
-          <div>
-            <div
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '20px',
-                color: 'var(--text-primary)',
-                marginBottom: '8px',
-              }}
-            >
-              Nexallure
+    <footer id="footer" style={{ background: 'var(--ink)', color: 'var(--on-ink-2)', padding: '80px 0 40px' }}>
+      <style>{`
+        .nx-ft { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: 48px; }
+        .nx-ft__brand { grid-column: 1 / span 4; display: flex; flex-direction: column; gap: 16px; }
+        .nx-ft__col { grid-column: span 2; display: flex; flex-direction: column; gap: 4px; }
+        .nx-ft__status { grid-column: 9 / span 4; }
+        .nx-ft h2 { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--on-ink-2); margin-bottom: 8px; }
+        .nx-ft__col button {
+          text-align: left; background: none; border: 0; padding: 0; min-height: 36px;
+          color: var(--on-ink); font-size: 15px; transition: color 150ms ease;
+        }
+        .nx-ft__col button:hover { color: var(--seal-on-ink); }
+        .nx-ft__status dl { display: grid; grid-template-columns: auto 1fr; column-gap: 20px; row-gap: 10px; font-size: 14px; }
+        .nx-ft__status dt { color: var(--on-ink-2); }
+        .nx-ft__status dd { color: var(--on-ink); }
+        @media (max-width: 900px) {
+          .nx-ft__brand, .nx-ft__status { grid-column: 1 / -1; }
+          .nx-ft__col { grid-column: span 6; }
+        }
+      `}</style>
+      <div className="nx-wrap">
+        <div className="nx-ft">
+          <div className="nx-ft__brand">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <Seal size={34} ink="var(--ink)" color="var(--seal-on-ink)" />
+              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 30, color: 'var(--on-ink)', lineHeight: 1 }}>Nexallure</span>
             </div>
-            <p
-              style={{
-                fontFamily: "'IBM Plex Sans', sans-serif",
-                fontSize: '13px',
-                color: 'var(--text-secondary)',
-                lineHeight: 1.5,
-                marginBottom: '16px',
-              }}
-            >
-              {t.footer_tagline}
-            </p>
-            <a
-              href="mailto:hello@nexallure.com"
-              style={{
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: '12px',
-                color: 'var(--gold)',
-                textDecoration: 'none',
-              }}
-            >
+            <p style={{ fontSize: 15, lineHeight: 1.6, maxWidth: 340 }}>{t.footer_tagline}</p>
+            <a href="mailto:hello@nexallure.com" className="nx-link" style={{ color: 'var(--on-ink)', alignSelf: 'flex-start', fontSize: 15 }}>
               hello@nexallure.com
             </a>
           </div>
 
-          {/* Col 3 — Legal */}
-          <div>
-            <div
-              style={{
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: '11px',
-                color: 'var(--text-muted)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                marginBottom: '16px',
-              }}
-            >
-              {t.footer_col3_title}
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {legalLinks.map((link) => (
-                <button
-                  key={link.label}
-                  onClick={link.onClick}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    boxShadow: 'none',
-                    padding: 0,
-                    textAlign: 'left',
-                    fontFamily: "'IBM Plex Sans', sans-serif",
-                    fontSize: '14px',
-                    color: 'var(--text-secondary)',
-                    cursor: 'pointer',
-                    transition: 'color 150ms ease',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)' }}
-                >
-                  {link.label}
-                </button>
-              ))}
-              {hasDeviceToken && (
-                <button
-                  onClick={handleSignOut}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    boxShadow: 'none',
-                    padding: 0,
-                    textAlign: 'left',
-                    fontFamily: "'IBM Plex Sans', sans-serif",
-                    fontSize: '13px',
-                    color: 'var(--text-muted)',
-                    cursor: 'pointer',
-                    marginTop: '8px',
-                    textDecoration: 'underline',
-                    textUnderlineOffset: '2px',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--danger)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-muted)' }}
-                  title="Clear remembered device and language preference"
-                >
-                  {t._lang === 'ZH' ? '退出登录 / 忘记此设备' : t._lang === 'TW' ? '登出 / 忘記此裝置' : 'Sign out / forget this device'}
-                </button>
-              )}
-            </div>
-          </div>
+          <nav className="nx-ft__col" aria-label={t.footer_col2_title}>
+            <h2>{t.footer_col2_title}</h2>
+            {platformLinks.map((l) => <button key={l.label} onClick={l.onClick}>{l.label}</button>)}
+          </nav>
 
-          {/* Col 4 — Pre-launch status (honest) */}
-          <div>
-            <div
-              style={{
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: '11px',
-                color: 'var(--text-muted)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                marginBottom: '16px',
-              }}
-            >
-              {t.footer_col4_title}
-            </div>
-            <div>
-              {statusItems.map((f, i) => (
-                <div
-                  key={f.label}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '8px 0',
-                    gap: '12px',
-                    borderBottom:
-                      i < statusItems.length - 1
-                        ? '1px solid rgba(42,51,72,0.15)'
-                        : 'none',
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '11px',
-                      color: 'var(--text-muted)',
-                    }}
-                  >
-                    {f.label}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '11px',
-                      color: 'var(--gold)',
-                      textAlign: 'right',
-                    }}
-                  >
-                    {f.value}
-                  </span>
+          <nav className="nx-ft__col" aria-label={t.footer_col3_title}>
+            <h2>{t.footer_col3_title}</h2>
+            {legalLinks.map((l) => <button key={l.label} onClick={l.onClick}>{l.label}</button>)}
+            {hasDeviceToken && (
+              <button onClick={handleForgetDevice} style={{ color: 'var(--on-ink-2)' }}>
+                {t._lang === 'ZH' ? '退出登录 / 忘记此设备' : t._lang === 'TW' ? '登出 / 忘記此裝置' : 'Sign out / forget this device'}
+              </button>
+            )}
+          </nav>
+
+          <div className="nx-ft__status">
+            <h2>{t.footer_col4_title}</h2>
+            <dl>
+              {statusItems.map((s) => (
+                <div key={s.label} style={{ display: 'contents' }}>
+                  <dt>{s.label}</dt>
+                  <dd>{s.value}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
           </div>
         </div>
 
-        {/* Pre-launch disclaimer */}
-        <div
-          style={{
-            background: 'var(--pure-white)',
-            border: '1px solid var(--border)',
-            padding: '16px 20px',
-            marginBottom: '24px',
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: '12px',
-            color: 'var(--text-muted)',
-            lineHeight: 1.6,
-          }}
-        >
-          {t.footer_disclaimer}
-        </div>
-
-        {/* Bottom bar */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingTop: '24px',
-            borderTop: '1px solid var(--border)',
-            gap: '24px',
-            flexWrap: 'wrap',
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: '12px',
-              color: 'var(--text-muted)',
-            }}
-          >
-            {t.footer_copyright}
-          </div>
-          <div
-            style={{
-              fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: '12px',
-              color: 'var(--text-muted)',
-            }}
-          >
-            {t.footer_designed}
-          </div>
+        <div style={{ marginTop: 72, paddingTop: 24, borderTop: '1px solid var(--ink-rule)', display: 'flex', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap', fontSize: 13, lineHeight: 1.6 }}>
+          <p style={{ maxWidth: 760 }}>{t.footer_disclaimer}</p>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12 }}>{t.footer_copyright}</p>
         </div>
       </div>
     </footer>

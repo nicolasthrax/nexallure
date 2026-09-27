@@ -126,12 +126,12 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
       <button
         onClick={openModal}
         disabled={state === "loading"}
-        className="flex items-center gap-2 px-4 py-2 border border-white/20 hover:border-[#C9A84C]/60 text-white/70 hover:text-[#C9A84C] font-mono text-xs tracking-widest transition-colors disabled:opacity-50"
+        className="flex items-center gap-2 px-4 py-2 border border-white/20 hover:border-[#E8826A]/60 text-white/70 hover:text-[#E8826A] font-mono text-xs tracking-widest transition-colors disabled:opacity-50"
       >
         {state === "loading" ? (
-          <span className="w-3 h-3 border border-[#C9A84C]/40 border-t-[#C9A84C] rounded-full animate-spin" />
+          <span className="w-3 h-3 border border-[#E8826A]/40 border-t-[#E8826A] rounded-full animate-spin" />
         ) : (
-          <span className="text-[#C9A84C]">+</span>
+          <span className="text-[#E8826A]">+</span>
         )}
         {state === "loading" ? "ADDING..." : "MONITOR THIS MARKET"}
       </button>
@@ -150,7 +150,7 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 12 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-[#141820] border border-[#C9A84C]/20 p-10 max-w-[480px] w-full mx-4"
+              className="bg-[#1D2027] border border-[#E8826A]/20 p-10 max-w-[480px] w-full mx-4"
             >
               <button
                 onClick={closeModal}
@@ -159,11 +159,11 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
                 ×
               </button>
 
-              <div className="font-mono text-[#C9A84C] text-xs tracking-[3px] uppercase mb-5">
+              <div className="font-mono text-[#E8826A] text-xs tracking-[3px] uppercase mb-5">
                 MARKET INTELLIGENCE
               </div>
 
-              <h3 className="font-serif text-2xl text-[#F7F6F2] mb-4 leading-tight">
+              <h3 className="font-display font-extrabold text-2xl text-[#EEE9DD] mb-4 leading-tight">
                 Initialize Market Monitor?
               </h3>
 
@@ -174,7 +174,7 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
 
               <button
                 onClick={handleMonitor}
-                className="w-full border border-[#C9A84C]/50 text-[#C9A84C] py-3.5 font-mono text-xs tracking-[2px] hover:bg-[#C9A84C]/10 hover:border-[#C9A84C] transition"
+                className="w-full border border-[#E8826A]/50 text-[#E8826A] py-3.5 font-mono text-xs tracking-[2px] hover:bg-[#E8826A]/10 hover:border-[#E8826A] transition"
               >
                 CONFIRM MONITORING
               </button>

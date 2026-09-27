@@ -84,7 +84,7 @@ export default function ConsentCheckbox({
             marginTop: '3px',
             width: '16px',
             height: '16px',
-            accentColor: '#B8922E',
+            accentColor: 'var(--seal)',
             flexShrink: 0,
             cursor: 'pointer',
           }}

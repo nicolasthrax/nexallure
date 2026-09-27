@@ -110,7 +110,6 @@ export default function SupplierForm({ t, setPage }) {
   const labelStyle = {
     fontFamily: "'IBM Plex Mono', monospace",
     fontSize: '12px',
-    textTransform: 'uppercase',
     letterSpacing: '0.05em',
     color: 'var(--text-muted)',
     display: 'flex',
@@ -155,7 +154,7 @@ export default function SupplierForm({ t, setPage }) {
           style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '13px', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '13px', color: 'var(--accent)', letterSpacing: '0.08em' }}>
               {t.form_eyebrow}
             </div>
             <h2 style={{ fontFamily: "'IBM Plex Serif', serif", fontSize: 'clamp(32px, 4vw, 44px)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
@@ -330,7 +329,7 @@ export default function SupplierForm({ t, setPage }) {
               <button
                 type="submit"
                 disabled={submitting}
-                style={{ width: '100%', height: '56px', background: submitting ? 'var(--text-muted)' : 'var(--text-primary)', color: 'var(--pure-white)', border: '1px solid var(--text-primary)', boxShadow: submitting ? 'none' : '0 2px 0 0 rgba(0,0,0,0.5)', fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '14px', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.08em', marginTop: '8px', cursor: submitting ? 'wait' : 'pointer' }}
+                style={{ width: '100%', height: '56px', background: submitting ? 'var(--text-muted)' : 'var(--text-primary)', color: 'var(--pure-white)', border: '1px solid var(--text-primary)', boxShadow: submitting ? 'none' : '0 2px 0 0 rgba(0,0,0,0.5)', fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '14px', fontWeight: 600, letterSpacing: '0.08em', marginTop: '8px', cursor: submitting ? 'wait' : 'pointer' }}
               >
                 {submitting ? t.form_submitting : t.form_submit}
               </button>

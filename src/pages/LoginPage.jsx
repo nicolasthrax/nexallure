@@ -79,11 +79,10 @@ export default function LoginPage({ t, setPage }) {
     fontSize: '11px',
     color: 'var(--text-light)',
     letterSpacing: '0.06em',
-    textTransform: 'uppercase',
   }
 
   // Tab button — match nav link style: uppercase IBM Plex Sans 13px,
-  // gold underline on active, #94A3B8 inactive, no background / border-radius.
+  // gold underline on active, var(--on-ink-2) inactive, no background / border-radius.
   const tabButtonStyle = (active) => ({
     flex: 1,
     background: 'none',
@@ -94,9 +93,8 @@ export default function LoginPage({ t, setPage }) {
     fontFamily: "'IBM Plex Sans', sans-serif",
     fontSize: '13px',
     fontWeight: active ? 600 : 500,
-    textTransform: 'uppercase',
     letterSpacing: '0.08em',
-    color: active ? 'var(--signal-gold)' : '#94A3B8',
+    color: active ? 'var(--signal-gold)' : 'var(--on-ink-2)',
     cursor: 'pointer',
     transition: 'color 0.2s ease, border-color 0.2s ease',
   })
@@ -104,7 +102,7 @@ export default function LoginPage({ t, setPage }) {
   const primaryButtonStyle = (loading) => ({
     width: '100%',
     height: '52px',
-    background: loading ? 'rgba(201,168,76,0.4)' : 'var(--signal-gold)',
+    background: loading ? 'rgba(232,130,106,0.4)' : 'var(--signal-gold)',
     color: 'var(--midnight-navy)',
     border: '1px solid var(--gold-shadow)',
     padding: '14px 28px',
@@ -149,7 +147,6 @@ export default function LoginPage({ t, setPage }) {
             fontSize: '11px',
             color: 'var(--signal-gold)',
             letterSpacing: '0.15em',
-            textTransform: 'uppercase',
             marginBottom: '16px',
             textAlign: 'center',
           }}
@@ -160,7 +157,7 @@ export default function LoginPage({ t, setPage }) {
         {/* Heading */}
         <h1
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontSize: '36px',
             color: 'var(--warm-white)',
             marginBottom: '32px',
@@ -224,8 +221,8 @@ export default function LoginPage({ t, setPage }) {
                   fontFamily: "'IBM Plex Mono', monospace",
                   fontSize: '12px',
                   color: 'var(--signal-gold)',
-                  background: 'rgba(201,168,76,0.08)',
-                  border: '1px solid rgba(201,168,76,0.3)',
+                  background: 'rgba(232,130,106,0.08)',
+                  border: '1px solid rgba(232,130,106,0.3)',
                   padding: '10px 14px',
                 }}
               >

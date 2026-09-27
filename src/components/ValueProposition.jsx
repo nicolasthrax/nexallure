@@ -34,7 +34,6 @@ export default function ValueProposition({ t }) {
               fontFamily: "'IBM Plex Mono', monospace",
               fontSize: '11px',
               color: 'var(--gold)',
-              textTransform: 'uppercase',
               letterSpacing: '0.18em',
               marginBottom: '16px',
             }}
@@ -43,7 +42,7 @@ export default function ValueProposition({ t }) {
           </div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "var(--font-display)",
               fontSize: '40px',
               color: 'var(--text-primary)',
               lineHeight: 1.2,
