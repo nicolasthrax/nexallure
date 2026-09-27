@@ -37,7 +37,6 @@ export default function LegalPage({ t, setPage, title, updated, intro, sections 
               fontFamily: "'IBM Plex Mono', monospace",
               fontSize: '11px',
               color: 'var(--gold)',
-              textTransform: 'uppercase',
               letterSpacing: '0.18em',
               marginBottom: '16px',
             }}
@@ -47,7 +46,7 @@ export default function LegalPage({ t, setPage, title, updated, intro, sections 
 
           <h1
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "var(--font-display)",
               fontSize: '40px',
               color: 'var(--text-primary)',
               lineHeight: 1.2,

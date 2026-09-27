@@ -46,20 +46,20 @@ export default function MultiSelect({ selected, onChange, t, variant = 'light' }
   const labelFor = (code) => MARKETS.find((m) => m.code === code)?.label || code
 
   const chipStyle = isDark
-    ? { background: '#1c2333', color: '#f0e6cc', border: '1px solid rgba(255,255,255,0.15)' }
+    ? { background: '#1c2333', color: 'var(--on-ink)', border: '1px solid rgba(255,255,255,0.15)' }
     : { background: 'var(--text-primary)', color: 'var(--pure-white)', border: '1px solid var(--text-primary)' }
 
-  const triggerBg = isDark ? '#0f1623' : 'var(--pure-white)'
+  const triggerBg = isDark ? '#1D2027' : 'var(--pure-white)'
   const triggerBorder = isDark ? '1px solid rgba(255,255,255,0.12)' : '1px solid var(--border)'
-  const triggerText = isDark ? '#f0e6cc' : 'var(--text-primary)'
-  const triggerPlaceholder = isDark ? 'rgba(240,230,204,0.4)' : 'var(--text-muted)'
+  const triggerText = isDark ? 'var(--on-ink)' : 'var(--text-primary)'
+  const triggerPlaceholder = isDark ? 'rgba(238,233,221,0.4)' : 'var(--text-muted)'
 
-  const dropdownBg = isDark ? '#0f1623' : 'var(--pure-white)'
+  const dropdownBg = isDark ? '#1D2027' : 'var(--pure-white)'
   const dropdownBorder = isDark ? '1px solid rgba(255,255,255,0.12)' : '1px solid var(--border)'
-  const itemText = isDark ? '#f0e6cc' : 'var(--text-primary)'
+  const itemText = isDark ? 'var(--on-ink)' : 'var(--text-primary)'
   const itemHover = isDark ? 'rgba(255,255,255,0.06)' : 'var(--off-white)'
   const checkboxBorder = isDark ? 'rgba(255,255,255,0.25)' : 'var(--border)'
-  const checkboxBg = isDark ? '#c9a84c' : 'var(--text-primary)'
+  const checkboxBg = isDark ? 'var(--seal-on-ink)' : 'var(--text-primary)'
 
   return (
     <div ref={containerRef} style={{ position: 'relative' }}>
@@ -88,7 +88,7 @@ export default function MultiSelect({ selected, onChange, t, variant = 'light' }
                   background: 'transparent',
                   border: 'none',
                   boxShadow: 'none',
-                  color: isDark ? '#f0e6cc' : 'var(--pure-white)',
+                  color: isDark ? 'var(--on-ink)' : 'var(--pure-white)',
                   fontSize: '14px',
                   lineHeight: 1,
                   padding: 0,
@@ -120,7 +120,7 @@ export default function MultiSelect({ selected, onChange, t, variant = 'light' }
           color: selected.length === 0 ? triggerPlaceholder : triggerText,
           transition: 'border-color 0.2s ease',
         }}
-        onMouseEnter={(e) => { e.currentTarget.style.borderColor = isDark ? '#c9a84c' : 'var(--border)' }}
+        onMouseEnter={(e) => { e.currentTarget.style.borderColor = isDark ? 'var(--seal-on-ink)' : 'var(--border)' }}
         onMouseLeave={(e) => { e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.12)' : 'var(--border)' }}
       >
         <span>
@@ -193,7 +193,7 @@ export default function MultiSelect({ selected, onChange, t, variant = 'light' }
                   >
                     {checked && (
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                        <path d="M1 5l3 3 5-6" stroke={isDark ? '#0f1623' : '#fff'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 5l3 3 5-6" stroke={isDark ? '#1D2027' : '#fff'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     )}
                   </div>

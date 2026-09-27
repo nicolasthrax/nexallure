@@ -23,7 +23,7 @@ export default class ErrorBoundary extends Component {
           </p>
           <button
             onClick={() => window.location.reload()}
-            style={{ marginTop: '8px', padding: '10px 24px', backgroundColor: '#C9A84C',
+            style={{ marginTop: '8px', padding: '10px 24px', backgroundColor: 'var(--seal-on-ink)',
               color: '#000', border: 'none', borderRadius: '4px', cursor: 'pointer',
               fontWeight: 600, fontSize: '14px' }}>
             Refresh

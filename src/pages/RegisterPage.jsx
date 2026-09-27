@@ -102,26 +102,25 @@ export default function RegisterPage({ t, setPage }) {
     display: 'block',
     fontSize: '11px',
     letterSpacing: '0.12em',
-    color: 'rgba(240,230,204,0.55)',
+    color: 'rgba(238,233,221,0.55)',
     marginBottom: '8px',
-    textTransform: 'uppercase',
     fontFamily: "'IBM Plex Mono', monospace",
   }
 
   const inputBase = {
     width: '100%',
-    background: '#0f1623',
+    background: '#1D2027',
     border: '1px solid rgba(255,255,255,0.12)',
     borderRadius: '4px',
     padding: '14px 16px',
-    color: '#f0e6cc',
+    color: 'var(--on-ink)',
     fontSize: '15px',
     outline: 'none',
     transition: 'border-color 0.2s ease',
     fontFamily: "'IBM Plex Sans', sans-serif",
   }
 
-  const handleFocus = (e) => { e.target.style.borderColor = '#c9a84c' }
+  const handleFocus = (e) => { e.target.style.borderColor = 'var(--seal-on-ink)' }
   const handleBlur = (e) => { e.target.style.borderColor = 'rgba(255,255,255,0.12)' }
 
   const selectStyle = {
@@ -158,7 +157,6 @@ export default function RegisterPage({ t, setPage }) {
             fontSize: '11px',
             color: 'var(--signal-gold)',
             letterSpacing: '0.15em',
-            textTransform: 'uppercase',
             textAlign: 'center',
             marginBottom: '12px',
           }}
@@ -167,7 +165,7 @@ export default function RegisterPage({ t, setPage }) {
         </p>
         <h1
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontSize: '32px',
             color: 'var(--warm-white)',
             textAlign: 'center',
@@ -194,16 +192,16 @@ export default function RegisterPage({ t, setPage }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={labelStyle}>{t.form_field3_label}</label>
               <select required value={industry} onChange={(e) => setIndustry(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
-                <option value="" disabled style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.form_field3_placeholder}</option>
-                <option value="automotive" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.industry_automotive}</option>
-                <option value="electronics" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.industry_electronics}</option>
-                <option value="machinery" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.industry_machinery}</option>
-                <option value="textiles" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.industry_textiles}</option>
-                <option value="chemicals" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.industry_chemicals}</option>
-                <option value="pharma" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.industry_pharma}</option>
-                <option value="food" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.industry_food}</option>
-                <option value="logistics" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.industry_logistics}</option>
-                <option value="other" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.industry_other}</option>
+                <option value="" disabled style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.form_field3_placeholder}</option>
+                <option value="automotive" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_automotive}</option>
+                <option value="electronics" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_electronics}</option>
+                <option value="machinery" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_machinery}</option>
+                <option value="textiles" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_textiles}</option>
+                <option value="chemicals" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_chemicals}</option>
+                <option value="pharma" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_pharma}</option>
+                <option value="food" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_food}</option>
+                <option value="logistics" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_logistics}</option>
+                <option value="other" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_other}</option>
               </select>
             </div>
 
@@ -221,12 +219,12 @@ export default function RegisterPage({ t, setPage }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={labelStyle}>{t.form_field4_label}</label>
               <select required value={size} onChange={(e) => setSize(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
-                <option value="" disabled style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.form_field4_placeholder}</option>
-                <option value="size_1" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.size_1}</option>
-                <option value="size_2" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.size_2}</option>
-                <option value="size_3" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.size_3}</option>
-                <option value="size_4" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.size_4}</option>
-                <option value="size_5" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.size_5}</option>
+                <option value="" disabled style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.form_field4_placeholder}</option>
+                <option value="size_1" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_1}</option>
+                <option value="size_2" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_2}</option>
+                <option value="size_3" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_3}</option>
+                <option value="size_4" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_4}</option>
+                <option value="size_5" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_5}</option>
               </select>
             </div>
 
@@ -238,12 +236,12 @@ export default function RegisterPage({ t, setPage }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={labelStyle}>{t.form_field6_label}</label>
               <select required value={volume} onChange={(e) => setVolume(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
-                <option value="" disabled style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.form_field6_placeholder}</option>
-                <option value="volume_1" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.volume_1}</option>
-                <option value="volume_2" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.volume_2}</option>
-                <option value="volume_3" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.volume_3}</option>
-                <option value="volume_4" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.volume_4}</option>
-                <option value="volume_5" style={{ background: '#0f1623', color: '#f0e6cc' }}>{t.volume_5}</option>
+                <option value="" disabled style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.form_field6_placeholder}</option>
+                <option value="volume_1" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_1}</option>
+                <option value="volume_2" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_2}</option>
+                <option value="volume_3" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_3}</option>
+                <option value="volume_4" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_4}</option>
+                <option value="volume_5" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_5}</option>
               </select>
             </div>
 
@@ -303,7 +301,7 @@ export default function RegisterPage({ t, setPage }) {
               disabled={submitting}
               style={{
                 width: '100%',
-                background: '#c9a84c',
+                background: 'var(--seal-on-ink)',
                 color: '#0d1117',
                 border: 'none',
                 borderRadius: '4px',
@@ -311,7 +309,6 @@ export default function RegisterPage({ t, setPage }) {
                 fontSize: '13px',
                 fontWeight: '600',
                 letterSpacing: '0.12em',
-                textTransform: 'uppercase',
                 cursor: submitting ? 'wait' : 'pointer',
                 transition: 'opacity 0.2s ease',
                 fontFamily: "'IBM Plex Sans', sans-serif",
@@ -324,14 +321,14 @@ export default function RegisterPage({ t, setPage }) {
           </form>
         )}
 
-        <p className="text-center text-sm mt-8" style={{ color: 'rgba(240,230,204,0.4)' }}>
+        <p className="text-center text-sm mt-8" style={{ color: 'rgba(238,233,221,0.4)' }}>
           Already have an account?{' '}
           <span
             onClick={() => setPage?.('login')}
             className="underline underline-offset-4 transition-colors cursor-pointer"
-            style={{ color: 'rgba(240,230,204,0.7)' }}
-            onMouseEnter={(e) => { e.target.style.color = '#f0e6cc' }}
-            onMouseLeave={(e) => { e.target.style.color = 'rgba(240,230,204,0.7)' }}
+            style={{ color: 'rgba(238,233,221,0.7)' }}
+            onMouseEnter={(e) => { e.target.style.color = 'var(--on-ink)' }}
+            onMouseLeave={(e) => { e.target.style.color = 'rgba(238,233,221,0.7)' }}
           >
             Sign in →
           </span>

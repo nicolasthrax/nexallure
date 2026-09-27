@@ -14,7 +14,7 @@ function PremiumSkeleton({ onComplete }) {
       style={{ background: "var(--midnight-navy)" }}
     >
       {/* Top pinned progress bar - fixed at very top */}
-      <div className="fixed top-0 left-0 w-full h-0.5 z-[9999] overflow-hidden" style={{ background: "rgba(201,168,76,0.15)" }}>
+      <div className="fixed top-0 left-0 w-full h-0.5 z-[9999] overflow-hidden" style={{ background: "rgba(232,130,106,0.15)" }}>
         <motion.div
           className="h-full"
           style={{ background: "var(--signal-gold)" }}
@@ -29,7 +29,7 @@ function PremiumSkeleton({ onComplete }) {
           {/* Eyebrow placeholder */}
           <div 
             className="h-3 sm:h-4 w-40 sm:w-48 mx-auto rounded-sm animate-pulse"
-            style={{ background: "rgba(201,168,76,0.25)" }}
+            style={{ background: "rgba(232,130,106,0.25)" }}
           />
 
           {/* Main title placeholder lines */}
@@ -60,7 +60,7 @@ function PremiumSkeleton({ onComplete }) {
           <div className="pt-6 sm:pt-8 flex justify-center">
             <div 
               className="h-12 sm:h-14 w-48 sm:w-56 rounded-sm animate-pulse"
-              style={{ background: "rgba(201,168,76,0.35)" }}
+              style={{ background: "rgba(232,130,106,0.35)" }}
             />
           </div>
         </div>

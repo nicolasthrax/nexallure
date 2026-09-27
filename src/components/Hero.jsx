@@ -64,7 +64,6 @@ export default function Hero({ t, setPage }) {
               fontFamily: "'IBM Plex Mono', monospace",
               fontSize: '11px',
               color: 'var(--signal-gold)',
-              textTransform: 'uppercase',
               letterSpacing: '0.15em',
               marginBottom: '20px',
             }}
@@ -80,7 +79,7 @@ export default function Hero({ t, setPage }) {
         >
           <h1
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "var(--font-display)",
               fontSize: '54px',
               fontWeight: 700,
               color: 'var(--warm-white)',

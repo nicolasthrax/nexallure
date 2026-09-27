@@ -14,9 +14,9 @@ export default function GlobalLoader({ children }) {
 
   if (!loaded) {
     return (
-      <div className="fixed inset-0 bg-[#0F1117] flex items-center justify-center z-[99999]">
+      <div className="fixed inset-0 bg-[#15171C] flex items-center justify-center z-[99999]">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-8 h-8 border-2 border-[#C9A84C]/30 border-t-[#C9A84C] rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-[#E8826A]/30 border-t-[#E8826A] rounded-full animate-spin" />
           <p className="font-mono text-xs text-white/40 tracking-[3px]">LOADING NEXALLURE</p>
         </div>
       </div>

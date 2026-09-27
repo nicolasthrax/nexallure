@@ -3,7 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 
 const HOLO = '#38bdf8'
 const HOLO_DIM = '#0ea5e9'
-const GOLD = '#c9a84c'
+const GOLD = 'var(--seal-on-ink)'
 
 function HoloFloor() {
   return (

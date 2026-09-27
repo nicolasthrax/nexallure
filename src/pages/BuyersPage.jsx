@@ -74,18 +74,17 @@ export default function BuyersPage({ setPage, t }) {
     display: 'block',
     fontSize: '11px',
     fontFamily: "'IBM Plex Mono', monospace",
-    color: '#6B7A8D',
-    textTransform: 'uppercase',
+    color: 'var(--ink-3)',
     letterSpacing: '0.08em',
     marginBottom: '8px',
   }
   const inputStyle = {
     height: '48px',
-    border: '1px solid #D4D8E1',
+    border: '1px solid var(--rule)',
     padding: '0 16px',
     fontSize: '15px',
     fontFamily: "'IBM Plex Sans', sans-serif",
-    color: '#0A0F1E',
+    color: 'var(--ink)',
     background: '#FFFFFF',
     outline: 'none',
     width: '100%',
@@ -125,27 +124,14 @@ export default function BuyersPage({ setPage, t }) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div
-                style={{
-                  fontFamily: "'IBM Plex Mono', monospace",
-                  fontSize: '11px',
-                  color: '#B8922E',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.15em',
-                  marginBottom: '20px',
-                }}
-              >
-                {t.buyers_eyebrow}
-              </div>
-
               <h1
                 style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: '48px',
-                  color: '#0A0F1E',
-                  lineHeight: 1.12,
-                  marginBottom: '20px',
-                  letterSpacing: '-0.01em',
+                  fontFamily: "var(--font-display)",
+                  fontSize: 'clamp(48px, 6vw, 88px)',
+                  fontWeight: 800,
+                  color: 'var(--ink)',
+                  lineHeight: 0.95,
+                  marginBottom: '28px',
                 }}
               >
                 {t.buyers_h1}
@@ -155,7 +141,7 @@ export default function BuyersPage({ setPage, t }) {
                 style={{
                   fontFamily: "'IBM Plex Sans', sans-serif",
                   fontSize: '17px',
-                  color: '#3D4A5C',
+                  color: 'var(--ink-2)',
                   lineHeight: 1.65,
                   maxWidth: '480px',
                   marginBottom: '32px',
@@ -164,24 +150,16 @@ export default function BuyersPage({ setPage, t }) {
                 {t.buyers_body}
               </p>
 
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              <ul style={{ listStyle: 'none', borderTop: '2px solid var(--ink)', maxWidth: '480px' }}>
                 {[t.buyers_badge2, t.buyers_badge3].map((badge) => (
-                  <div
+                  <li
                     key={badge}
-                    style={{
-                      border: '1px solid #B8922E',
-                      background: 'rgba(184,146,46,0.06)',
-                      padding: '8px 14px',
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '11px',
-                      color: '#7A5F20',
-                      letterSpacing: '0.04em',
-                    }}
+                    style={{ padding: '14px 0', borderBottom: '1px solid var(--rule)', fontSize: '15px', color: 'var(--ink)' }}
                   >
                     {badge}
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </motion.div>
 
             {/* Right card — waitlist form */}
@@ -192,18 +170,17 @@ export default function BuyersPage({ setPage, t }) {
             >
               <div
                 style={{
-                  background: '#FFFFFF',
-                  border: '1px solid #D4D8E1',
-                  borderTop: '3px solid #B8922E',
-                  padding: '32px',
-                  boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+                  background: 'var(--paper-light)',
+                  border: '1px solid var(--rule)',
+                  borderRadius: '4px',
+                  padding: '36px',
                 }}
               >
                 <h2
                   style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "var(--font-display)",
                     fontSize: '22px',
-                    color: '#0A0F1E',
+                    color: 'var(--ink)',
                     marginBottom: '8px',
                   }}
                 >
@@ -213,7 +190,7 @@ export default function BuyersPage({ setPage, t }) {
                   style={{
                     fontFamily: "'IBM Plex Sans', sans-serif",
                     fontSize: '13px',
-                    color: '#6B7A8D',
+                    color: 'var(--ink-3)',
                     marginBottom: '24px',
                     lineHeight: 1.6,
                   }}
@@ -225,11 +202,11 @@ export default function BuyersPage({ setPage, t }) {
                   <div
                     style={{
                       padding: '20px',
-                      border: '1px solid #1E5C3A',
+                      border: '1px solid var(--go)',
                       background: 'rgba(30,92,58,0.08)',
                       fontFamily: "'IBM Plex Mono', monospace",
                       fontSize: '13px',
-                      color: '#1E5C3A',
+                      color: 'var(--go)',
                     }}
                   >
                     {t.buyers_success}
@@ -347,14 +324,13 @@ export default function BuyersPage({ setPage, t }) {
                       disabled={submitting}
                       style={{
                         height: '52px',
-                        background: submitting ? '#6B7A8D' : '#0A0F1E',
+                        background: submitting ? 'var(--ink-3)' : 'var(--ink)',
                         color: '#FFF',
                         fontWeight: 600,
                         fontSize: '14px',
-                        border: '1px solid #0A0F1E',
+                        border: '1px solid var(--ink)',
                         cursor: submitting ? 'wait' : 'pointer',
                         fontFamily: "'IBM Plex Sans', sans-serif",
-                        textTransform: 'uppercase',
                         letterSpacing: '0.06em',
                         marginTop: '4px',
                       }}
@@ -372,7 +348,7 @@ export default function BuyersPage({ setPage, t }) {
       {/* Stats Bar */}
       <section
         style={{
-          background: '#0A0F1E',
+          background: 'var(--ink)',
           padding: '60px 32px',
           display: 'flex',
           justifyContent: 'center',
@@ -388,7 +364,7 @@ export default function BuyersPage({ setPage, t }) {
               style={{
                 fontFamily: "'IBM Plex Mono', monospace",
                 fontSize: '20px',
-                color: '#C9A84C',
+                color: 'var(--seal-on-ink)',
                 marginBottom: '4px',
                 letterSpacing: '0.05em',
               }}
@@ -399,8 +375,7 @@ export default function BuyersPage({ setPage, t }) {
               style={{
                 fontFamily: "'IBM Plex Mono', monospace",
                 fontSize: '11px',
-                color: '#94A3B8',
-                textTransform: 'uppercase',
+                color: 'var(--on-ink-2)',
               }}
             >
               {stat.label}
