@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Big Shoulders Display"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
+        display: ['"Cormorant Garamond"', '"Songti SC"', 'serif'],
         mono: ['"IBM Plex Mono"', 'monospace'],
       },
     },

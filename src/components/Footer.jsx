@@ -30,18 +30,20 @@ export default function Footer({ t, setPage, hasDeviceToken }) {
   }
 
   return (
-    <footer id="footer" style={{ background: 'var(--ink)', color: 'var(--on-ink-2)', padding: '80px 0 40px' }}>
+    <footer id="footer" style={{ background: 'var(--ink-deep)', color: 'var(--on-ink-2)', padding: '96px 0 40px', borderTop: '1px solid var(--ink-rule)' }}>
       <style>{`
         .nx-ft { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: 48px; }
         .nx-ft__brand { grid-column: 1 / span 4; display: flex; flex-direction: column; gap: 16px; }
         .nx-ft__col { grid-column: span 2; display: flex; flex-direction: column; gap: 4px; }
         .nx-ft__status { grid-column: 9 / span 4; }
-        .nx-ft h2 { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--on-ink-2); margin-bottom: 8px; }
+        .nx-ft h2 { font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+        :lang(zh) .nx-ft h2 { font-size: 13px; letter-spacing: 0.1em; }
+        .nx-ft__brand p { font-family: var(--font-display); font-size: 22px !important; line-height: 1.35 !important; color: var(--on-ink); }
         .nx-ft__col button {
           text-align: left; background: none; border: 0; padding: 0; min-height: 36px;
           color: var(--on-ink); font-size: 15px; transition: color 150ms ease;
         }
-        .nx-ft__col button:hover { color: var(--seal-on-ink); }
+        .nx-ft__col button:hover { color: var(--gold); }
         .nx-ft__status dl { display: grid; grid-template-columns: auto 1fr; column-gap: 20px; row-gap: 10px; font-size: 14px; }
         .nx-ft__status dt { color: var(--on-ink-2); }
         .nx-ft__status dd { color: var(--on-ink); }

@@ -3,30 +3,33 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------ */
-/*  Nexallure — "Manifest" design system                               */
-/*  Paper, ink and one seal-red accent, taken from export paperwork.   */
-/*  Chinese text uses the reader's system CJK face (PingFang / YaHei), */
-/*  which is fast and reliable inside mainland China.                  */
+/*  Nexallure — "Atlas" design system                                  */
+/*  Ivory, deep navy and the gold of the official logo. A serif        */
+/*  display face gives the brand the calm of an old trading house.     */
+/*  Chinese text uses the reader's system CJK faces (Songti for        */
+/*  display, PingFang / YaHei for body), fast inside mainland China.   */
 /* ------------------------------------------------------------------ */
 :root {
-  --paper:        #F2EEE4;
-  --paper-deep:   #E7E1D2;
-  --paper-light:  #FAF8F2;
-  --ink:          #15171C;
-  --ink-2:        #3B3F48;
-  --ink-3:        #5C616B;
-  --rule:         #D3CCBA;
-  --rule-strong:  #B9B09B;
-  --seal:         #A8321F;
-  --seal-deep:    #862614;
-  --seal-tint:    #F4E3DC;
-  --seal-on-ink:  #E8826A;
-  --go:           #2C6A48;
-  --on-ink:       #EEE9DD;
-  --on-ink-2:     #A9ADB6;
-  --ink-rule:     #2C3039;
+  --paper:        #F5F1E8;
+  --paper-deep:   #ECE5D6;
+  --paper-light:  #FBF9F4;
+  --ink:          #0F1B2D;
+  --ink-2:        #33405A;
+  --ink-3:        #5E687A;
+  --rule:         #DDD5C4;
+  --rule-strong:  #C3B899;
+  --seal:         #7A6330;
+  --seal-deep:    #5E4B22;
+  --seal-tint:    #EFE6CF;
+  --seal-on-ink:  #C9B27A;
+  --gold:         #B7A06A;
+  --go:           #2F6B4F;
+  --on-ink:       #F1ECE1;
+  --on-ink-2:     #A7AFBF;
+  --ink-rule:     #243248;
+  --ink-deep:     #0A1422;
 
-  --font-display: 'Big Shoulders Display', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-display: 'Cormorant Garamond', 'Songti SC', 'STSong', 'Noto Serif SC', 'SimSun', serif;
   --font-body:    'IBM Plex Sans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   --font-mono:    'IBM Plex Mono', 'PingFang SC', 'Microsoft YaHei', monospace;
 
@@ -35,7 +38,7 @@
 
   /* Legacy names, remapped so every older page picks up the new palette */
   --midnight-navy:  var(--ink);
-  --charcoal:       #22252C;
+  --charcoal:       #16243A;
   --slate-gray:     var(--ink-3);
   --warm-white:     var(--on-ink);
   --signal-gold:    var(--seal-on-ink);
@@ -46,15 +49,31 @@
   --off-white:      var(--paper);
   --pure-white:     var(--paper-light);
   --border:         var(--rule);
-  --gold:           var(--seal);
-  --gold-dim:       rgba(168, 50, 31, 0.1);
+  --gold-dim:       rgba(183, 160, 106, 0.14);
   --green:          var(--go);
-  --green-bg:       rgba(44, 106, 72, 0.08);
+  --green-bg:       rgba(47, 107, 79, 0.08);
   --text-primary:   var(--ink);
   --text-secondary: var(--ink-2);
   --text-muted:     var(--ink-3);
   --danger:         #8B1A1A;
   --danger-bg:      rgba(139, 26, 26, 0.06);
+}
+
+/* Any block can flip to the navy "night" palette; components inside that
+   read the tokens (the route map, rules, buttons) re-colour themselves. */
+.nx-night {
+  --paper:       #0F1B2D;
+  --paper-light: #16243A;
+  --paper-deep:  #0A1422;
+  --ink:         #F1ECE1;
+  --ink-2:       #C9CFDA;
+  --ink-3:       #8E98AB;
+  --rule:        #26354D;
+  --rule-strong: #3A4A64;
+  --seal:        #C9B27A;
+  --seal-deep:   #B7A06A;
+  background: var(--paper);
+  color: var(--ink);
 }
 
 * {
@@ -107,10 +126,24 @@ button {
 
 .nx-display {
   font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  line-height: 0.92;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
 }
+:lang(zh) .nx-display { font-weight: 600; letter-spacing: 0.02em; line-height: 1.22; }
+
+/* Small spaced capitals, the way the logo sets NEXALLURE */
+.nx-eyebrow {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--seal);
+}
+.nx-eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; }
+:lang(zh) .nx-eyebrow { letter-spacing: 0.16em; font-size: 13px; }
 
 .nx-label {
   font-family: var(--font-mono);
@@ -122,26 +155,29 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   min-height: 52px;
-  padding: 0 24px;
-  border-radius: 4px;
+  padding: 0 28px;
+  border-radius: 1px;
   border: 1px solid transparent;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
 }
-.nx-btn .nx-arrow { transition: transform 220ms var(--ease-out); }
+:lang(zh) .nx-btn { font-size: 15px; letter-spacing: 0.06em; }
+.nx-btn .nx-arrow { transition: transform 260ms var(--ease-out); }
 .nx-btn:hover .nx-arrow { transform: translateX(4px); }
 
-.nx-btn--seal { background: var(--seal); color: #fff; }
-.nx-btn--seal:hover { background: var(--seal-deep); }
+.nx-btn--seal { background: var(--gold); color: #0F1B2D; }
+.nx-btn--seal:hover { background: #CDB67E; }
 .nx-btn--ink { background: var(--ink); color: var(--paper-light); }
-.nx-btn--ink:hover { background: #000; }
-.nx-btn--line { background: transparent; color: var(--ink); border-color: var(--ink); }
-.nx-btn--line:hover { background: var(--ink); color: var(--paper-light); }
+.nx-btn--ink:hover { background: var(--seal); }
+.nx-btn--line { background: transparent; color: var(--ink); border-color: var(--rule-strong); }
+.nx-btn--line:hover { border-color: var(--ink); }
 .nx-btn--paper { background: var(--paper-light); color: var(--ink); }
 .nx-btn--paper:hover { background: #fff; }
 

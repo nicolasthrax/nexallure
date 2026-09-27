@@ -1,33 +1,37 @@
 import { useRef } from 'react'
-import { motion, useInView, useReducedMotion } from 'framer-motion'
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import RouteMap from '../components/home/RouteMap'
 import BriefStory from '../components/home/BriefStory'
 import { Stamp } from '../components/home/Stamp'
 
 const EASE = [0.22, 1, 0.36, 1]
+const GOLD = '#B7A06A'
+const POINT = '#FCE5AF'
 
 function Arrow() {
   return (
     <svg className="nx-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.4" />
     </svg>
   )
 }
 
-// A hairline that draws itself across the page when it scrolls into view.
-function Rule({ color = 'var(--ink)', weight = 2 }) {
+// Fades and lifts its children once, the first time they come into view.
+function Reveal({ children, delay = 0, as = 'div', ...rest }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 1 })
+  const inView = useInView(ref, { once: true, amount: 0.3 })
   const reduce = useReducedMotion()
+  const Tag = motion[as]
   return (
-    <motion.div
+    <Tag
       ref={ref}
-      aria-hidden="true"
-      initial={reduce ? false : { scaleX: 0 }}
-      animate={inView ? { scaleX: 1 } : undefined}
-      transition={{ duration: 1.1, ease: EASE }}
-      style={{ height: weight, background: color, transformOrigin: 'left' }}
-    />
+      initial={reduce ? false : { opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 1, delay, ease: EASE }}
+      {...rest}
+    >
+      {children}
+    </Tag>
   )
 }
 
@@ -41,141 +45,132 @@ function Hero({ t, setPage }) {
   const lines = headlineLines(t.hero_h1)
 
   return (
-    <section style={{ paddingTop: 'calc(100px + clamp(32px, 4.5vw, 72px))', paddingBottom: 'clamp(64px, 8vw, 120px)' }}>
+    <section className="nx-night" style={{ paddingTop: 'calc(100px + clamp(56px, 7vw, 112px))', paddingBottom: 'clamp(56px, 7vw, 96px)', position: 'relative' }}>
       <style>{`
-        .nx-hero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; }
-        .nx-hero__side { grid-column: 1 / span 5; display: flex; flex-direction: column; gap: 36px; }
-        .nx-hero__map { grid-column: 6 / span 7; padding-top: 12px; }
-        .nx-hero__h1 { font-size: clamp(52px, 5.4vw, 84px); }
-        .nx-hero__h1 > span { white-space: nowrap; }
-        @media (max-width: 900px) {
-          .nx-hero__h1 { font-size: clamp(48px, 13vw, 88px); }
-          .nx-hero__h1 > span { white-space: normal; }
-        }
-        :lang(zh) .nx-hero__h1 { font-size: clamp(44px, 5.2vw, 84px); line-height: 1.14; }
-        :lang(zh) .nx-display { line-height: 1.15; letter-spacing: 0.01em; }
-        @media (max-width: 900px) {
-          .nx-hero__side, .nx-hero__map { grid-column: 1 / -1; }
-          .nx-hero__map { margin-top: 56px; }
+        .at-hero { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px; }
+        .at-hero__h1 { font-size: clamp(52px, 7vw, 116px); max-width: 17ch; }
+        .at-hero__h1 > span:nth-child(2) em { font-style: italic; color: var(--gold); }
+        :lang(zh) .at-hero__h1 { font-size: clamp(42px, 6vw, 92px); max-width: none; }
+        :lang(zh) .at-hero__h1 em, :lang(zh) .at-in__num { font-style: normal; }
+        .at-hero__map { margin-top: clamp(64px, 8vw, 120px); padding-top: 28px; border-top: 1px solid var(--rule); }
+        .at-hero__maphead { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+        .at-hero__glow {
+          position: absolute; left: 50%; top: 0; width: min(1100px, 120vw); height: 720px; transform: translateX(-50%);
+          background: radial-gradient(closest-side, rgba(183,160,106,0.14), transparent 70%);
+          pointer-events: none;
         }
       `}</style>
-      <div className="nx-wrap">
-        <div className="nx-hero__grid">
-          <div className="nx-hero__side">
-            <h1 className="nx-display nx-hero__h1">
-              {lines.map((line, i) => (
-                <span key={line} style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.04em' }}>
-                  <motion.span
-                    style={{ display: 'block' }}
-                    initial={reduce ? false : { y: '105%' }}
-                    animate={{ y: '0%' }}
-                    transition={{ duration: 0.9, delay: 0.1 + i * 0.09, ease: EASE }}
-                  >
-                    {line}
-                  </motion.span>
-                </span>
-              ))}
-            </h1>
-            <motion.div
-              style={{ display: 'flex', flexDirection: 'column', gap: 28 }}
-              initial={reduce ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <p style={{ fontSize: 18, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: 440 }}>{t.hero_sub}</p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-                <button className="nx-btn nx-btn--seal" onClick={() => setPage('marketGuide')}>
-                  {t.home_mg_cta}
-                  <Arrow />
-                </button>
-                <button
-                  className="nx-btn nx-btn--line"
-                  onClick={() => document.getElementById('roadmap')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+      <div className="at-hero__glow" aria-hidden="true" />
+      <div className="nx-wrap" style={{ position: 'relative' }}>
+        <div className="at-hero">
+          <motion.span
+            className="nx-eyebrow"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            {t.footer_tagline.split(/[.。]/)[0]}
+          </motion.span>
+          <h1 className="nx-display at-hero__h1">
+            {lines.map((line, i) => (
+              <span key={line} style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.06em' }}>
+                <motion.span
+                  style={{ display: 'block' }}
+                  initial={reduce ? false : { y: '110%' }}
+                  animate={{ y: '0%' }}
+                  transition={{ duration: 1.1, delay: 0.15 + i * 0.12, ease: EASE }}
                 >
-                  {t.hero_cta_secondary}
-                </button>
-              </div>
-            </motion.div>
-          </div>
-
-          <div className="nx-hero__map">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, flexWrap: 'wrap', marginBottom: 8 }}>
-              <h2 style={{ fontSize: 17, fontWeight: 600 }}>{t.map_title}</h2>
-              <span style={{ fontSize: 14, color: 'var(--ink-3)' }}>{t.map_hint}</span>
+                  {i === 1 ? <em>{line}</em> : line}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+          <motion.div
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 36 }}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.6, ease: EASE }}
+          >
+            <p style={{ fontSize: 18, lineHeight: 1.7, color: 'var(--ink-2)', maxWidth: 620 }}>{t.hero_sub}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'center' }}>
+              <button className="nx-btn nx-btn--seal" onClick={() => setPage('marketGuide')}>
+                {t.home_mg_cta}
+                <Arrow />
+              </button>
+              <button
+                className="nx-btn nx-btn--line"
+                onClick={() => document.getElementById('roadmap')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              >
+                {t.hero_cta_secondary}
+              </button>
             </div>
-            <RouteMap t={t} onPick={() => setPage('marketGuide')} />
+          </motion.div>
+        </div>
+
+        <div className="at-hero__map">
+          <div className="at-hero__maphead">
+            <h2 className="nx-display" style={{ fontSize: 'clamp(24px, 2.4vw, 32px)' }}>{t.map_title}</h2>
+            <span style={{ fontSize: 14, color: 'var(--ink-3)' }}>{t.map_hint}</span>
           </div>
+          <RouteMap t={t} onPick={() => setPage('marketGuide')} />
         </div>
       </div>
     </section>
   )
 }
 
-function Manifest({ t, setPage }) {
-  const rows = [
-    { no: 'NXLU 001', tool: t.about_tool_mg, desc: t.tool_mg_desc, live: true },
-    { no: 'NXLU 002', tool: t.about_tool_sample, desc: t.tool_sample_desc },
-    { no: 'NXLU 003', tool: t.about_tool_quoting, desc: t.tool_quoting_desc },
+const NUMERALS = ['I', 'II', 'III']
+
+function Instruments({ t, setPage }) {
+  const tools = [
+    { tool: t.about_tool_mg, desc: t.tool_mg_desc, live: true },
+    { tool: t.about_tool_sample, desc: t.tool_sample_desc },
+    { tool: t.about_tool_quoting, desc: t.tool_quoting_desc },
   ]
 
   return (
-    <section id="roadmap" style={{ padding: 'clamp(80px, 10vw, 144px) 0', scrollMarginTop: 100 }}>
+    <section id="roadmap" style={{ padding: 'clamp(96px, 12vw, 176px) 0', scrollMarginTop: 100 }}>
       <style>{`
-        .nx-mf__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: end; margin-bottom: 56px; }
-        .nx-mf__head h2 { grid-column: 1 / span 6; font-size: clamp(48px, 6.4vw, 96px); }
-        .nx-mf__head div { grid-column: 8 / span 5; display: flex; flex-direction: column; gap: 14px; font-size: 16px; line-height: 1.65; color: var(--ink-2); }
-        .nx-mf__cols, .nx-mf__row {
-          display: grid; grid-template-columns: 120px minmax(0, 1.1fr) 170px minmax(0, 1.4fr) 200px;
-          column-gap: 24px; align-items: center;
-        }
-        .nx-mf__cols { padding: 12px 0; font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
-        .nx-mf__row { padding: 28px 0; border-bottom: 1px solid var(--rule); transition: background-color 200ms ease; }
-        .nx-mf__row:hover { background: var(--paper-light); }
-        .nx-mf__tool { font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 2.8vw, 40px); line-height: 1; }
-        .nx-mf__pending {
-          justify-self: start; font-family: var(--font-mono); font-size: 12px; color: var(--ink-2);
-          border: 1px dashed var(--rule-strong); border-radius: 2px; padding: 4px 8px;
-        }
+        .at-in__head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px; margin-bottom: clamp(56px, 7vw, 96px); }
+        .at-in__head h2 { font-size: clamp(44px, 5.6vw, 88px); max-width: 16ch; }
+        .at-in__intro { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 920px; text-align: left; font-size: 16px; line-height: 1.75; color: var(--ink-2); }
+        .at-in__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); }
+        .at-in__cell { display: flex; flex-direction: column; gap: 20px; padding: 40px 36px 44px; border-left: 1px solid var(--rule); transition: background-color 300ms ease; }
+        .at-in__cell:first-child { border-left: 0; padding-left: 0; }
+        .at-in__cell:hover { background: var(--paper-light); }
+        .at-in__num { font-family: var(--font-display); font-style: italic; font-size: 64px; line-height: 0.8; color: var(--gold); }
+        .at-in__tool { font-family: var(--font-display); font-weight: 500; font-size: clamp(28px, 2.5vw, 38px); line-height: 1.05; }
+        .at-in__dev { align-self: flex-start; font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); padding: 7px 0; }
         @media (max-width: 900px) {
-          .nx-mf__head h2, .nx-mf__head div { grid-column: 1 / -1; }
-          .nx-mf__head div { margin-top: 24px; }
-          .nx-mf__cols { display: none; }
-          .nx-mf__row { grid-template-columns: 1fr auto; row-gap: 14px; }
-          .nx-mf__row > :nth-child(1) { grid-column: 1 / -1; }
-          .nx-mf__row > :nth-child(4), .nx-mf__row > :nth-child(5) { grid-column: 1 / -1; }
+          .at-in__intro { grid-template-columns: 1fr; gap: 16px; }
+          .at-in__grid { grid-template-columns: 1fr; }
+          .at-in__cell { border-left: 0; border-top: 1px solid var(--rule); padding: 36px 0; }
+          .at-in__cell:first-child { border-top: 0; }
         }
       `}</style>
       <div className="nx-wrap">
-        <div className="nx-mf__head">
-          <h2 className="nx-display">{t.about_h2}</h2>
-          <div>
+        <div className="at-in__head">
+          <Reveal as="h2" className="nx-display" delay={0.05}>{t.about_h2}</Reveal>
+          <Reveal className="at-in__intro" delay={0.15}>
             <p>{t.about_p1}</p>
             <p>{t.about_p2}</p>
-          </div>
+          </Reveal>
         </div>
 
-        <Rule />
-        <div className="nx-mf__cols" aria-hidden="true">
-          <span>{t.manifest_no}</span>
-          <span>{t.about_roadmap_tool}</span>
-          <span>{t.about_roadmap_status}</span>
-          <span />
-          <span />
-        </div>
-        <div role="list">
-          {rows.map((r) => (
-            <div key={r.no} className="nx-mf__row" role="listitem">
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-3)' }}>{r.no}</span>
-              <span className="nx-mf__tool">{r.tool}</span>
-              {r.live ? <span><Stamp>{t.about_status_live}</Stamp></span> : <span className="nx-mf__pending">{t.about_status_dev}</span>}
-              <p style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-2)' }}>{r.desc}</p>
-              {r.live ? (
-                <button className="nx-btn nx-btn--ink" style={{ minHeight: 44, padding: '0 16px', justifySelf: 'start' }} onClick={() => setPage('marketGuide')}>
+        <div className="at-in__grid" role="list">
+          {tools.map((r, i) => (
+            <Reveal key={r.tool} className="at-in__cell" role="listitem" delay={i * 0.12}>
+              <span className="at-in__num" aria-hidden="true">{NUMERALS[i]}.</span>
+              <h3 className="at-in__tool">{r.tool}</h3>
+              {r.live ? <Stamp>{t.about_status_live}</Stamp> : <span className="at-in__dev">{t.about_status_dev}</span>}
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--ink-2)', flex: 1 }}>{r.desc}</p>
+              {r.live && (
+                <button className="nx-btn nx-btn--ink" style={{ alignSelf: 'flex-start' }} onClick={() => setPage('marketGuide')}>
                   {t.home_mg_cta}
                   <Arrow />
                 </button>
-              ) : <span />}
-            </div>
+              )}
+            </Reveal>
           ))}
         </div>
       </div>
@@ -185,33 +180,43 @@ function Manifest({ t, setPage }) {
 
 function Buyers({ t, setPage }) {
   return (
-    <section style={{ padding: 'clamp(80px, 10vw, 144px) 0', borderTop: '1px solid var(--rule)' }}>
+    <section style={{ padding: 'clamp(96px, 12vw, 176px) 0' }}>
       <style>{`
-        .nx-by { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
-        .nx-by__l { grid-column: 1 / span 6; display: flex; flex-direction: column; gap: 32px; align-items: flex-start; }
-        .nx-by__r { grid-column: 8 / span 5; }
-        .nx-by__item { display: flex; flex-direction: column; gap: 10px; padding: 24px 0; border-bottom: 1px solid var(--rule); }
-        @media (max-width: 900px) { .nx-by__l, .nx-by__r { grid-column: 1 / -1; } .nx-by__r { margin-top: 48px; } }
+        .at-by { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; }
+        .at-by__l { grid-column: 1 / span 6; display: flex; flex-direction: column; gap: 36px; align-items: flex-start; position: sticky; top: 140px; }
+        .at-by__r { grid-column: 8 / span 5; display: flex; flex-direction: column; }
+        .at-by__item { display: grid; grid-template-columns: 56px 1fr; gap: 8px 20px; padding: 36px 0; border-top: 1px solid var(--rule); }
+        .at-by__item:last-child { border-bottom: 1px solid var(--rule); }
+        .at-by__item > span:first-child { grid-row: span 3; font-family: var(--font-display); font-style: italic; font-size: 40px; line-height: 0.9; color: var(--gold); }
+        .at-by__data { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--seal); margin-top: 6px; }
+        :lang(zh) .at-by__data { font-size: 13px; letter-spacing: 0.08em; }
+        @media (max-width: 900px) {
+          .at-by__l, .at-by__r { grid-column: 1 / -1; position: static; }
+          .at-by__r { margin-top: 56px; }
+        }
       `}</style>
-      <div className="nx-wrap nx-by">
-        <div className="nx-by__l">
-          <h2 className="nx-display" style={{ fontSize: 'clamp(44px, 5.6vw, 84px)' }}>{t.vp_h2}</h2>
-          <button className="nx-btn nx-btn--line" onClick={() => setPage('buyers')}>
-            {t.buyers_cta}
-            <Arrow />
-          </button>
+      <div className="nx-wrap at-by">
+        <div className="at-by__l">
+          <Reveal as="span" className="nx-eyebrow">{t.nav_buyers}</Reveal>
+          <Reveal as="h2" className="nx-display" delay={0.05} style={{ fontSize: 'clamp(44px, 5.4vw, 84px)' }}>{t.vp_h2}</Reveal>
+          <Reveal delay={0.15}>
+            <button className="nx-btn nx-btn--line" onClick={() => setPage('buyers')}>
+              {t.buyers_cta}
+              <Arrow />
+            </button>
+          </Reveal>
         </div>
-        <div className="nx-by__r">
-          <Rule />
+        <div className="at-by__r">
           {[
             [t.vp_card2_title, t.vp_card2_body, t.vp_card2_data],
             [t.vp_card3_title, t.vp_card3_body, t.vp_card3_data],
-          ].map(([title, body, data]) => (
-            <div key={title} className="nx-by__item">
-              <h3 style={{ fontSize: 20, fontWeight: 600 }}>{title}</h3>
-              <p style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-2)' }}>{body}</p>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}>{data}</span>
-            </div>
+          ].map(([title, body, data], i) => (
+            <Reveal key={title} className="at-by__item" delay={i * 0.12}>
+              <span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="nx-display" style={{ fontSize: 30 }}>{title}</h3>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--ink-2)' }}>{body}</p>
+              <span className="at-by__data">{data}</span>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -219,7 +224,9 @@ function Buyers({ t, setPage }) {
   )
 }
 
-function ComplianceLedger({ t }) {
+// The compliance status, set out like a certificate: a double gold frame
+// around a plain ledger of where each item stands today.
+function Certificate({ t }) {
   const rows = [
     [t.footer_status_hosting_label, t.footer_status_hosting],
     [t.footer_status_mainland_label, t.footer_status_not_active],
@@ -227,79 +234,94 @@ function ComplianceLedger({ t }) {
     [t.footer_status_data_label, t.footer_status_consent, t.comp_card3_data],
   ]
   return (
-    <section id="compliance" style={{ padding: 'clamp(80px, 10vw, 144px) 0', background: 'var(--paper-deep)', scrollMarginTop: 100 }}>
+    <section id="compliance" style={{ padding: 'clamp(96px, 12vw, 176px) 0', background: 'var(--paper-deep)', scrollMarginTop: 100 }}>
       <style>{`
-        .nx-cp { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
-        .nx-cp__l { grid-column: 1 / span 4; display: flex; flex-direction: column; gap: 24px; }
-        .nx-cp__r { grid-column: 6 / span 7; background: var(--paper-light); border: 1px solid var(--rule); border-radius: 4px; }
-        .nx-cp__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 24px; padding: 22px 28px; border-bottom: 1px solid var(--rule); align-items: baseline; }
-        .nx-cp__row:last-child { border-bottom: 0; }
-        @media (max-width: 900px) {
-          .nx-cp__l, .nx-cp__r { grid-column: 1 / -1; }
-          .nx-cp__r { margin-top: 40px; }
-          .nx-cp__row { grid-template-columns: 1fr; gap: 4px; padding: 18px 20px; }
+        .at-cert {
+          max-width: 980px; margin: 0 auto; background: var(--paper-light);
+          outline: 1px solid var(--gold); outline-offset: -10px;
+          border: 1px solid var(--rule-strong);
+          padding: clamp(40px, 6vw, 88px) clamp(24px, 6vw, 96px);
+          display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px;
         }
+        .at-cert h2 { font-size: clamp(38px, 4.4vw, 64px); max-width: 18ch; }
+        .at-cert dl { width: 100%; margin-top: 24px; text-align: left; border-top: 1px solid var(--ink); }
+        .at-cert__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+        .at-cert__cols { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); padding: 12px 0; }
+        @media (max-width: 700px) { .at-cert__row { grid-template-columns: 1fr; gap: 4px; } }
       `}</style>
-      <div className="nx-wrap nx-cp">
-        <div className="nx-cp__l">
-          <h2 className="nx-display" style={{ fontSize: 'clamp(40px, 4.6vw, 68px)' }}>{t.comp_h2}</h2>
-          <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-2)' }}>{t.comp_intro}</p>
-        </div>
-        <div className="nx-cp__r">
-          <div className="nx-cp__row" style={{ paddingTop: 14, paddingBottom: 14, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-3)' }}>
-            <span>{t.comp_col_item}</span>
-            <span>{t.comp_col_status}</span>
-          </div>
-          {rows.map(([label, value, note], i) => (
-            <div key={label} className="nx-cp__row">
-              <span style={{ fontSize: 16, fontWeight: 600 }}>{label}</span>
-              <span style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 15, color: i === 3 ? 'var(--go)' : 'var(--ink-2)', fontWeight: i === 3 ? 500 : 400 }}>
-                {value}
-                {note && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-3)', fontWeight: 400 }}>{note}</span>}
-              </span>
+      <div className="nx-wrap">
+        <Reveal className="at-cert">
+          <svg width="44" height="44" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="31" fill="none" stroke={GOLD} strokeWidth="1.2" />
+            <circle cx="32" cy="32" r="24" fill={GOLD} />
+            <circle cx="32" cy="32" r="1.6" fill={POINT} />
+          </svg>
+          <h2 className="nx-display">{t.comp_h2}</h2>
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--ink-2)', maxWidth: 520 }}>{t.comp_intro}</p>
+          <dl>
+            <div className="at-cert__row at-cert__cols" aria-hidden="true">
+              <span>{t.comp_col_item}</span>
+              <span>{t.comp_col_status}</span>
             </div>
-          ))}
-        </div>
+            {rows.map(([label, value, note], i) => (
+              <div key={label} className="at-cert__row">
+                <dt className="nx-display" style={{ fontSize: 22 }}>{label}</dt>
+                <dd style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 15, color: i === 3 ? 'var(--go)' : 'var(--ink-2)', fontWeight: i === 3 ? 500 : 400 }}>
+                  {value}
+                  {note && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-3)', fontWeight: 400 }}>{note}</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
       </div>
     </section>
   )
 }
 
+// The logo's gold disc, large, turning slowly into view as the reader scrolls.
+function Orb() {
+  const ref = useRef(null)
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const scale = useTransform(scrollYProgress, [0, 0.5], reduce ? [1, 1] : [0.6, 1])
+  const ring = useTransform(scrollYProgress, [0, 0.5], reduce ? [1, 1] : [0, 1])
+  return (
+    <div ref={ref} aria-hidden="true" style={{ width: 'min(200px, 50vw)', aspectRatio: '1', margin: '0 auto' }}>
+      <svg viewBox="0 0 200 200" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+        <motion.circle cx="100" cy="100" r="98" fill="none" stroke={GOLD} strokeWidth="0.8" style={{ pathLength: ring, rotate: -90, transformOrigin: 'center' }} />
+        <motion.circle cx="100" cy="100" r="78" fill={GOLD} style={{ scale, transformOrigin: 'center' }} />
+        <circle cx="100" cy="100" r="3" fill={POINT} />
+      </svg>
+    </div>
+  )
+}
+
 function Account({ t, setPage }) {
   return (
-    <section style={{ padding: 'clamp(88px, 11vw, 160px) 0' }}>
-      <style>{`
-        .nx-ac { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: center; }
-        .nx-ac__l { grid-column: 1 / span 7; display: flex; flex-direction: column; gap: 28px; align-items: flex-start; }
-        .nx-ac__r { grid-column: 9 / span 4; display: flex; justify-content: center; }
-        @media (max-width: 900px) { .nx-ac__l, .nx-ac__r { grid-column: 1 / -1; } .nx-ac__r { justify-content: flex-start; margin-top: 48px; } }
-      `}</style>
-      <div className="nx-wrap nx-ac">
-        <div className="nx-ac__l">
-          <h2 className="nx-display" style={{ fontSize: 'clamp(48px, 6.4vw, 100px)' }}>{t.form_h2}</h2>
-          <p style={{ fontSize: 17, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: 560 }}>{t.form_body}</p>
-          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10, fontSize: 16 }}>
-            {[t.form_trust1, t.form_trust2, t.form_trust3].map((item) => (
-              <li key={item} style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="var(--seal)" strokeWidth="1.8" /></svg>
-                {item}
-              </li>
-            ))}
-          </ul>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
-            <button className="nx-btn nx-btn--seal" onClick={() => setPage('register')}>
-              {t.mg_blur_signup}
-              <Arrow />
-            </button>
-            <span style={{ fontSize: 15, color: 'var(--ink-2)' }}>
-              {t.account_signin_prompt}{' '}
-              <button className="nx-link" style={{ color: 'var(--ink)', minHeight: 44 }} onClick={() => setPage('login')}>{t.nav_signin}</button>
-            </span>
-          </div>
-        </div>
-        <div className="nx-ac__r">
-          <Stamp size="lg" angle={-11}>{t.prelaunch_badge}</Stamp>
-        </div>
+    <section className="nx-night" style={{ padding: 'clamp(96px, 12vw, 176px) 0' }}>
+      <div className="nx-wrap" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 36 }}>
+        <Orb />
+        <Reveal as="h2" className="nx-display" style={{ fontSize: 'clamp(44px, 6vw, 96px)', maxWidth: '16ch' }}>{t.form_h2}</Reveal>
+        <Reveal as="p" delay={0.1} style={{ fontSize: 17, lineHeight: 1.7, color: 'var(--ink-2)', maxWidth: 560 }}>{t.form_body}</Reveal>
+        <Reveal as="ul" delay={0.15} style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px 28px', fontSize: 15, color: 'var(--ink-2)' }}>
+          {[t.form_trust1, t.form_trust2, t.form_trust3].map((item) => (
+            <li key={item} style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+              <span aria-hidden="true" style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--gold)' }} />
+              {item}
+            </li>
+          ))}
+        </Reveal>
+        <Reveal delay={0.2} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+          <button className="nx-btn nx-btn--seal" onClick={() => setPage('register')}>
+            {t.mg_blur_signup}
+            <Arrow />
+          </button>
+          <span style={{ fontSize: 15, color: 'var(--ink-2)' }}>
+            {t.account_signin_prompt}{' '}
+            <button className="nx-link" style={{ color: 'var(--ink)', minHeight: 44 }} onClick={() => setPage('login')}>{t.nav_signin}</button>
+          </span>
+        </Reveal>
       </div>
     </section>
   )
@@ -309,10 +331,10 @@ export default function HomePage({ t, setPage }) {
   return (
     <main style={{ overflowX: 'clip' }}>
       <Hero t={t} setPage={setPage} />
-      <Manifest t={t} setPage={setPage} />
+      <Instruments t={t} setPage={setPage} />
       <BriefStory t={t} onOpen={() => setPage('marketGuide')} />
       <Buyers t={t} setPage={setPage} />
-      <ComplianceLedger t={t} />
+      <Certificate t={t} />
       <Account t={t} setPage={setPage} />
     </main>
   )
