@@ -28,16 +28,16 @@ function RadarChart({ data, size = 260 }) {
       {rings.map(ring => (
         <polygon key={ring}
           points = {Array.from({ length: n }, (_, i) => pt(i, ring)).map(([x, y]) => `${x},${y}`).join(' ')}
-          fill="none" stroke="rgba(232,130,106,0.12)" strokeWidth="1"
+          fill="none" stroke="rgba(201,178,122,0.12)" strokeWidth="1"
         />
       ))}
       {/* Axes */}
       {labels.map((_, i) => {
         const [x, y] = pt(i, 100)
-        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="rgba(232,130,106,0.15)" strokeWidth="1" />
+        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="rgba(201,178,122,0.15)" strokeWidth="1" />
       })}
       {/* Data polygon */}
-      <polygon points={polygon} fill="rgba(232,130,106,0.15)" stroke="var(--seal-on-ink)" strokeWidth="2" />
+      <polygon points={polygon} fill="rgba(201,178,122,0.15)" stroke="var(--seal-on-ink)" strokeWidth="2" />
       {/* Data dots */}
       {values.map((v, i) => {
         const [x, y] = pt(i, v)
@@ -100,7 +100,7 @@ function PlatformHeatmap({ platforms }) {
               transition={{ duration: 0.8, delay: i * 0.1, ease: 'easeOut' }}
               style={{
                 height: '100%',
-                background: `rgba(232,130,106,${0.2 + (p.score / 100) * 0.7})`,
+                background: `rgba(201,178,122,${0.2 + (p.score / 100) * 0.7})`,
                 borderRight: '2px solid var(--seal-on-ink)',
               }}
             />
@@ -113,7 +113,7 @@ function PlatformHeatmap({ platforms }) {
           <div style={{
             width: '60px', flexShrink: 0,
             fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px',
-            color: p.tier === 'PRIMARY' ? 'var(--seal-on-ink)' : p.tier === 'SECONDARY' ? 'rgba(232,130,106,0.6)' : 'rgba(255,255,255,0.3)',
+            color: p.tier === 'PRIMARY' ? 'var(--seal-on-ink)' : p.tier === 'SECONDARY' ? 'rgba(201,178,122,0.6)' : 'rgba(255,255,255,0.3)',
           }}>{p.tier}</div>
         </div>
       ))}
@@ -123,7 +123,7 @@ function PlatformHeatmap({ platforms }) {
 
 // ─── Opportunity Score Badge ──────────────────────────────────────────────────
 function OpportunityScore({ score, label }) {
-  const color = score >= 75 ? 'var(--seal-on-ink)' : score >= 50 ? 'rgba(232,130,106,0.7)' : 'rgba(232,130,106,0.4)'
+  const color = score >= 75 ? 'var(--seal-on-ink)' : score >= 50 ? 'rgba(201,178,122,0.7)' : 'rgba(201,178,122,0.4)'
   const circumference = 2 * Math.PI * 28
   const dash = (score / 100) * circumference
 
@@ -171,7 +171,7 @@ function BuyerRegionBars({ regions }) {
               initial={{ width: 0 }}
               animate={{ width: `${(r.concentration / max) * 100}%` }}
               transition={{ duration: 0.7, delay: i * 0.08, ease: 'easeOut' }}
-              style={{ height: '100%', background: 'linear-gradient(90deg, rgba(232,130,106,0.5), var(--seal-on-ink))', borderRadius: '3px' }}
+              style={{ height: '100%', background: 'linear-gradient(90deg, rgba(201,178,122,0.5), var(--seal-on-ink))', borderRadius: '3px' }}
             />
           </div>
           {r.note && (
@@ -442,7 +442,7 @@ export default function MarketGuidePage({ setPage, t }) {
           content: '';
           flex: 1;
           height: 1px;
-          background: rgba(232,130,106,0.15);
+          background: rgba(201,178,122,0.15);
         }
         .insight-bullet {
           display: flex;
@@ -459,15 +459,15 @@ export default function MarketGuidePage({ setPage, t }) {
         .bullet-index {
           font-family: 'IBM Plex Mono', monospace;
           font-size: 10px;
-          color: rgba(232,130,106,0.5);
+          color: rgba(201,178,122,0.5);
           padding-top: 3px;
           flex-shrink: 0;
           width: 20px;
         }
         .reach-tag {
           display: inline-block;
-          background: rgba(232,130,106,0.08);
-          border: 1px solid rgba(232,130,106,0.2);
+          background: rgba(201,178,122,0.08);
+          border: 1px solid rgba(201,178,122,0.2);
           color: var(--seal-on-ink);
           font-family: 'IBM Plex Mono', monospace;
           font-size: 11px;
@@ -566,9 +566,9 @@ export default function MarketGuidePage({ setPage, t }) {
                   <div style={isAuthenticated ? {} : { filter: 'blur(6px)', userSelect: 'none', pointerEvents: 'none' }}>
 
                     {/* Report header */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px', paddingBottom: '20px', borderBottom: '1px solid rgba(232,130,106,0.15)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px', paddingBottom: '20px', borderBottom: '1px solid rgba(201,178,122,0.15)' }}>
                       <div>
-                        <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', color: 'rgba(232,130,106,0.5)', letterSpacing: '0.1em', marginBottom: '6px' }}>
+                        <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', color: 'rgba(201,178,122,0.5)', letterSpacing: '0.1em', marginBottom: '6px' }}>
                           INTELLIGENCE REPORT · {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
                         </div>
                         <h2 style={{ fontFamily: "var(--font-display)", fontSize: '28px', color: 'var(--warm-white)', margin: 0 }}>
@@ -581,7 +581,7 @@ export default function MarketGuidePage({ setPage, t }) {
                           region={market === 'any' ? (t?._lang === 'ZH' || t?._lang === 'TW' ? '全球市场' : 'Global Markets') : (t?.[market] || market)} 
                           userId={session?.user?.id} 
                         />
-                        <button onClick={handlePrint} style={{ background: 'transparent', color: 'var(--seal-on-ink)', border: '1px solid rgba(232,130,106,0.3)', padding: '9px 18px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', cursor: 'pointer', letterSpacing: '0.05em' }}>
+                        <button onClick={handlePrint} style={{ background: 'transparent', color: 'var(--seal-on-ink)', border: '1px solid rgba(201,178,122,0.3)', padding: '9px 18px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', cursor: 'pointer', letterSpacing: '0.05em' }}>
                           ↓ PDF
                         </button>
                         <button onClick={() => setResult(null)} style={{ background: 'transparent', color: 'var(--on-ink-2)', border: '1px solid rgba(255,255,255,0.2)', padding: '9px 18px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', cursor: 'pointer', letterSpacing: '0.05em' }}>

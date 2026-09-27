@@ -102,7 +102,7 @@ export default function LoginPage({ t, setPage }) {
   const primaryButtonStyle = (loading) => ({
     width: '100%',
     height: '52px',
-    background: loading ? 'rgba(232,130,106,0.4)' : 'var(--signal-gold)',
+    background: loading ? 'rgba(201,178,122,0.4)' : 'var(--signal-gold)',
     color: 'var(--midnight-navy)',
     border: '1px solid var(--gold-shadow)',
     padding: '14px 28px',
@@ -221,8 +221,8 @@ export default function LoginPage({ t, setPage }) {
                   fontFamily: "'IBM Plex Mono', monospace",
                   fontSize: '12px',
                   color: 'var(--signal-gold)',
-                  background: 'rgba(232,130,106,0.08)',
-                  border: '1px solid rgba(232,130,106,0.3)',
+                  background: 'rgba(201,178,122,0.08)',
+                  border: '1px solid rgba(201,178,122,0.3)',
                   padding: '10px 14px',
                 }}
               >
