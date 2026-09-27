@@ -185,13 +185,13 @@ export default function RegisterPage({ t, setPage }) {
         ) : (
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.form_field1_label}</label>
-              <input type="text" required value={companyName} onChange={(e) => setCompanyName(e.target.value)} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
+              <label htmlFor="f-form-field1-label" style={labelStyle}>{t.form_field1_label}</label>
+              <input id="f-form-field1-label" type="text" required value={companyName} onChange={(e) => setCompanyName(e.target.value)} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.form_field3_label}</label>
-              <select required value={industry} onChange={(e) => setIndustry(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
+              <label htmlFor="f-form-field3-label" style={labelStyle}>{t.form_field3_label}</label>
+              <select id="f-form-field3-label" required value={industry} onChange={(e) => setIndustry(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
                 <option value="" disabled style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.form_field3_placeholder}</option>
                 <option value="automotive" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_automotive}</option>
                 <option value="electronics" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_electronics}</option>
@@ -209,16 +209,16 @@ export default function RegisterPage({ t, setPage }) {
               {industry === 'other' && (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.2 }} style={{ overflow: 'hidden' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '4px' }}>
-                    <label style={labelStyle}>{t.form_field3_other_placeholder}</label>
-                    <input type="text" required value={industryOther} onChange={(e) => setIndustryOther(e.target.value)} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
+                    <label htmlFor="f-form-field3-other-placeholder" style={labelStyle}>{t.form_field3_other_placeholder}</label>
+                    <input id="f-form-field3-other-placeholder" type="text" required value={industryOther} onChange={(e) => setIndustryOther(e.target.value)} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.form_field4_label}</label>
-              <select required value={size} onChange={(e) => setSize(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
+              <label htmlFor="f-form-field4-label" style={labelStyle}>{t.form_field4_label}</label>
+              <select id="f-form-field4-label" required value={size} onChange={(e) => setSize(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
                 <option value="" disabled style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.form_field4_placeholder}</option>
                 <option value="size_1" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_1}</option>
                 <option value="size_2" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_2}</option>
@@ -229,13 +229,13 @@ export default function RegisterPage({ t, setPage }) {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.form_field5_label}</label>
-              <MultiSelect selected={markets} onChange={setMarkets} t={t} variant="dark" />
+              <label htmlFor="f-form-field5-label" style={labelStyle}>{t.form_field5_label}</label>
+              <MultiSelect id="f-form-field5-label" selected={markets} onChange={setMarkets} t={t} variant="dark" />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.form_field6_label}</label>
-              <select required value={volume} onChange={(e) => setVolume(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
+              <label htmlFor="f-form-field6-label" style={labelStyle}>{t.form_field6_label}</label>
+              <select id="f-form-field6-label" required value={volume} onChange={(e) => setVolume(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
                 <option value="" disabled style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.form_field6_placeholder}</option>
                 <option value="volume_1" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_1}</option>
                 <option value="volume_2" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_2}</option>
@@ -246,18 +246,18 @@ export default function RegisterPage({ t, setPage }) {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.form_field7_label}</label>
-              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
+              <label htmlFor="f-form-field7-label" style={labelStyle}>{t.form_field7_label}</label>
+              <input id="f-form-field7-label" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.form_field_password_label}</label>
-              <input type="password" required minLength={8} placeholder={t.form_field_password_placeholder} value={password} onChange={(e) => setPassword(e.target.value)} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
+              <label htmlFor="f-form-field-password-label" style={labelStyle}>{t.form_field_password_label}</label>
+              <input id="f-form-field-password-label" type="password" required minLength={8} placeholder={t.form_field_password_placeholder} value={password} onChange={(e) => setPassword(e.target.value)} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.form_field_confirm_label}</label>
-              <input type="password" required minLength={8} value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value); if (confirmError) setConfirmError('') }} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
+              <label htmlFor="f-form-field-confirm-label" style={labelStyle}>{t.form_field_confirm_label}</label>
+              <input id="f-form-field-confirm-label" type="password" required minLength={8} value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value); if (confirmError) setConfirmError('') }} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
               {confirmError && (
                 <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', color: '#e05555' }}>
                   {confirmError}
@@ -266,6 +266,7 @@ export default function RegisterPage({ t, setPage }) {
             </div>
 
             <ConsentCheckbox
+              tone="dark"
               t={t}
               checked={consent}
               onChange={(v) => { setConsent(v); if (v) setConsentError('') }}
@@ -273,6 +274,7 @@ export default function RegisterPage({ t, setPage }) {
               error={consentError}
             />
             <ConsentCheckbox
+              tone="dark"
               t={t}
               label={t.cross_border_consent_label}
               checked={crossBorderConsent}
@@ -321,17 +323,11 @@ export default function RegisterPage({ t, setPage }) {
           </form>
         )}
 
-        <p className="text-center text-sm mt-8" style={{ color: 'rgba(238,233,221,0.4)' }}>
-          Already have an account?{' '}
-          <span
-            onClick={() => setPage?.('login')}
-            className="underline underline-offset-4 transition-colors cursor-pointer"
-            style={{ color: 'rgba(238,233,221,0.7)' }}
-            onMouseEnter={(e) => { e.target.style.color = 'var(--on-ink)' }}
-            onMouseLeave={(e) => { e.target.style.color = 'rgba(238,233,221,0.7)' }}
-          >
-            Sign in →
-          </span>
+        <p className="text-center text-sm mt-8" style={{ color: 'var(--on-ink-2)' }}>
+          {t.account_signin_prompt}{' '}
+          <button type="button" className="nx-link" style={{ color: 'var(--on-ink)', minHeight: 44 }} onClick={() => setPage?.('login')}>
+            {t.nav_signin} →
+          </button>
         </p>
       </motion.div>
     </div>

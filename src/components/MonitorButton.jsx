@@ -108,6 +108,13 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
     setShowModal(false);
   }
 
+  useEffect(() => {
+    if (!showModal) return;
+    const onKey = (e) => { if (e.key === "Escape") setShowModal(false); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [showModal]);
+
   // If already monitored, show remove button. Ensure isMonitored is checked.
   if (isMonitored) {
     return (
@@ -150,11 +157,16 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 12 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-[#1D2027] border border-[#E8826A]/20 p-10 max-w-[480px] w-full mx-4"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="monitor-dialog-title"
+              className="relative bg-[#1D2027] border border-[#E8826A]/20 p-10 max-w-[480px] w-full mx-4"
             >
               <button
+                type="button"
                 onClick={closeModal}
-                className="absolute top-4 right-4 text-white/40 hover:text-white text-xl"
+                aria-label="Close"
+                className="absolute top-3 right-3 w-11 h-11 flex items-center justify-center text-white/60 hover:text-white text-xl"
               >
                 ×
               </button>
@@ -163,11 +175,11 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
                 MARKET INTELLIGENCE
               </div>
 
-              <h3 className="font-display font-extrabold text-2xl text-[#EEE9DD] mb-4 leading-tight">
+              <h3 id="monitor-dialog-title" className="font-display font-extrabold text-2xl text-[#EEE9DD] mb-4 leading-tight">
                 Initialize Market Monitor?
               </h3>
 
-              <p className="text-white/55 text-sm leading-relaxed mb-8">
+              <p className="text-white/70 text-sm leading-relaxed mb-8">
                 This will add <strong>{industry}</strong> in <strong>{region}</strong> to your Monitor page. 
                 You will receive updates and alerts for this market.
               </p>

@@ -6,7 +6,7 @@ import * as d3 from 'd3'
 const ORIGIN = [121.55, 29.87]
 
 // One arc per region the Market Guide covers, ending at a major port there.
-export const REGIONS = [
+const REGIONS = [
   { key: 'market_us',     port: 'port_us',     at: [-118.27, 33.74], lift: 0.18 },
   { key: 'market_latam',  port: 'port_latam',  at: [-46.33, -23.96], lift: -0.14 },
   { key: 'market_anz',    port: 'port_anz',    at: [151.2, -33.87],  lift: -0.25 },

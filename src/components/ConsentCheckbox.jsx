@@ -17,7 +17,9 @@ export default function ConsentCheckbox({
   onNavigate,
   error,
   required = true,
+  tone = 'light',
 }) {
+  const dark = tone === 'dark'
   const template = label || t.consent_label || ''
   const privacyText = t.consent_privacy_link || 'Privacy Policy'
   const termsText = t.consent_terms_link || 'Terms of Service'
@@ -50,7 +52,7 @@ export default function ConsentCheckbox({
         border: 'none',
         boxShadow: 'none',
         padding: 0,
-        color: 'var(--gold)',
+        color: dark ? 'var(--seal-on-ink)' : 'var(--seal)',
         textDecoration: 'underline',
         cursor: 'pointer',
         fontFamily: 'inherit',
@@ -70,7 +72,7 @@ export default function ConsentCheckbox({
           gap: '10px',
           fontFamily: "'IBM Plex Sans', sans-serif",
           fontSize: '13px',
-          color: 'var(--text-secondary)',
+          color: dark ? 'var(--on-ink-2)' : 'var(--ink-2)',
           lineHeight: 1.55,
           cursor: 'pointer',
         }}
@@ -84,7 +86,7 @@ export default function ConsentCheckbox({
             marginTop: '3px',
             width: '16px',
             height: '16px',
-            accentColor: 'var(--seal)',
+            accentColor: dark ? 'var(--seal-on-ink)' : 'var(--seal)',
             flexShrink: 0,
             cursor: 'pointer',
           }}
@@ -103,7 +105,7 @@ export default function ConsentCheckbox({
           style={{
             fontFamily: "'IBM Plex Mono', monospace",
             fontSize: '11px',
-            color: 'var(--danger)',
+            color: dark ? '#F08A7A' : 'var(--danger)',
             paddingLeft: '26px',
           }}
         >

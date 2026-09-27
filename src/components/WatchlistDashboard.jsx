@@ -7,31 +7,34 @@ export default function WatchlistDashboard({ userId, t = {}, setPage }) {
   const [markets, setMarkets] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  async function fetchMonitoredMarkets() {
-    if (!userId) {
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from("monitored_markets")
-        .select("id, category, region, created_at")
-        .eq("user_id", userId)
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-      setMarkets(data || []);
-    } catch (err) {
-      console.error("Failed to fetch monitored markets:", err);
-      toast.error("Could not load your monitored markets");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
+    let cancelled = false;
+
+    async function fetchMonitoredMarkets() {
+      if (!userId) {
+        setLoading(false);
+        return;
+      }
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from("monitored_markets")
+          .select("id, category, region, created_at")
+          .eq("user_id", userId)
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+        if (!cancelled) setMarkets(data || []);
+      } catch (err) {
+        console.error("Failed to fetch monitored markets:", err);
+        toast.error("Could not load your monitored markets");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
     fetchMonitoredMarkets();
+    return () => { cancelled = true; };
   }, [userId]);
 
   async function handleRemove(id) {
@@ -104,7 +107,27 @@ export default function WatchlistDashboard({ userId, t = {}, setPage }) {
           </button>
         </header>
 
-        {markets.length === 0 ? (
+        {!userId ? (
+          <div
+            style={{
+              marginTop: 40,
+              padding: "56px 32px",
+              border: "1px dashed var(--rule-strong)",
+              borderRadius: 4,
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 16,
+            }}
+          >
+            <p style={{ fontSize: 18, fontWeight: 600 }}>{t.mg_blur_body}</p>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+              <button className="nx-btn nx-btn--ink" onClick={() => setPage?.("login")}>{t.nav_signin}</button>
+              <button className="nx-btn nx-btn--line" onClick={() => setPage?.("register")}>{t.mg_blur_signup}</button>
+            </div>
+          </div>
+        ) : markets.length === 0 ? (
           <div
             style={{
               marginTop: 40,

@@ -1,10 +1,8 @@
 export const translations = {
   EN: {
     /* ============== NAV ============== */
-    nav_suppliers: 'For suppliers',
     nav_buyers: 'For buyers',
     nav_compliance: 'Compliance',
-    nav_about: 'About',
     nav_market_guide: 'Market Guide',
     nav_signin: 'Sign in',
     nav_monitor: 'Monitor',
@@ -14,18 +12,14 @@ export const translations = {
     prelaunch_text: 'Nexallure is in pre-launch. Compliance framework, audit programs, and buyer network are in progress.',
 
     /* ============== HERO ============== */
-    hero_eyebrow: 'AI export tools for manufacturers',
     hero_h1: 'Export Smarter. Research Faster. Win More Deals.',
     hero_sub: "Nexallure gives Chinese manufacturers AI tools to research export markets, track sample pipelines, and quote with confidence. Built for daily use, not shelf decoration.",
     hero_cta_secondary: "See What's Coming",
-    home_mg_eyebrow: 'Market intelligence',
     home_mg_h1: 'Find your best export markets in seconds',
-    home_mg_sub: 'Select your product and instantly see where buyers are, which platforms they use, and how to reach them.',
     home_mg_cta: 'Open Market Guide',
     mg_hero_teaser: "Don't know where to find foreign buyers? Select your product category and we'll show you exactly where buyers are, which platforms they use, and how to reach them.",
 
     /* ============== VALUE PROP ============== */
-    vp_eyebrow: 'Why Nexallure',
     vp_h2: 'The Export Infrastructure Western Buyers Require',
     vp_card2_title: 'Audit Trail',
     vp_card2_body: 'Suppliers will undergo third-party ISO factory audits before platform onboarding, ensuring production standards meet Western procurement requirements.',
@@ -44,11 +38,8 @@ export const translations = {
     about_tool_sample: 'Sample & After-Sales Tracker',
     about_tool_quoting: 'Export Quoting Engine',
     about_status_live: 'Live',
-    about_status_june: 'June 2026',
-    about_status_july: 'July 2026',
 
     /* ============== SUPPLIER FORM ============== */
-    form_eyebrow: 'Create your account',
     form_h2: 'Create Your Manufacturer Account',
     form_body: "Sign up to access Nexallure's export tools — starting with the Market Intelligence Guide. More tools coming soon.",
     form_trust1: 'No listing fee during pre-launch',
@@ -66,7 +57,6 @@ export const translations = {
     form_field6_label: 'Annual export volume',
     form_field6_placeholder: 'Select volume...',
     form_field7_label: 'Primary export contact email',
-    form_field7_placeholder: 'Procurement or export manager email',
     form_field_password_label: 'Create your account password',
     form_field_password_placeholder: 'Min. 8 characters',
     form_field_confirm_label: 'Confirm password',
@@ -120,18 +110,8 @@ export const translations = {
     market_other: 'Other',
 
     /* ============== COMPLIANCE SECTION ============== */
-    comp_eyebrow: 'Regulatory roadmap',
     comp_h2: 'Designed Around Cross-Border Compliance',
-    comp_card1_title: 'International Hosting Strategy',
-    comp_card1_body: 'Nexallure is currently designed for international pre-launch hosting. If a mainland-China deployment is pursued, the site will move to a qualified mainland provider and will not launch there until required regulatory prerequisites are complete; no mainland-hosting registration is claimed for the current deployment.',
-    comp_card1_data: 'No mainland registration claimed',
-    comp_card3_title: 'PIPL Cross-Border Compliance',
-    comp_card3_body: "Supplier and buyer data handling is being designed to meet China's Personal Information Protection Law requirements for cross-border data transfers, with explicit consent collected at every touchpoint.",
     comp_card3_data: 'PIPL-aligned · GDPR-aligned',
-
-    badge_iso: 'ISO 9001 — target standard',
-    badge_hosting: 'International hosting — no mainland registration claimed',
-    badge_pipl: 'PIPL consent framework — active',
 
     /* ============== FOOTER ============== */
     footer_tagline: 'Export Infrastructure for Chinese Manufacturers. Currently pre-launch.',
@@ -140,22 +120,18 @@ export const translations = {
     footer_col4_title: 'Pre-launch status',
     footer_link_privacy: 'Privacy Policy',
     footer_link_terms: 'Terms of Service',
-    footer_link_data: 'Data Processing Notice',
     footer_status_hosting_label: 'Hosting strategy',
     footer_status_mainland_label: 'Mainland-China launch',
     footer_status_audit_label: 'Audit program',
     footer_status_data_label: 'Data handling',
-    footer_status_pending: 'Pre-launch',
     footer_status_hosting: 'International pre-launch',
     footer_status_not_active: 'Not active / not claimed',
     footer_status_development: 'In development',
     footer_status_consent: 'Explicit consent required',
     footer_copyright: '© 2026 Nexallure (pre-launch). All rights reserved.',
-    footer_designed: 'Designed to Institutional Standard',
     footer_disclaimer: 'Nexallure is in pre-launch. References to verification, audits, ISO certifications, and compliance programs describe target standards and work in progress; they do not represent completed certifications at this time.',
 
     /* ============== BUYERS WAITLIST PAGE ============== */
-    buyers_eyebrow: 'Institutional buyer access — waitlist',
     buyers_h1: 'Join the Nexallure Buyer Waitlist',
     buyers_body: 'Nexallure is building a network of Chinese manufacturers aligned with Western procurement standards. Join the waitlist to be notified when buyer onboarding opens and to receive priority access.',
     buyers_badge2: 'ISO 9001 audit program — in development',
@@ -175,6 +151,7 @@ export const translations = {
     buyers_role_other: 'Other',
     buyers_label_categories: 'Categories of interest',
     buyers_label_categories_placeholder: 'Select categories...',
+    buyers_categories_summary: 'selected',
     buyers_label_notes: 'Sourcing needs (optional)',
     buyers_label_notes_placeholder: 'Briefly describe what you source from China, target volumes, or timelines.',
     buyers_submit: 'Join buyer waitlist',
@@ -235,8 +212,6 @@ export const translations = {
     /* ============== LOGIN PAGE ============== */
     login_h1: 'Sign In to Nexallure',
     login_loading: 'Signing in…',
-    login_submit: 'Sign in',
-    login_apply_link: "Don't have an account? Apply as a supplier →",
     login_tab_magic: 'Magic link',
     login_tab_password: 'Password',
     login_magic_label: 'Your email',
@@ -254,7 +229,6 @@ export const translations = {
     mg_label_market: 'Target region',
     mg_label_market_any: 'Any / Show all major markets',
     mg_cta: 'Show me my buyers',
-    mg_generating: 'Researching buyer landscape…',
     mg_section_where: 'Where buyers are',
     mg_section_platforms: 'Platforms they use',
     mg_section_what: 'What they look for',
@@ -263,15 +237,7 @@ export const translations = {
     mg_disclaimer: 'This guide is generated by AI based on general market knowledge.\n                  Verify specifics before committing to a strategy.',
     mg_try_another: 'Try another category',
     mg_error: 'Could not load market data. Please try again.',
-    mg_copy_link: 'Copy link',
-    mg_copied: 'Copied!',
-
-    /* ============== MARKET GUIDE AUTH GATE ============== */
-    mg_auth_title: 'Unlock the Market Guide',
-    mg_auth_body: 'This tool is available to registered Nexallure suppliers. Apply for early access or sign in to your account.',
-    mg_auth_signin: 'Sign in',
-    mg_auth_apply: 'Apply as a supplier instead →',
-
+    mg_error_select: 'Please select a product category first.',
     /* ============== MARKET GUIDE BLUR GATE ============== */
     mg_blur_title: 'Your report is ready',
     mg_blur_body: 'Sign in or create a free account to view your results.',
@@ -315,10 +281,8 @@ export const translations = {
   },
 
   ZH: {
-    nav_suppliers: '供应商入驻',
     nav_buyers: '买家入口',
     nav_compliance: '合规进度',
-    nav_about: '关于我们',
     nav_market_guide: '买家指南',
     nav_signin: '登录',
     nav_monitor: '市场监控',
@@ -326,17 +290,13 @@ export const translations = {
     prelaunch_badge: '预发布',
     prelaunch_text: 'Nexallure 当前处于预发布阶段。合规框架、审计计划及买家网络均在筹备中。',
 
-    hero_eyebrow: '面向制造商的 AI 出口工具',
     hero_h1: '更聪明地出口，更高效地调研，赢得更多订单。',
     hero_sub: 'Nexallure 为中国制造商提供 AI 工具，用于调研出口市场、追踪样品管线、自信报价。为日常使用而设计，不是放在架子上当摆设。',
     hero_cta_secondary: '看看即将上线',
-    home_mg_eyebrow: '市场情报',
     home_mg_h1: '几秒内找到您最佳的出口市场',
-    home_mg_sub: '选择产品类别，即刻查看买家分布、常用平台及触达方式。',
     home_mg_cta: '打开买家指南',
     mg_hero_teaser: '不知道去哪里找海外买家？选择你的产品类别，我们将告诉你买家在哪里、使用哪些平台，以及如何联系他们。',
 
-    vp_eyebrow: '为什么选择 NEXALLURE',
     vp_h2: '西方买家所需的出口基础设施',
     vp_card2_title: '审计追踪',
     vp_card2_body: '所有供应商在入驻平台前将接受第三方 ISO 工厂审计，确保生产标准符合西方采购要求。',
@@ -354,10 +314,7 @@ export const translations = {
     about_tool_sample: '样品与售后追踪器',
     about_tool_quoting: '出口报价引擎',
     about_status_live: '已上线',
-    about_status_june: '2026 年 6 月',
-    about_status_july: '2026 年 7 月',
 
-    form_eyebrow: '创建账户',
     form_h2: '创建您的制造商账户',
     form_body: '注册即可使用 Nexallure 的出口工具——从市场情报指南开始。更多工具即将上线。',
     form_trust1: '预发布期间免登记费',
@@ -375,7 +332,6 @@ export const translations = {
     form_field6_label: '年出口额',
     form_field6_placeholder: '请选择年出口额...',
     form_field7_label: '出口业务主要联系邮箱',
-    form_field7_placeholder: '采购或出口负责人邮箱',
     form_field_password_label: '创建账户密码',
     form_field_password_placeholder: '至少 8 个字符',
     form_field_confirm_label: '确认密码',
@@ -426,18 +382,8 @@ export const translations = {
     market_anz: '澳新',
     market_other: '其他',
 
-    comp_eyebrow: '监管合规路线图',
     comp_h2: '基于跨境合规要求设计',
-    comp_card1_title: '国际托管策略',
-    comp_card1_body: 'Nexallure 当前按国际预发布托管模式设计。如未来选择在中国大陆部署，网站将迁移至符合要求的中国大陆服务商，并在所需监管前置条件完成前不会上线；当前部署不主张任何大陆托管登记状态。',
-    comp_card1_data: '当前不主张大陆登记状态',
-    comp_card3_title: '个人信息保护法跨境合规',
-    comp_card3_body: '供应商及买家的数据处理流程正按照中国《个人信息保护法》关于跨境数据传输的要求进行设计，将在每一处采集节点获取明示同意。',
     comp_card3_data: '符合 PIPL · 对标 GDPR',
-
-    badge_iso: 'ISO 9001 — 目标标准',
-    badge_hosting: '国际托管 — 不主张大陆登记状态',
-    badge_pipl: 'PIPL 同意框架 — 已启用',
 
     footer_tagline: '面向中国制造商的出口基础设施平台。当前处于预发布阶段。',
     footer_col2_title: '平台',
@@ -445,21 +391,17 @@ export const translations = {
     footer_col4_title: '预发布状态',
     footer_link_privacy: '隐私政策',
     footer_link_terms: '服务条款',
-    footer_link_data: '数据处理说明',
     footer_status_hosting_label: '托管策略',
     footer_status_mainland_label: '中国大陆上线',
     footer_status_audit_label: '审计计划',
     footer_status_data_label: '数据处理',
-    footer_status_pending: '预发布',
     footer_status_hosting: '国际预发布托管',
     footer_status_not_active: '未启用 / 不主张',
     footer_status_development: '开发中',
     footer_status_consent: '需明示同意',
     footer_copyright: '© 2026 Nexallure（预发布）。保留所有权利。',
-    footer_designed: '按机构级标准设计',
     footer_disclaimer: 'Nexallure 当前处于预发布阶段。本站涉及核验、审计、ISO 认证及合规计划的表述均为目标标准或筹备中状态，不代表已完成相关认证。',
 
-    buyers_eyebrow: '机构买家通道 — 候补名单',
     buyers_h1: '加入 Nexallure 买家候补名单',
     buyers_body: 'Nexallure 正在搭建符合西方采购标准的中国制造商网络。加入候补名单，第一时间获取买家入驻开放通知并享有优先权。',
     buyers_badge2: 'ISO 9001 审计计划 — 开发中',
@@ -479,6 +421,7 @@ export const translations = {
     buyers_role_other: '其他',
     buyers_label_categories: '关注的品类',
     buyers_label_categories_placeholder: '请选择品类...',
+    buyers_categories_summary: '个品类已选',
     buyers_label_notes: '采购需求（选填）',
     buyers_label_notes_placeholder: '请简要说明您在中国采购的品类、目标量级或时间安排。',
     buyers_submit: '加入买家候补名单',
@@ -536,8 +479,6 @@ export const translations = {
     /* ============== LOGIN PAGE ============== */
     login_h1: '登录 Nexallure',
     login_loading: '登录中…',
-    login_submit: '登录',
-    login_apply_link: '还没有账户？申请成为供应商 →',
     login_tab_magic: '魔法链接',
     login_tab_password: '密码',
     login_magic_label: '您的邮箱',
@@ -555,7 +496,6 @@ export const translations = {
     mg_label_market: '目标地区',
     mg_label_market_any: '任意 / 显示所有主要市场',
     mg_cta: '查找买家',
-    mg_generating: '正在分析买家市场…',
     mg_section_where: '买家在哪里',
     mg_section_platforms: '他们使用的平台',
     mg_section_what: '他们看重什么',
@@ -564,15 +504,7 @@ export const translations = {
     mg_disclaimer: '本指南由AI根据通用市场知识生成，请在制定策略前核实具体信息。',
     mg_try_another: '换一个类别',
     mg_error: '无法加载市场数据，请稍后重试。',
-    mg_copy_link: '复制链接',
-    mg_copied: '已复制',
-
-    /* ============== MARKET GUIDE AUTH GATE ============== */
-    mg_auth_title: '解锁买家指南',
-    mg_auth_body: '此工具仅对已注册的 Nexallure 供应商开放。申请早期访问权限或登录您的账户。',
-    mg_auth_signin: '登录',
-    mg_auth_apply: '申请成为供应商 →',
-
+    mg_error_select: '请先选择产品类别。',
     /* ============== MARKET GUIDE BLUR GATE ============== */
     mg_blur_title: '您的报告已生成',
     mg_blur_body: '登录或创建免费账户以查看结果。',
@@ -616,10 +548,8 @@ export const translations = {
   },
 
   TW: {
-    nav_suppliers: '供應商入駐',
     nav_buyers: '買家入口',
     nav_compliance: '合規進度',
-    nav_about: '關於我們',
     nav_market_guide: '買家指南',
     nav_signin: '登入',
     nav_monitor: '市場監控',
@@ -627,17 +557,13 @@ export const translations = {
     prelaunch_badge: '預發布',
     prelaunch_text: 'Nexallure 目前處於預發布階段。合規框架、稽核計畫及買家網絡均在籌備中。',
 
-    hero_eyebrow: '面向製造商的 AI 出口工具',
     hero_h1: '更聰明地出口，更高效地調研，贏得更多訂單。',
     hero_sub: 'Nexallure 為中國製造商提供 AI 工具，用於調研出口市場、追蹤樣品管線、自信報價。為日常使用而設計，不是放在架上當擺設。',
     hero_cta_secondary: '看看即將上線',
-    home_mg_eyebrow: '市場情報',
     home_mg_h1: '幾秒內找到您最佳的出口市場',
-    home_mg_sub: '選擇產品類別，即刻查看買家分佈、常用平台及觸達方式。',
     home_mg_cta: '開啟買家指南',
     mg_hero_teaser: '不知道去哪裡找海外買家？選擇你的產品類別，我們將告訴你買家在哪裡、使用哪些平台，以及如何聯繫他們。',
 
-    vp_eyebrow: '為什麼選擇 NEXALLURE',
     vp_h2: '西方買家所需的出口基礎設施',
     vp_card2_title: '稽核追蹤',
     vp_card2_body: '所有供應商在入駐平台前將接受第三方 ISO 工廠稽核，確保生產標準符合西方採購要求。',
@@ -655,10 +581,7 @@ export const translations = {
     about_tool_sample: '樣品與售後追蹤器',
     about_tool_quoting: '出口報價引擎',
     about_status_live: '已上線',
-    about_status_june: '2026 年 6 月',
-    about_status_july: '2026 年 7 月',
 
-    form_eyebrow: '建立帳戶',
     form_h2: '建立您的製造商帳戶',
     form_body: '註冊即可使用 Nexallure 的出口工具——從市場情報指南開始。更多工具即將上線。',
     form_trust1: '預發布期間免登記費',
@@ -676,7 +599,6 @@ export const translations = {
     form_field6_label: '年出口額',
     form_field6_placeholder: '請選擇年出口額...',
     form_field7_label: '出口業務主要聯絡信箱',
-    form_field7_placeholder: '採購或出口負責人信箱',
     form_field_password_label: '創建帳戶密碼',
     form_field_password_placeholder: '至少 8 個字元',
     form_field_confirm_label: '確認密碼',
@@ -727,18 +649,8 @@ export const translations = {
     market_anz: '澳紐',
     market_other: '其他',
 
-    comp_eyebrow: '監管合規路線圖',
     comp_h2: '依託跨境合規要求設計',
-    comp_card1_title: '國際託管策略',
-    comp_card1_body: 'Nexallure 目前按國際預發布託管模式設計。如未來選擇在中國大陸部署，網站將遷移至符合要求的中國大陸服務商，並在所需監管前置條件完成前不會上線；目前部署不主張任何大陸託管登記狀態。',
-    comp_card1_data: '目前不主張大陸登記狀態',
-    comp_card3_title: '個人資訊保護法跨境合規',
-    comp_card3_body: '供應商及買家的資料處理流程正依照中國《個人資訊保護法》關於跨境資料傳輸的要求進行設計，將在每一處採集節點取得明示同意。',
     comp_card3_data: '符合 PIPL · 對標 GDPR',
-
-    badge_iso: 'ISO 9001 — 目標標準',
-    badge_hosting: '國際託管 — 不主張大陸登記狀態',
-    badge_pipl: 'PIPL 同意框架 — 已啟用',
 
     footer_tagline: '面向中國製造商的出口基礎設施平台。目前處於預發布階段。',
     footer_col2_title: '平台',
@@ -746,21 +658,17 @@ export const translations = {
     footer_col4_title: '預發布狀態',
     footer_link_privacy: '隱私政策',
     footer_link_terms: '服務條款',
-    footer_link_data: '資料處理說明',
     footer_status_hosting_label: '託管策略',
     footer_status_mainland_label: '中國大陸上線',
     footer_status_audit_label: '稽核計畫',
     footer_status_data_label: '資料處理',
-    footer_status_pending: '預發布',
     footer_status_hosting: '國際預發布託管',
     footer_status_not_active: '未啟用 / 不主張',
     footer_status_development: '開發中',
     footer_status_consent: '需明示同意',
     footer_copyright: '© 2026 Nexallure（預發布）。保留所有權利。',
-    footer_designed: '依機構級標準設計',
     footer_disclaimer: 'Nexallure 目前處於預發布階段。本站涉及核驗、稽核、ISO 認證及合規計畫的表述均為目標標準或籌備中狀態，不代表已完成相關認證。',
 
-    buyers_eyebrow: '機構買家通道 — 候補名單',
     buyers_h1: '加入 Nexallure 買家候補名單',
     buyers_body: 'Nexallure 正在建立符合西方採購標準的中國製造商網絡。加入候補名單，第一時間取得買家入駐開放通知並享有優先權。',
     buyers_badge2: 'ISO 9001 稽核計畫 — 開發中',
@@ -780,6 +688,7 @@ export const translations = {
     buyers_role_other: '其他',
     buyers_label_categories: '關注的品類',
     buyers_label_categories_placeholder: '請選擇品類...',
+    buyers_categories_summary: '個品類已選',
     buyers_label_notes: '採購需求（選填）',
     buyers_label_notes_placeholder: '請簡要說明您在中國採購的品類、目標量級或時程安排。',
     buyers_submit: '加入買家候補名單',
@@ -837,8 +746,6 @@ export const translations = {
     /* ============== LOGIN PAGE ============== */
     login_h1: '登入 Nexallure',
     login_loading: '登入中…',
-    login_submit: '登入',
-    login_apply_link: '還沒有帳戶？申請成為供應商 →',
     login_tab_magic: '魔法連結',
     login_tab_password: '密碼',
     login_magic_label: '您的郵箱',
@@ -856,7 +763,6 @@ export const translations = {
     mg_label_market: '目標地區',
     mg_label_market_any: '任意 / 顯示所有主要市場',
     mg_cta: '查找買家',
-    mg_generating: '正在分析買家市場…',
     mg_section_where: '買家在哪裡',
     mg_section_platforms: '他們使用的平台',
     mg_section_what: '他們看重什麼',
@@ -865,15 +771,7 @@ export const translations = {
     mg_disclaimer: '本指南由AI根據通用市場知識生成，請在制定策略前核實具體信息。',
     mg_try_another: '換一個類別',
     mg_error: '無法載入市場數據，請稍後重試。',
-    mg_copy_link: '複製連結',
-    mg_copied: '已複製',
-
-    /* ============== MARKET GUIDE AUTH GATE ============== */
-    mg_auth_title: '解鎖買家指南',
-    mg_auth_body: '此工具僅對已註冊的 Nexallure 供應商開放。申請早期訪問權限或登入您的帳戶。',
-    mg_auth_signin: '登入',
-    mg_auth_apply: '申請成為供應商 →',
-
+    mg_error_select: '請先選擇產品類別。',
     /* ============== MARKET GUIDE BLUR GATE ============== */
     mg_blur_title: '您的報告已生成',
     mg_blur_body: '登入或建立免費帳戶以查看結果。',

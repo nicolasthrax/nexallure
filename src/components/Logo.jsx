@@ -1,10 +1,10 @@
 // Nexallure's official logo: a gold disc with a pale point at its centre,
 // and the NEXALLURE wordmark in widely spaced Roman capitals.
 // Colours are sampled from the official artwork.
-export const LOGO_GOLD = '#B7A06A'
-export const LOGO_POINT = '#FCE5AF'
+const LOGO_GOLD = '#B7A06A'
+const LOGO_POINT = '#FCE5AF'
 
-export function LogoMark({ size = 28 }) {
+function LogoMark({ size = 28 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true" style={{ flexShrink: 0, display: 'block' }}>
       <circle cx="32" cy="32" r="32" fill={LOGO_GOLD} />

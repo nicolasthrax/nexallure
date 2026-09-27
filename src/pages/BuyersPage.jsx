@@ -3,6 +3,13 @@ import { motion } from 'framer-motion'
 import MultiSelect from '../components/MultiSelect'
 import ConsentCheckbox from '../components/ConsentCheckbox'
 import { submitForm } from '../lib/submitForm'
+import { translations } from '../i18n'
+
+const CATEGORY_KEYS = [
+  'industry_automotive', 'industry_electronics', 'industry_machinery',
+  'industry_textiles', 'industry_chemicals', 'industry_pharma',
+  'industry_food', 'industry_logistics', 'industry_other',
+]
 
 export default function BuyersPage({ setPage, t }) {
   const [name, setName] = useState('')
@@ -217,8 +224,8 @@ export default function BuyersPage({ setPage, t }) {
                     style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}
                   >
                     <div>
-                      <label style={labelStyle}>{t.buyers_label_name}</label>
-                      <input
+                      <label htmlFor="f-buyers-label-name" style={labelStyle}>{t.buyers_label_name}</label>
+                      <input id="f-buyers-label-name"
                         type="text"
                         required
                         value={name}
@@ -228,8 +235,8 @@ export default function BuyersPage({ setPage, t }) {
                       />
                     </div>
                     <div>
-                      <label style={labelStyle}>{t.buyers_label_email}</label>
-                      <input
+                      <label htmlFor="f-buyers-label-email" style={labelStyle}>{t.buyers_label_email}</label>
+                      <input id="f-buyers-label-email"
                         type="email"
                         required
                         value={email}
@@ -240,8 +247,8 @@ export default function BuyersPage({ setPage, t }) {
                       />
                     </div>
                     <div>
-                      <label style={labelStyle}>{t.buyers_label_company}</label>
-                      <input
+                      <label htmlFor="f-buyers-label-company" style={labelStyle}>{t.buyers_label_company}</label>
+                      <input id="f-buyers-label-company"
                         type="text"
                         required
                         value={company}
@@ -251,8 +258,8 @@ export default function BuyersPage({ setPage, t }) {
                       />
                     </div>
                     <div>
-                      <label style={labelStyle}>{t.buyers_label_role}</label>
-                      <select
+                      <label htmlFor="f-buyers-label-role" style={labelStyle}>{t.buyers_label_role}</label>
+                      <select id="f-buyers-label-role"
                         required
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
@@ -267,12 +274,21 @@ export default function BuyersPage({ setPage, t }) {
                       </select>
                     </div>
                     <div>
-                      <label style={labelStyle}>{t.buyers_label_categories}</label>
-                      <MultiSelect selected={categories} onChange={setCategories} t={t} />
+                      <label htmlFor="f-buyers-label-categories" style={labelStyle}>{t.buyers_label_categories}</label>
+                      <MultiSelect
+                        id="f-buyers-label-categories"
+                        selected={categories}
+                        onChange={setCategories}
+                        t={t}
+                        placeholder={t.buyers_label_categories_placeholder}
+                        summary={t.buyers_categories_summary}
+                        // Submitted values stay in English so the team can read every submission.
+                        options={CATEGORY_KEYS.map((k) => ({ code: translations.EN[k], label: t[k] }))}
+                      />
                     </div>
                     <div>
-                      <label style={labelStyle}>{t.buyers_label_notes}</label>
-                      <textarea
+                      <label htmlFor="f-buyers-label-notes" style={labelStyle}>{t.buyers_label_notes}</label>
+                      <textarea id="f-buyers-label-notes"
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
                         placeholder={t.buyers_label_notes_placeholder}

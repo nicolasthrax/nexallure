@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/Auth'
 import MarketLoader from '../components/MarketLoader'
@@ -311,15 +311,21 @@ export default function MarketGuidePage({ setPage, t }) {
       
       // Handle HTML non-ok failures safely without crashing parsing routines
       if (!response.ok) {
-        const text = await response.text();
+        // Surface the server's own message when it sent JSON; the old version
+        // threw inside its own try block and always fell back to the generic text.
+        let serverMsg = null
         try {
-          const errJson = JSON.parse(text);
-          throw new Error(errJson.error || errJson.detail);
+          const errJson = JSON.parse(await response.text())
+          serverMsg = errJson.detail || errJson.error || null
         } catch {
-          throw new Error(response.status === 401 
-            ? 'Authentication required. Please sign in to generate market guides.' 
-            : `Server error (Status ${response.status}). Please try again later.`);
+          // Non-JSON body (e.g. an HTML error page): keep the generic message.
         }
+        if (response.status === 401) {
+          throw new Error('Authentication required. Please sign in to generate market guides.')
+        }
+        throw new Error(serverMsg
+          ? `${serverMsg} (Status ${response.status})`
+          : `Server error (Status ${response.status}). Please try again later.`)
       }
 
       const parsed = await response.json()
@@ -486,8 +492,9 @@ export default function MarketGuidePage({ setPage, t }) {
           margin-top: 2px;
           letter-spacing: 0.05em;
         }
-        .sev-high { background: rgba(220,50,50,0.15); color: #e05555; border: 1px solid rgba(220,50,50,0.3); }
-        .sev-med { background: rgba(232,130,106,0.12); color: var(--seal-on-ink); border: 1px solid rgba(232,130,106,0.25); }
+        .sev-high { background: var(--seal-on-ink); color: var(--ink); border: 1px solid var(--seal-on-ink); }
+        .sev-med { background: transparent; color: var(--seal-on-ink); border: 1px solid var(--seal-on-ink); }
+        .sev-low { background: transparent; color: var(--on-ink-2); border: 1px dashed rgba(238,233,221,0.35); }
         @media (max-width: 768px) {
           .mg-container { padding: 80px 20px 60px; }
           .mg-form-grid, .mg-top-grid, .mg-mid-grid { grid-template-columns: 1fr; }
@@ -516,33 +523,33 @@ export default function MarketGuidePage({ setPage, t }) {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ maxWidth: '800px', margin: '0 auto' }} className="no-print">
               <div className="mg-form-grid">
                 <div>
-                  <label style={{ display: 'block', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', color: 'var(--text-light)', marginBottom: '8px', letterSpacing: '0.06em' }}>
+                  <label htmlFor="mg-industry" style={{ display: 'block', fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', color: 'var(--text-light)', marginBottom: '8px' }}>
                     {t?.mg_label_industry}
                   </label>
-                  <select value={industry} onChange={e => setIndustry(e.target.value)} style={dropdownStyle} disabled={loading}>
+                  <select id="mg-industry" value={industry} onChange={e => setIndustry(e.target.value)} style={dropdownStyle} disabled={loading}>
                     <option value="" disabled>-- {t?.mg_label_industry} --</option>
                     {industryKeys.map(k => <option key={k} value={k}>{t?.[k]}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', color: 'var(--text-light)', marginBottom: '8px', letterSpacing: '0.06em' }}>
+                  <label htmlFor="mg-market" style={{ display: 'block', fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', color: 'var(--text-light)', marginBottom: '8px' }}>
                     {t?.mg_label_market}
                   </label>
-                  <select value={market} onChange={e => setMarket(e.target.value)} style={dropdownStyle} disabled={loading}>
+                  <select id="mg-market" value={market} onChange={e => setMarket(e.target.value)} style={dropdownStyle} disabled={loading}>
                     <option value="any">{t?.mg_label_market_any}</option>
                     {marketKeys.map(k => <option key={k} value={k}>{t?.[k]}</option>)}
                   </select>
                 </div>
               </div>
               <div style={{ textAlign: 'center' }}>
-                {error && <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', color: 'var(--signal-gold)', marginBottom: '16px' }}>{error}</div>}
+                {error && <div role="alert" style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', color: 'var(--signal-gold)', marginBottom: '16px' }}>{error}</div>}
                 {loading && (
                   <AnimatePresence>
                     <MarketLoader text="Analyzing export markets..." />
                   </AnimatePresence>
                 )}
                 {!loading && (
-                  <button onClick={handleFetch} style={{ background: industry ? 'var(--signal-gold)' : 'rgba(232,130,106,0.3)', color: 'var(--midnight-navy)', border: '1px solid var(--gold-shadow)', padding: '14px 28px', fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '14px', fontWeight: 600, cursor: 'pointer', letterSpacing: '0.04em', opacity: industry ? 1 : 0.6 }}>
+                  <button onClick={handleFetch} style={{ background: 'var(--signal-gold)', color: 'var(--midnight-navy)', border: '1px solid var(--gold-shadow)', borderRadius: '4px', minHeight: '48px', padding: '0 28px', fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>
                     {t?.mg_cta}
                   </button>
                 )}
@@ -577,7 +584,7 @@ export default function MarketGuidePage({ setPage, t }) {
                         <button onClick={handlePrint} style={{ background: 'transparent', color: 'var(--seal-on-ink)', border: '1px solid rgba(232,130,106,0.3)', padding: '9px 18px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', cursor: 'pointer', letterSpacing: '0.05em' }}>
                           ↓ PDF
                         </button>
-                        <button onClick={() => setResult(null)} style={{ background: 'transparent', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.1)', padding: '9px 18px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', cursor: 'pointer', letterSpacing: '0.05em' }}>
+                        <button onClick={() => setResult(null)} style={{ background: 'transparent', color: 'var(--on-ink-2)', border: '1px solid rgba(255,255,255,0.2)', padding: '9px 18px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', cursor: 'pointer', letterSpacing: '0.05em' }}>
                           ← {t?.mg_try_another}
                         </button>
                       </div>
@@ -684,7 +691,7 @@ export default function MarketGuidePage({ setPage, t }) {
   const sev = isObj ? item.severity : (i < 2 ? 'HIGH' : 'MED')
   return (
     <div key={i} className="mistake-row">
-      <span className={`mistake-sev ${sev === 'HIGH' ? 'sev-high' : 'sev-med'}`}>{sev}</span>
+      <span className={`mistake-sev ${sev === 'HIGH' ? 'sev-high' : sev === 'LOW' ? 'sev-low' : 'sev-med'}`}>{sev}</span>
       <span style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '13px', color: 'var(--warm-white)', lineHeight: 1.5 }}>{text}</span>
     </div>
   )

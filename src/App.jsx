@@ -48,6 +48,21 @@ function AppInner() {
     window.scrollTo(0, 0)
   }, [location])
 
+  // Give every route its own document title (it was the same on every page).
+  useEffect(() => {
+    const titles = {
+      '/buyers': t.buyers_h1,
+      '/market-guide': t.nav_market_guide,
+      '/monitor': t.nav_monitor,
+      '/privacy': t.privacy_title,
+      '/terms': t.terms_title,
+      '/login': t.nav_signin,
+      '/register': t.mg_blur_signup,
+    }
+    const page = titles[location]
+    document.title = page ? `${page} · Nexallure` : `Nexallure · ${t.hero_h1}`
+  }, [location, t.buyers_h1, t.nav_market_guide, t.nav_monitor, t.privacy_title, t.terms_title, t.nav_signin, t.mg_blur_signup, t.hero_h1])
+
   useEffect(() => {
     const map = { EN: 'en', ZH: 'zh-CN', TW: 'zh-TW' }
     document.documentElement.lang = map[lang] || 'zh-CN'

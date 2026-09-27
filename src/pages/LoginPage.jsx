@@ -202,8 +202,8 @@ export default function LoginPage({ t, setPage }) {
         {tab === 'magic' && (
           <form onSubmit={handleMagicSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.login_magic_label}</label>
-              <input
+              <label htmlFor="f-login-magic-label" style={labelStyle}>{t.login_magic_label}</label>
+              <input id="f-login-magic-label"
                 type="email"
                 value={magicEmail}
                 onChange={(e) => setMagicEmail(e.target.value)}
@@ -240,8 +240,8 @@ export default function LoginPage({ t, setPage }) {
         {tab === 'password' && (
           <form onSubmit={handlePasswordSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.login_magic_label}</label>
-              <input
+              <label htmlFor="f-login-magic-label-2" style={labelStyle}>{t.login_magic_label}</label>
+              <input id="f-login-magic-label-2"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -252,8 +252,8 @@ export default function LoginPage({ t, setPage }) {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={labelStyle}>{t.login_tab_password}</label>
-              <input
+              <label htmlFor="f-login-tab-password" style={labelStyle}>{t.login_tab_password}</label>
+              <input id="f-login-tab-password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
