@@ -28,16 +28,16 @@ function RadarChart({ data, size = 260 }) {
       {rings.map(ring => (
         <polygon key={ring}
           points = {Array.from({ length: n }, (_, i) => pt(i, ring)).map(([x, y]) => `${x},${y}`).join(' ')}
-          fill="none" stroke="rgba(201,178,122,0.12)" strokeWidth="1"
+          fill="none" stroke="rgba(31,79,191,0.14)" strokeWidth="1"
         />
       ))}
       {/* Axes */}
       {labels.map((_, i) => {
         const [x, y] = pt(i, 100)
-        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="rgba(201,178,122,0.15)" strokeWidth="1" />
+        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="rgba(31,79,191,0.18)" strokeWidth="1" />
       })}
       {/* Data polygon */}
-      <polygon points={polygon} fill="rgba(201,178,122,0.15)" stroke="var(--seal-on-ink)" strokeWidth="2" />
+      <polygon points={polygon} fill="rgba(31,79,191,0.18)" stroke="var(--seal-on-ink)" strokeWidth="2" />
       {/* Data dots */}
       {values.map((v, i) => {
         const [x, y] = pt(i, v)
@@ -63,8 +63,8 @@ function RadarChart({ data, size = 260 }) {
         
         return (
           <text key={i} x={lx} y={ly} textAnchor={anchor}
-            fill="rgba(255,255,255,0.7)" fontSize="10"
-            fontFamily="'IBM Plex Mono', monospace"
+            fill="var(--ink-2)" fontSize="13"
+            fontFamily="var(--font-mono)"
             style={{ dominantBaseline: 'middle' }}
             dy={dy}
           >
@@ -86,36 +86,36 @@ function PlatformHeatmap({ platforms, t }) {
         return (
         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: '11px',
-            color: 'rgba(255,255,255,0.6)',
+            fontFamily: "var(--font-mono)",
+            fontSize: '13px',
+            color: 'var(--ink-2)',
             width: '120px',
             flexShrink: 0,
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           }}>{p.name}</div>
-          <div style={{ flex: 1, height: '28px', background: 'rgba(255,255,255,0.04)', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ flex: 1, height: '28px', background: 'rgba(14,17,22,0.06)', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${p.score}%` }}
               transition={{ duration: 0.8, delay: i * 0.1, ease: 'easeOut' }}
               style={{
                 height: '100%',
-                background: `rgba(201,178,122,${0.2 + (p.score / 100) * 0.7})`,
+                background: `rgba(31,79,191,${0.2 + (p.score / 100) * 0.7})`,
                 borderRight: '2px solid var(--seal-on-ink)',
               }}
             />
             <span style={{
               position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)',
-              fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px',
-              color: 'rgba(255,255,255,0.5)',
+              fontFamily: "var(--font-mono)", fontSize: '13px',
+              color: 'var(--ink-3)',
             }}>{p.score}</span>
           </div>
           <div style={{
             width: '60px', flexShrink: 0,
-            fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px',
-            color: tier === 'PRIMARY' ? 'var(--seal-on-ink)' : tier === 'SECONDARY' ? 'rgba(201,178,122,0.6)' : 'rgba(255,255,255,0.3)',
+            fontFamily: "var(--font-mono)", fontSize: '13px',
+            color: tier === 'PRIMARY' ? 'var(--seal-on-ink)' : tier === 'SECONDARY' ? 'var(--ink-2)' : 'var(--ink-3)',
           }}>{t?.[TIER_LABEL[tier]] || tier}</div>
         </div>
         )
@@ -126,14 +126,14 @@ function PlatformHeatmap({ platforms, t }) {
 
 // ─── Opportunity Score Badge ──────────────────────────────────────────────────
 function OpportunityScore({ score, label }) {
-  const color = score >= 75 ? 'var(--seal-on-ink)' : score >= 50 ? 'rgba(201,178,122,0.7)' : 'rgba(201,178,122,0.4)'
+  const color = 'var(--blue)'
   const circumference = 2 * Math.PI * 28
   const dash = (score / 100) * circumference
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
       <svg width="72" height="72" viewBox="0 0 72 72">
-        <circle cx="36" cy="36" r="28" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="5" />
+        <circle cx="36" cy="36" r="28" fill="none" stroke="rgba(14,17,22,0.10)" strokeWidth="5" />
         <motion.circle
           cx="36" cy="36" r="28" fill="none"
           stroke={color} strokeWidth="5"
@@ -145,13 +145,13 @@ function OpportunityScore({ score, label }) {
           transform="rotate(-90 36 36)"
         />
         <text x="36" y="40" textAnchor="middle" fill={color}
-          fontSize="14" fontWeight="700" fontFamily="'IBM Plex Mono', monospace">
+          fontSize="16" fontWeight="700" fontFamily="var(--font-mono)">
           {score}
         </text>
       </svg>
       <div style={{
-        fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '9px',
-        color: 'rgba(255,255,255,0.4)', textAlign: 'center', letterSpacing: '0.08em', maxWidth: '70px',
+        fontFamily: "var(--font-body)", fontSize: '13px',
+        color: 'var(--ink-3)', textAlign: 'center', letterSpacing: '0.08em', maxWidth: '70px',
       }}>{label}</div>
     </div>
   )
@@ -166,19 +166,19 @@ function BuyerRegionBars({ regions }) {
       {regions.map((r, i) => (
         <div key={i}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-            <span style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '13px', color: 'var(--warm-white)' }}>{r.country}</span>
-            <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', color: 'var(--seal-on-ink)' }}>{r.concentration}%</span>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: '15px', color: 'var(--warm-white)' }}>{r.country}</span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: '13px', color: 'var(--seal-on-ink)' }}>{r.concentration}%</span>
           </div>
-          <div style={{ height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '3px', overflow: 'hidden' }}>
+          <div style={{ height: '6px', background: 'rgba(14,17,22,0.08)', borderRadius: '3px', overflow: 'hidden' }}>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${(r.concentration / max) * 100}%` }}
               transition={{ duration: 0.7, delay: i * 0.08, ease: 'easeOut' }}
-              style={{ height: '100%', background: 'linear-gradient(90deg, rgba(201,178,122,0.5), var(--seal-on-ink))', borderRadius: '3px' }}
+              style={{ height: '100%', background: 'linear-gradient(90deg, rgba(31,79,191,0.60), var(--seal-on-ink))', borderRadius: '3px' }}
             />
           </div>
           {r.note && (
-            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '3px' }}>{r.note}</div>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: '13px', color: 'var(--ink-3)', marginTop: '3px' }}>{r.note}</div>
           )}
         </div>
       ))}
@@ -198,7 +198,7 @@ function BlurGateOverlay({ t, setPage }) {
       justifyContent: 'center',
     }}>
       <div style={{
-        background: 'rgba(10,15,30,0.92)',
+        background: 'rgba(255,255,255,0.97)',
         border: '1px solid var(--border-dark)',
         padding: '40px 48px',
         textAlign: 'center',
@@ -214,7 +214,7 @@ function BlurGateOverlay({ t, setPage }) {
           {t.mg_blur_title}
         </h3>
         <p style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "var(--font-body)",
           fontSize: '15px',
           color: 'var(--text-light)',
           lineHeight: 1.6,
@@ -230,8 +230,8 @@ function BlurGateOverlay({ t, setPage }) {
               color: 'var(--midnight-navy)',
               border: '1px solid var(--gold-shadow)',
               padding: '12px 24px',
-              fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: '14px',
+              fontFamily: "var(--font-body)",
+              fontSize: '16px',
               fontWeight: 600,
               cursor: 'pointer',
               letterSpacing: '0.04em',
@@ -246,8 +246,8 @@ function BlurGateOverlay({ t, setPage }) {
               color: 'var(--warm-white)',
               border: '1px solid var(--border-dark)',
               padding: '12px 24px',
-              fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: '14px',
+              fontFamily: "var(--font-body)",
+              fontSize: '16px',
               fontWeight: 500,
               cursor: 'pointer',
               letterSpacing: '0.04em',
@@ -373,8 +373,8 @@ export default function MarketGuidePage({ setPage, t }) {
     background: 'var(--midnight-navy)',
     border: '1px solid var(--border-dark)',
     color: 'var(--warm-white)',
-    fontFamily: "'IBM Plex Sans', sans-serif",
-    fontSize: '14px', padding: '0 16px', outline: 'none',
+    fontFamily: "var(--font-body)",
+    fontSize: '16px', padding: '0 16px', outline: 'none',
     cursor: 'pointer', appearance: 'none',
     backgroundImage: `url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2394A3B8' fill='none' stroke-width='1.5'/%3E%3C/svg%3E")`,
     backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center',
@@ -442,15 +442,14 @@ export default function MarketGuidePage({ setPage, t }) {
         }
         .mg-full { margin-bottom: 24px; }
         .card {
-          background: rgba(255,255,255,0.03);
-          border: 1px solid var(--border-dark);
+          background: #fff;
+          border: 1px solid var(--rule);
           padding: 28px 32px;
         }
         .card-label {
-          font-family: 'IBM Plex Mono', monospace;
-          font-size: 10px;
+          font-family: var(--font-mono);
+          font-size: 13px;
           color: var(--signal-gold);
-          letter-spacing: 0.12em;
           margin-bottom: 20px;
           display: flex;
           align-items: center;
@@ -460,35 +459,35 @@ export default function MarketGuidePage({ setPage, t }) {
           content: '';
           flex: 1;
           height: 1px;
-          background: rgba(201,178,122,0.15);
+          background: rgba(31,79,191,0.18);
         }
         .insight-bullet {
           display: flex;
           align-items: flex-start;
           gap: 10px;
           padding: 10px 0;
-          border-bottom: 1px solid rgba(255,255,255,0.04);
-          font-family: 'IBM Plex Sans', sans-serif;
-          font-size: 14px;
+          border-bottom: 1px solid rgba(14,17,22,0.06);
+          font-family: var(--font-body);
+          font-size: 16px;
           color: var(--warm-white);
           line-height: 1.55;
         }
         .insight-bullet:last-child { border-bottom: none; }
         .bullet-index {
-          font-family: 'IBM Plex Mono', monospace;
-          font-size: 10px;
-          color: rgba(201,178,122,0.5);
+          font-family: var(--font-mono);
+          font-size: 13px;
+          color: var(--ink-3);
           padding-top: 3px;
           flex-shrink: 0;
           width: 20px;
         }
         .reach-tag {
           display: inline-block;
-          background: rgba(201,178,122,0.08);
-          border: 1px solid rgba(201,178,122,0.2);
+          background: rgba(31,79,191,0.10);
+          border: 1px solid rgba(31,79,191,0.24);
           color: var(--seal-on-ink);
-          font-family: 'IBM Plex Mono', monospace;
-          font-size: 11px;
+          font-family: var(--font-mono);
+          font-size: 13px;
           padding: 5px 12px;
           margin: 4px 4px 4px 0;
           letter-spacing: 0.04em;
@@ -498,21 +497,21 @@ export default function MarketGuidePage({ setPage, t }) {
           align-items: flex-start;
           gap: 12px;
           padding: 12px 0;
-          border-bottom: 1px solid rgba(255,255,255,0.04);
+          border-bottom: 1px solid rgba(14,17,22,0.06);
         }
         .mistake-row:last-child { border-bottom: none; }
         .mistake-sev {
-          font-family: 'IBM Plex Mono', monospace;
-          font-size: 9px;
+          font-family: var(--font-mono);
+          font-size: 13px;
           padding: 3px 7px;
           border-radius: 2px;
           flex-shrink: 0;
           margin-top: 2px;
           letter-spacing: 0.05em;
         }
-        .sev-high { background: var(--seal-on-ink); color: var(--ink); border: 1px solid var(--seal-on-ink); }
-        .sev-med { background: transparent; color: var(--seal-on-ink); border: 1px solid var(--seal-on-ink); }
-        .sev-low { background: transparent; color: var(--on-ink-2); border: 1px dashed rgba(238,233,221,0.35); }
+        .sev-high { background: var(--rust); color: #fff; border: 1px solid var(--rust); }
+        .sev-med { background: transparent; color: var(--rust); border: 1px solid var(--rust); }
+        .sev-low { background: transparent; color: var(--ink-3); border: 1px dashed var(--rule-strong); }
         @media (max-width: 768px) {
           .mg-container { padding: 80px 20px 60px; }
           .mg-form-grid, .mg-top-grid, .mg-mid-grid { grid-template-columns: 1fr; }
@@ -525,13 +524,13 @@ export default function MarketGuidePage({ setPage, t }) {
           {/* Header */}
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
             style={{ marginBottom: '64px', textAlign: 'center' }} className="no-print">
-            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', color: 'var(--signal-gold)', letterSpacing: '0.15em', marginBottom: '20px' }}>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: '13px', color: 'var(--signal-gold)', marginBottom: '16px' }}>
               {t?.mg_eyebrow}
             </div>
-            <h1 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(36px, 5vw, 52px)', color: 'var(--warm-white)', lineHeight: 1.12, marginBottom: '20px', letterSpacing: '-0.01em' }}>
+            <h1 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(40px, 6vw, 72px)', fontWeight: 800, fontStretch: '90%', color: 'var(--ink)', lineHeight: 1.05, marginBottom: '20px', letterSpacing: '-0.015em', textWrap: 'balance' }}>
               {t?.mg_h1}
             </h1>
-            <p style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '17px', color: 'var(--text-light)', lineHeight: 1.65, maxWidth: '600px', margin: '0 auto' }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: '17px', color: 'var(--text-light)', lineHeight: 1.65, maxWidth: '600px', margin: '0 auto' }}>
               {t?.mg_sub}
             </p>
           </motion.div>
@@ -541,7 +540,7 @@ export default function MarketGuidePage({ setPage, t }) {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ maxWidth: '800px', margin: '0 auto' }} className="no-print">
               <div className="mg-form-grid">
                 <div>
-                  <label htmlFor="mg-industry" style={{ display: 'block', fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', color: 'var(--text-light)', marginBottom: '8px' }}>
+                  <label htmlFor="mg-industry" style={{ display: 'block', fontFamily: "var(--font-mono)", fontSize: '14px', color: 'var(--text-light)', marginBottom: '8px' }}>
                     {t?.mg_label_industry}
                   </label>
                   <select id="mg-industry" value={industry} onChange={e => setIndustry(e.target.value)} style={dropdownStyle} disabled={loading}>
@@ -550,7 +549,7 @@ export default function MarketGuidePage({ setPage, t }) {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="mg-market" style={{ display: 'block', fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', color: 'var(--text-light)', marginBottom: '8px' }}>
+                  <label htmlFor="mg-market" style={{ display: 'block', fontFamily: "var(--font-mono)", fontSize: '14px', color: 'var(--text-light)', marginBottom: '8px' }}>
                     {t?.mg_label_market}
                   </label>
                   <select id="mg-market" value={market} onChange={e => setMarket(e.target.value)} style={dropdownStyle} disabled={loading}>
@@ -560,14 +559,14 @@ export default function MarketGuidePage({ setPage, t }) {
                 </div>
               </div>
               <div style={{ textAlign: 'center' }}>
-                {error && <div role="alert" style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', color: 'var(--signal-gold)', marginBottom: '16px' }}>{error}</div>}
+                {error && <div role="alert" style={{ fontFamily: "var(--font-mono)", fontSize: '14px', color: 'var(--signal-gold)', marginBottom: '16px' }}>{error}</div>}
                 {loading && (
                   <AnimatePresence>
                     <MarketLoader text={t?.mg_loading} />
                   </AnimatePresence>
                 )}
                 {!loading && (
-                  <button onClick={handleFetch} style={{ background: 'var(--signal-gold)', color: 'var(--midnight-navy)', border: '1px solid var(--gold-shadow)', borderRadius: '4px', minHeight: '48px', padding: '0 28px', fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>
+                  <button onClick={handleFetch} style={{ background: 'var(--signal-gold)', color: 'var(--midnight-navy)', border: '1px solid var(--gold-shadow)', borderRadius: '4px', minHeight: '48px', padding: '0 28px', fontFamily: "var(--font-body)", fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>
                     {t?.mg_cta}
                   </button>
                 )}
@@ -584,9 +583,9 @@ export default function MarketGuidePage({ setPage, t }) {
                   <div style={isAuthenticated ? {} : { filter: 'blur(6px)', userSelect: 'none', pointerEvents: 'none' }}>
 
                     {/* Report header */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px', paddingBottom: '20px', borderBottom: '1px solid rgba(201,178,122,0.15)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px', paddingBottom: '20px', borderBottom: '1px solid rgba(31,79,191,0.18)' }}>
                       <div>
-                        <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', color: 'rgba(201,178,122,0.5)', letterSpacing: '0.1em', marginBottom: '6px' }}>
+                        <div style={{ fontFamily: "var(--font-mono)", fontSize: '13px', color: 'var(--ink-3)', marginBottom: '6px' }}>
                           {t?.mg_report_label} · {new Date().toLocaleDateString(t?._lang === 'EN' ? 'en-GB' : t?._lang === 'TW' ? 'zh-TW' : 'zh-CN', { day: '2-digit', month: 'short', year: 'numeric' })}
                         </div>
                         <h2 style={{ fontFamily: "var(--font-display)", fontSize: '28px', color: 'var(--warm-white)', margin: 0 }}>
@@ -595,10 +594,10 @@ export default function MarketGuidePage({ setPage, t }) {
                       </div>
                       <div style={{ display: 'flex', gap: '12px' }} className="no-print">
                         <MonitorButton industry={industry} region={market} userId={session?.user?.id} t={t} />
-                        <button onClick={handlePrint} style={{ background: 'transparent', color: 'var(--seal-on-ink)', border: '1px solid rgba(201,178,122,0.3)', padding: '9px 18px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', cursor: 'pointer', letterSpacing: '0.05em' }}>
+                        <button onClick={handlePrint} style={{ background: 'transparent', color: 'var(--seal-on-ink)', border: '1px solid rgba(31,79,191,0.36)', padding: '9px 18px', fontFamily: "var(--font-mono)", fontSize: '13px', cursor: 'pointer', letterSpacing: '0.05em' }}>
                           ↓ PDF
                         </button>
-                        <button onClick={() => setResult(null)} style={{ background: 'transparent', color: 'var(--on-ink-2)', border: '1px solid rgba(255,255,255,0.2)', padding: '9px 18px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', cursor: 'pointer', letterSpacing: '0.05em' }}>
+                        <button onClick={() => setResult(null)} style={{ background: 'transparent', color: 'var(--ink-2)', border: '1px solid rgba(14,17,22,0.20)', padding: '9px 18px', fontFamily: "var(--font-mono)", fontSize: '13px', cursor: 'pointer', letterSpacing: '0.05em' }}>
                           ← {t?.mg_try_another}
                         </button>
                       </div>
@@ -685,7 +684,7 @@ export default function MarketGuidePage({ setPage, t }) {
                         {result.outreach_detail && (
                           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                             {result.outreach_detail.map((item, i) => (
-                              <li key={i} className="insight-bullet" style={{ fontSize: '13px' }}>
+                              <li key={i} className="insight-bullet" style={{ fontSize: '15px' }}>
                                 <span className="bullet-index">→</span>
                                 <span>{item}</span>
                               </li>
@@ -706,7 +705,7 @@ export default function MarketGuidePage({ setPage, t }) {
   return (
     <div key={i} className="mistake-row">
       <span className={`mistake-sev ${sev === 'HIGH' ? 'sev-high' : sev === 'LOW' ? 'sev-low' : 'sev-med'}`}>{t?.[SEVERITY_LABEL[sev]] || sev}</span>
-      <span style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '13px', color: 'var(--warm-white)', lineHeight: 1.5 }}>{text}</span>
+      <span style={{ fontFamily: "var(--font-body)", fontSize: '15px', color: 'var(--warm-white)', lineHeight: 1.5 }}>{text}</span>
     </div>
   )
 })}
@@ -715,7 +714,7 @@ export default function MarketGuidePage({ setPage, t }) {
 
 {/* Disclaimer */}
 <div style={{ textAlign: 'center', marginTop: '16px' }} className="no-print">
-<p style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.25)', lineHeight: 1.6 }}>
+<p style={{ fontFamily: "var(--font-body)", fontSize: '14px', color: 'var(--ink-3)', lineHeight: 1.6 }}>
 {t?.mg_disclaimer}
 </p>
 </div>

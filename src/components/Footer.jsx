@@ -30,20 +30,20 @@ export default function Footer({ t, setPage, hasDeviceToken }) {
   }
 
   return (
-    <footer id="footer" style={{ background: 'var(--ink-deep)', color: 'var(--on-ink-2)', padding: '96px 0 40px', borderTop: '1px solid var(--ink-rule)' }}>
+    <footer id="footer" style={{ background: 'var(--ink)', color: 'var(--on-ink-2)', padding: '88px 0 40px', borderTop: '6px solid var(--yellow)' }}>
       <style>{`
         .nx-ft { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: 48px; }
         .nx-ft__brand { grid-column: 1 / span 4; display: flex; flex-direction: column; gap: 16px; }
         .nx-ft__col { grid-column: span 2; display: flex; flex-direction: column; gap: 4px; }
         .nx-ft__status { grid-column: 9 / span 4; }
-        .nx-ft h2 { font-size: 13px; font-weight: 600; color: var(--on-ink); margin-bottom: 12px; }
-        .nx-ft__brand p { font-family: var(--font-display); font-size: 22px !important; line-height: 1.35 !important; color: var(--on-ink); }
+        .nx-ft h2 { font-size: 15px; font-weight: 700; color: var(--on-ink); margin-bottom: 12px; }
+        .nx-ft__brand p { font-size: 17px !important; line-height: 1.6 !important; color: var(--on-ink); }
         .nx-ft__col button {
           text-align: left; background: none; border: 0; padding: 0; min-height: 36px;
-          color: var(--on-ink); font-size: 15px; transition: color 150ms ease;
+          color: var(--on-ink); font-size: 17px; transition: color 150ms ease;
         }
-        .nx-ft__col button:hover { color: var(--gold); }
-        .nx-ft__status dl { display: grid; grid-template-columns: auto 1fr; column-gap: 20px; row-gap: 10px; font-size: 14px; }
+        .nx-ft__col button:hover { color: var(--yellow); }
+        .nx-ft__status dl { display: grid; grid-template-columns: auto 1fr; column-gap: 20px; row-gap: 10px; font-size: 16px; }
         .nx-ft__status dt { color: var(--on-ink-2); }
         .nx-ft__status dd { color: var(--on-ink); }
         @media (max-width: 900px) {
@@ -91,9 +91,9 @@ export default function Footer({ t, setPage, hasDeviceToken }) {
           </div>
         </div>
 
-        <div style={{ marginTop: 72, paddingTop: 24, borderTop: '1px solid var(--ink-rule)', display: 'flex', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap', fontSize: 13, lineHeight: 1.6 }}>
+        <div style={{ marginTop: 72, paddingTop: 24, borderTop: '1px solid var(--ink-rule)', display: 'flex', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap', fontSize: 15, lineHeight: 1.6 }}>
           <p style={{ maxWidth: 760 }}>{t.footer_disclaimer}</p>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12 }}>{t.footer_copyright}</p>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 14 }}>{t.footer_copyright}</p>
         </div>
       </div>
     </footer>

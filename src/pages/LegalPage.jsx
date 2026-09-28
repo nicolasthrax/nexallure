@@ -22,9 +22,10 @@ export default function LegalPage({ t, setPage, title, updated, intro, sections 
               border: 'none',
               boxShadow: 'none',
               padding: 0,
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: '12px',
-              color: 'var(--text-muted)',
+              fontFamily: "var(--font-body)",
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'var(--ink-2)',
               cursor: 'pointer',
               marginBottom: '32px',
             }}
@@ -34,11 +35,10 @@ export default function LegalPage({ t, setPage, title, updated, intro, sections 
 
           <div
             style={{
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: '11px',
-              color: 'var(--gold)',
-              letterSpacing: '0.18em',
-              marginBottom: '16px',
+              fontFamily: "var(--font-mono)",
+              fontSize: '15px',
+              color: 'var(--blue)',
+                            marginBottom: '16px',
             }}
           >
             {updated}
@@ -47,9 +47,11 @@ export default function LegalPage({ t, setPage, title, updated, intro, sections 
           <h1
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: '40px',
+              fontSize: 'clamp(40px, 6vw, 64px)',
+              fontWeight: 800,
+              fontStretch: '90%',
               color: 'var(--text-primary)',
-              lineHeight: 1.2,
+              lineHeight: 1.05,
               letterSpacing: '-0.01em',
               marginBottom: '24px',
             }}
@@ -59,10 +61,11 @@ export default function LegalPage({ t, setPage, title, updated, intro, sections 
 
           <p
             style={{
-              fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: '16px',
+              fontFamily: "var(--font-body)",
+              fontSize: '19px',
               color: 'var(--text-secondary)',
-              lineHeight: 1.7,
+              lineHeight: 1.65,
+              maxWidth: '62ch',
               marginBottom: '40px',
             }}
           >
@@ -74,9 +77,10 @@ export default function LegalPage({ t, setPage, title, updated, intro, sections 
               <div key={i}>
                 <h2
                   style={{
-                    fontFamily: "'IBM Plex Sans', sans-serif",
-                    fontSize: '16px',
-                    fontWeight: 600,
+                    fontFamily: "var(--font-display)",
+                    fontSize: '22px',
+                    fontWeight: 800,
+                    fontStretch: '90%',
                     color: 'var(--text-primary)',
                     marginBottom: '10px',
                   }}
@@ -85,10 +89,11 @@ export default function LegalPage({ t, setPage, title, updated, intro, sections 
                 </h2>
                 <p
                   style={{
-                    fontFamily: "'IBM Plex Sans', sans-serif",
-                    fontSize: '15px',
+                    fontFamily: "var(--font-body)",
+                    fontSize: '17px',
                     color: 'var(--text-secondary)',
-                    lineHeight: 1.75,
+                    lineHeight: 1.7,
+                    maxWidth: '66ch',
                   }}
                 >
                   {s.body}

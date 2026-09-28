@@ -58,7 +58,7 @@ export default function MarketLoader({ text = "Analyzing export markets..." }) {
 
           ctx.beginPath();
           ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255,255,255,${0.08 + pulse * 0.22})`;
+          ctx.fillStyle = `rgba(31,79,191,${0.12 + pulse * 0.5})`;
           ctx.fill();
         }
       }
@@ -95,7 +95,7 @@ export default function MarketLoader({ text = "Analyzing export markets..." }) {
       <motion.div variants={itemVariants} style={{
         position: "absolute", top: 0, left: 0,
         width: "100%", height: "100%",
-        background: "rgba(10, 15, 30, 0.85)",
+        background: "rgba(255,255,255,0.97)",
       }} />
 
       <motion.canvas
@@ -121,9 +121,9 @@ export default function MarketLoader({ text = "Analyzing export markets..." }) {
           <TetrisLoading size="sm" speed="fast" showLoadingText={false} />
         </div>
         <p style={{
-          fontFamily: "'IBM Plex Mono', monospace",
+          fontFamily: "var(--font-mono)",
           fontSize: "12px",
-          color: "rgba(238,233,221,0.7)",
+          color: "var(--ink-2)",
           letterSpacing: "0.1em",
           textTransform: "uppercase",
           margin: 0,

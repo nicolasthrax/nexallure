@@ -118,11 +118,11 @@ export function MonitorButton({ industry, region, userId, t = {}, onMonitorChang
     minHeight: 40,
     padding: "0 16px",
     background: "transparent",
-    border: "1px solid var(--ink-rule)",
-    borderRadius: 2,
-    color: "var(--on-ink)",
-    fontSize: 13,
-    fontWeight: 500,
+    border: "2px solid var(--ink)",
+    borderRadius: 0,
+    color: "var(--ink)",
+    fontSize: 15,
+    fontWeight: 700,
     cursor: "pointer",
   };
 
@@ -137,7 +137,7 @@ export function MonitorButton({ industry, region, userId, t = {}, onMonitorChang
   return (
     <>
       <button onClick={openModal} disabled={state === "loading"} style={{ ...buttonStyle, opacity: state === "loading" ? 0.5 : 1 }}>
-        <span aria-hidden="true" style={{ color: "var(--seal-on-ink)" }}>+</span>
+        <span aria-hidden="true" style={{ color: "var(--blue)" }}>+</span>
         {state === "loading" ? t.mon_adding : t.mon_add}
       </button>
 
@@ -151,7 +151,7 @@ export function MonitorButton({ industry, region, userId, t = {}, onMonitorChang
             style={{
               position: "fixed", inset: 0, zIndex: 9999,
               display: "flex", alignItems: "center", justifyContent: "center",
-              background: "rgba(6, 12, 22, 0.72)", padding: 16,
+              background: "rgba(14, 17, 22, 0.6)", padding: 16,
             }}
           >
             <motion.div
@@ -165,7 +165,7 @@ export function MonitorButton({ industry, region, userId, t = {}, onMonitorChang
               style={{
                 position: "relative", width: "100%", maxWidth: 460,
                 padding: 40, background: "var(--paper-light)", color: "var(--ink)",
-                border: "1px solid var(--rule-strong)", outline: "1px solid var(--gold)", outlineOffset: -7,
+                border: "2px solid var(--ink)", boxShadow: "8px 8px 0 var(--yellow)",
               }}
             >
               <button
@@ -180,11 +180,11 @@ export function MonitorButton({ industry, region, userId, t = {}, onMonitorChang
                 ×
               </button>
 
-              <h3 id="monitor-dialog-title" className="nx-display" style={{ fontSize: 30, marginBottom: 14, paddingRight: 32 }}>
+              <h3 id="monitor-dialog-title" className="nx-display" style={{ fontSize: 32, fontStretch: "85%", marginBottom: 14, paddingRight: 32 }}>
                 {t.mon_dialog_title}
               </h3>
 
-              <p style={{ fontSize: 15, lineHeight: 1.65, color: "var(--ink-2)", marginBottom: 28 }}>
+              <p style={{ fontSize: 17, lineHeight: 1.65, color: "var(--ink-2)", marginBottom: 28 }}>
                 {(t.mon_dialog_body || "").replace("{industry}", industryLabel).replace("{region}", regionLabel)}
               </p>
 

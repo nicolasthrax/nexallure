@@ -63,66 +63,68 @@ export default function Nav({ setPage, lang, setLang, t }) {
         .nx-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           height: 64px;
-          background: var(--ink);
-          color: var(--on-ink);
-          border-bottom: 1px solid var(--ink-rule);
+          background: var(--paper);
+          color: var(--ink);
+          border-bottom: 2px solid var(--ink);
         }
-        .nx-nav__row { height: 64px; display: flex; align-items: center; gap: 48px; }
+        .nx-nav__row { height: 62px; display: flex; align-items: center; gap: 40px; }
         .nx-brand {
           display: flex; align-items: center; min-height: 44px;
-          background: none; border: 0; padding: 0; color: var(--on-ink);
+          background: none; border: 0; padding: 0; color: var(--ink);
         }
-        .nx-links { display: flex; gap: 32px; flex: 1; }
+        .nx-links { display: flex; gap: 6px; flex: 1; }
         .nx-links button {
-          position: relative; background: none; border: 0; padding: 8px 0;
-          font-size: 14px; font-weight: 500;
-          color: var(--on-ink-2);
-          transition: color 200ms ease;
+          position: relative; background: none; border: 0; padding: 8px 10px;
+          font-size: 16px; font-weight: 600; color: var(--ink-2);
+          transition: color 150ms ease;
         }
-        .nx-links button::after {
-          content: ''; position: absolute; left: 0; right: 0; bottom: 2px; height: 1px;
-          background: var(--gold); transform: scaleX(0); transform-origin: left;
-          transition: transform 260ms var(--ease-out);
+        /* A highlighter stroke that sweeps under the link. */
+        .nx-links button::before {
+          content: ''; position: absolute; left: 6px; right: 6px; bottom: 8px; height: 9px; z-index: -1;
+          background: var(--yellow); transform: scaleX(0); transform-origin: left;
+          transition: transform 280ms var(--ease-out);
         }
-        .nx-links button:hover, .nx-links button[aria-current="page"] { color: var(--on-ink); }
-        .nx-links button[aria-current="page"]::after { transform: scaleX(1); }
-        .nx-right { display: flex; align-items: center; gap: 18px; }
-        .nx-lang { display: flex; gap: 2px; }
+        .nx-links button { isolation: isolate; }
+        .nx-links button:hover, .nx-links button[aria-current="page"] { color: var(--ink); }
+        .nx-links button:hover::before, .nx-links button[aria-current="page"]::before { transform: scaleX(1); }
+        .nx-right { display: flex; align-items: center; gap: 12px; }
+        .nx-lang { display: flex; border: 2px solid var(--ink); }
         .nx-lang button {
-          min-width: 32px; height: 32px; border: 0; border-radius: 1px;
-          background: transparent; color: var(--on-ink-2);
-          font-family: var(--font-mono); font-size: 12px;
-          transition: color 150ms ease, box-shadow 150ms ease;
+          min-width: 38px; height: 34px; border: 0;
+          background: transparent; color: var(--ink);
+          font-size: 15px; font-weight: 600;
+          transition: background-color 150ms ease, color 150ms ease;
         }
-        .nx-lang button:hover { color: var(--on-ink); }
-        .nx-lang button[aria-pressed="true"] { color: var(--gold); box-shadow: inset 0 -1px 0 var(--gold); }
+        .nx-lang button + button { border-left: 2px solid var(--ink); }
+        .nx-lang button:hover { background: var(--yellow); }
+        .nx-lang button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
         .nx-plain {
-          background: none; border: 0; font-size: 14px; font-weight: 500; color: var(--on-ink);
-          min-height: 44px; padding: 0 4px;
+          background: none; border: 0; font-size: 16px; font-weight: 600; color: var(--ink);
+          min-height: 44px; padding: 0 8px;
+          text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; text-decoration-color: transparent;
+          transition: text-decoration-color 150ms ease;
         }
-        .nx-plain:hover { color: var(--gold); }
-        .nx-nav .nx-btn { min-height: 40px; padding: 0 16px; font-size: 14px; }
+        .nx-plain:hover { text-decoration-color: var(--blue); }
+        .nx-nav .nx-btn { min-height: 40px; padding: 0 16px; font-size: 15px; }
         .nx-burger { display: none; }
         .nx-sheet {
-          position: fixed; inset: 64px 0 0 0; z-index: 99; background: var(--ink); color: var(--on-ink);
-          display: flex; flex-direction: column; padding: 24px var(--gutter) 40px; gap: 4px;
+          position: fixed; inset: 64px 0 0 0; z-index: 99; background: var(--paper); color: var(--ink);
+          display: flex; flex-direction: column; padding: 16px var(--gutter) 40px; gap: 0;
           overflow-y: auto;
         }
         .nx-sheet > button {
-          text-align: left; background: none; border: 0; border-bottom: 1px solid var(--ink-rule);
-          padding: 20px 0; font-family: var(--font-display); font-weight: 500;
-          font-size: 40px; line-height: 1; color: var(--on-ink);
+          text-align: left; background: none; border: 0; border-bottom: 2px solid var(--ink);
+          padding: 18px 0; font-family: var(--font-display); font-weight: 800; font-stretch: 80%;
+          font-size: 40px; line-height: 1; color: var(--ink);
         }
-        .nx-sheet .nx-lang button { border: 1px solid var(--ink-rule); }
-        .nx-sheet .nx-btn--line { color: var(--on-ink); border-color: var(--ink-rule); }
-        @media (max-width: 1080px) { .nx-links { gap: 24px; } .nx-nav__row { gap: 28px; } }
-        @media (max-width: 900px) {
+        .nx-sheet .nx-lang button { min-width: 56px; height: 44px; }
+        @media (max-width: 960px) {
           .nx-links, .nx-right .nx-hide-sm { display: none; }
           .nx-nav__row { justify-content: space-between; gap: 12px; }
           .nx-burger {
-            display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px;
-            border: 1px solid var(--ink-rule); border-radius: 1px; background: transparent;
-            color: var(--on-ink); font-size: 14px; font-weight: 500;
+            display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px;
+            border: 2px solid var(--ink); background: transparent;
+            color: var(--ink); font-size: 16px; font-weight: 700;
           }
         }
       `}</style>
@@ -130,7 +132,7 @@ export default function Nav({ setPage, lang, setLang, t }) {
       <nav className="nx-nav" data-scrolled={scrolled || menuOpen} aria-label="Main">
         <div className="nx-wrap nx-nav__row">
           <button className="nx-brand" onClick={() => { setPage('home'); window.scrollTo(0, 0) }} aria-label="Nexallure home">
-            <Logo size={26} color="var(--on-ink)" />
+            <Logo size={26} color="var(--ink)" />
           </button>
 
           <div className="nx-links">
@@ -197,7 +199,7 @@ export default function Nav({ setPage, lang, setLang, t }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 32 }}>
               <div className="nx-lang" role="group" aria-label={t.nav_lang} style={{ alignSelf: 'flex-start' }}>
                 {LANGS.map((l) => (
-                  <button key={l.code} aria-pressed={lang === l.code} aria-label={l.name} onClick={() => setLang(l.code)} style={{ minWidth: 56, height: 40 }}>
+                  <button key={l.code} aria-pressed={lang === l.code} aria-label={l.name} onClick={() => setLang(l.code)} >
                     {l.label}
                   </button>
                 ))}

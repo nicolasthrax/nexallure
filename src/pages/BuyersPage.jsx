@@ -80,18 +80,17 @@ export default function BuyersPage({ setPage, t }) {
 
   const labelStyle = {
     display: 'block',
-    fontSize: '11px',
-    fontFamily: "'IBM Plex Mono', monospace",
-    color: 'var(--ink-3)',
-    letterSpacing: '0.08em',
+    fontSize: '15px',
+    fontWeight: 700,
+    color: 'var(--ink-2)',
     marginBottom: '8px',
   }
   const inputStyle = {
-    height: '48px',
-    border: '1px solid var(--rule)',
+    height: '52px',
+    border: '2px solid var(--rule-strong)',
     padding: '0 16px',
-    fontSize: '15px',
-    fontFamily: "'IBM Plex Sans', sans-serif",
+    fontSize: '17px',
+    fontFamily: "var(--font-body)",
     color: 'var(--ink)',
     background: '#FFFFFF',
     outline: 'none',
@@ -112,7 +111,7 @@ export default function BuyersPage({ setPage, t }) {
       <section
         id="buyers-section"
         style={{
-          background: '#F5F4F0',
+          background: 'var(--paper-deep)',
           padding: '120px 32px',
           paddingTop: '180px',
         }}
@@ -147,7 +146,7 @@ export default function BuyersPage({ setPage, t }) {
 
               <p
                 style={{
-                  fontFamily: "'IBM Plex Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: '17px',
                   color: 'var(--ink-2)',
                   lineHeight: 1.65,
@@ -179,8 +178,8 @@ export default function BuyersPage({ setPage, t }) {
               <div
                 style={{
                   background: 'var(--paper-light)',
-                  border: '1px solid var(--rule)',
-                  borderRadius: '4px',
+                  border: '2px solid var(--ink)',
+                  boxShadow: '8px 8px 0 var(--yellow)',
                   padding: '36px',
                 }}
               >
@@ -196,8 +195,8 @@ export default function BuyersPage({ setPage, t }) {
                 </h2>
                 <p
                   style={{
-                    fontFamily: "'IBM Plex Sans', sans-serif",
-                    fontSize: '13px',
+                    fontFamily: "var(--font-body)",
+                    fontSize: '15px',
                     color: 'var(--ink-3)',
                     marginBottom: '24px',
                     lineHeight: 1.6,
@@ -212,8 +211,8 @@ export default function BuyersPage({ setPage, t }) {
                       padding: '20px',
                       border: '1px solid var(--go)',
                       background: 'rgba(30,92,58,0.08)',
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '13px',
+                      fontFamily: "var(--font-mono)",
+                      fontSize: '15px',
                       color: 'var(--go)',
                     }}
                   >
@@ -300,7 +299,7 @@ export default function BuyersPage({ setPage, t }) {
                           padding: '12px 16px',
                           resize: 'vertical',
                           minHeight: '96px',
-                          fontFamily: "'IBM Plex Sans', sans-serif",
+                          fontFamily: "var(--font-body)",
                         }}
                       />
                     </div>
@@ -324,8 +323,8 @@ export default function BuyersPage({ setPage, t }) {
                     {errorMsg && (
                       <div
                         style={{
-                          fontFamily: "'IBM Plex Mono', monospace",
-                          fontSize: '12px',
+                          fontFamily: "var(--font-mono)",
+                          fontSize: '14px',
                           color: 'var(--danger)',
                           background: 'var(--danger-bg)',
                           border: '1px solid var(--danger)',
@@ -343,12 +342,11 @@ export default function BuyersPage({ setPage, t }) {
                         height: '52px',
                         background: submitting ? 'var(--ink-3)' : 'var(--ink)',
                         color: '#FFF',
-                        fontWeight: 600,
-                        fontSize: '14px',
-                        border: '1px solid var(--ink)',
+                        fontWeight: 700,
+                        fontSize: '17px',
+                        border: '2px solid var(--ink)',
                         cursor: submitting ? 'wait' : 'pointer',
-                        fontFamily: "'IBM Plex Sans', sans-serif",
-                        letterSpacing: '0.06em',
+                        fontFamily: "var(--font-body)",
                         marginTop: '4px',
                       }}
                     >
@@ -364,8 +362,8 @@ export default function BuyersPage({ setPage, t }) {
 
       {/* Stats Bar */}
       <section
+        className="nx-night"
         style={{
-          background: 'var(--ink)',
           padding: '60px 32px',
           display: 'flex',
           justifyContent: 'center',
@@ -379,19 +377,18 @@ export default function BuyersPage({ setPage, t }) {
           <div key={i} style={{ textAlign: 'center' }}>
             <div
               style={{
-                fontFamily: "'IBM Plex Mono', monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: '20px',
                 color: 'var(--seal-on-ink)',
                 marginBottom: '4px',
-                letterSpacing: '0.05em',
               }}
             >
               {stat.num}
             </div>
             <div
               style={{
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: '11px',
+                fontFamily: "var(--font-mono)",
+                fontSize: '13px',
                 color: 'var(--on-ink-2)',
               }}
             >

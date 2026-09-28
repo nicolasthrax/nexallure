@@ -3,70 +3,85 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------ */
-/*  Nexallure — "Atlas" design system                                  */
-/*  Ivory, deep navy and the gold of the official logo. A serif        */
-/*  display face gives the brand the calm of an old trading house.     */
-/*  Chinese text uses the reader's system CJK faces (Songti for        */
-/*  display, PingFang / YaHei for body), fast inside mainland China.   */
+/*  Nexallure — "Harbour" design system                                */
+/*  Built for reading first: white pages, near-black text, generous    */
+/*  size and spacing. Atkinson Hyperlegible (designed by the Braille   */
+/*  Institute for legibility) sets the text; Anybody, a variable face  */
+/*  whose letters can widen and narrow, sets the headlines; the mono   */
+/*  cut drives the departures board. Colour comes from shipping        */
+/*  containers and is used to label things, never to decorate them.   */
+/*  Chinese uses the reader's system face (PingFang / YaHei), which    */
+/*  is fast and reliable inside mainland China.                        */
 /* ------------------------------------------------------------------ */
 :root {
-  --paper:        #F5F1E8;
-  --paper-deep:   #ECE5D6;
-  --paper-light:  #FBF9F4;
-  --ink:          #0F1B2D;
-  --ink-2:        #33405A;
-  --ink-3:        #5E687A;
-  --rule:         #DDD5C4;
-  --rule-strong:  #C3B899;
-  --seal:         #7A6330;
-  --seal-deep:    #5E4B22;
-  --seal-tint:    #EFE6CF;
-  --seal-on-ink:  #C9B27A;
-  --gold:         #B7A06A;
-  --go:           #2F6B4F;
-  --on-ink:       #F1ECE1;
-  --on-ink-2:     #A7AFBF;
-  --ink-rule:     #243248;
-  --ink-deep:     #0A1422;
+  --paper:        #FFFFFF;
+  --paper-deep:   #F2F3F5;
+  --paper-light:  #FFFFFF;
+  --ink:          #0E1116;
+  --ink-2:        #2B313B;
+  --ink-3:        #545C69;
+  --rule:         #DADDE3;
+  --rule-strong:  #B4BAC5;
 
-  --font-display: 'Cormorant Garamond', 'Songti SC', 'STSong', 'Noto Serif SC', 'SimSun', serif;
-  --font-body:    'IBM Plex Sans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-  --font-mono:    'IBM Plex Mono', 'PingFang SC', 'Microsoft YaHei', monospace;
+  /* Container colours */
+  --blue:         #1F4FBF;
+  --blue-deep:    #173C92;
+  --blue-tint:    #E8EEFB;
+  --rust:         #B4471F;
+  --rust-tint:    #FBEDE7;
+  --green:        #1E6B4E;
+  --green-tint:   #E4F2EC;
+  --yellow:       #F2B705;
+
+  --seal:         var(--blue);
+  --seal-deep:    var(--blue-deep);
+  --seal-tint:    var(--blue-tint);
+  --seal-on-ink:  var(--blue);
+  --go:           var(--green);
+
+  --on-ink:       #F4F5F7;
+  --on-ink-2:     #B9C0CC;
+  --ink-rule:     #2A303A;
+  --ink-deep:     #07090C;
+
+  --font-display: 'Anybody Variable', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-body:    'Atkinson Hyperlegible Next Variable', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-mono:    'Atkinson Hyperlegible Mono Variable', 'PingFang SC', 'Microsoft YaHei', monospace;
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --gutter: clamp(20px, 5vw, 96px);
+  --gutter: clamp(20px, 5vw, 80px);
+  --measure: 62ch;
 
-  /* Legacy names, remapped so every older page picks up the new palette */
-  --midnight-navy:  var(--ink);
-  --warm-white:     var(--on-ink);
-  --signal-gold:    var(--seal-on-ink);
-  --gold-shadow:    var(--seal-deep);
-  --border-dark:    var(--ink-rule);
-  --text-light:     var(--on-ink-2);
-  --off-white:      var(--paper);
+  /* Names used by the older inner pages, pointed at the light palette */
+  --midnight-navy:  var(--paper-deep);
+  --warm-white:     var(--ink);
+  --text-light:     var(--ink-2);
+  --border-dark:    var(--rule-strong);
+  --signal-gold:    var(--blue);
+  --gold-shadow:    var(--blue-deep);
+  --off-white:      var(--paper-deep);
   --pure-white:     var(--paper-light);
-  --green:          var(--go);
-  --green-bg:       rgba(47, 107, 79, 0.08);
+  --green-bg:       var(--green-tint);
   --text-primary:   var(--ink);
   --text-secondary: var(--ink-2);
   --text-muted:     var(--ink-3);
-  --danger:         #8B1A1A;
-  --danger-bg:      rgba(139, 26, 26, 0.06);
+  --danger:         #A1261B;
+  --danger-bg:      #FBECEA;
 }
 
-/* Any block can flip to the navy "night" palette; components inside that
-   read the tokens (the route map, rules, buttons) re-colour themselves. */
+/* Dark blocks (footer, the departures board): components inside that read
+   the tokens re-colour themselves. */
 .nx-night {
-  --paper:       #0F1B2D;
-  --paper-light: #16243A;
-  --paper-deep:  #0A1422;
-  --ink:         #F1ECE1;
-  --ink-2:       #C9CFDA;
-  --ink-3:       #8E98AB;
-  --rule:        #26354D;
-  --rule-strong: #3A4A64;
-  --seal:        #C9B27A;
-  --seal-deep:   #B7A06A;
+  --paper:       #0E1116;
+  --paper-deep:  #07090C;
+  --paper-light: #161A21;
+  --ink:         #F4F5F7;
+  --ink-2:       #D5DAE2;
+  --ink-3:       #A3ABB8;
+  --rule:        #2A303A;
+  --rule-strong: #3B4350;
+  --seal:        #8FB0FF;
+  --seal-on-ink: #8FB0FF;
   background: var(--paper);
   color: var(--ink);
 }
@@ -79,16 +94,23 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
   background: var(--paper);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+:lang(zh) body { line-height: 1.8; letter-spacing: 0.01em; }
+
+/* Tailwind's reset leaves headings at body weight; a heading should look like one. */
+h1, h2, h3, h4 { font-weight: 700; }
 
 button {
   font-family: inherit;
@@ -96,24 +118,23 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--seal);
-  outline-offset: 3px;
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
 }
 
 ::selection {
-  background: var(--seal);
-  color: var(--paper-light);
+  background: var(--yellow);
+  color: var(--ink);
 }
 
-/* Register page input placeholders */
 .register-input::placeholder {
-  color: rgba(238, 233, 221, 0.4);
+  color: var(--ink-3);
 }
 
 /* ------------------------------ Shared pieces ------------------------------ */
 .nx-wrap {
   width: 100%;
-  max-width: 1360px;
+  max-width: 1240px;
   margin: 0 auto;
   padding-left: var(--gutter);
   padding-right: var(--gutter);
@@ -121,44 +142,66 @@ button {
 
 .nx-display {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 800;
+  font-stretch: 100%;
   letter-spacing: -0.015em;
-  line-height: 1.02;
+  line-height: 1;
+  text-wrap: balance;
 }
-:lang(zh) .nx-display { font-weight: 600; letter-spacing: 0.02em; line-height: 1.22; }
+:lang(zh) .nx-display { font-weight: 700; letter-spacing: 0.01em; line-height: 1.25; }
+
+/* Text set to be read: capped line length, comfortable leading. */
+.nx-prose { max-width: var(--measure); font-size: 18px; line-height: 1.65; color: var(--ink-2); }
+:lang(zh) .nx-prose { line-height: 1.85; }
 
 .nx-label {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--ink-3);
 }
 
 .nx-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   min-height: 52px;
   padding: 0 24px;
-  border-radius: 2px;
-  border: 1px solid transparent;
+  border-radius: 0;
+  border: 2px solid var(--ink);
   font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 17px;
+  font-weight: 700;
   text-decoration: none;
-  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+  transition: color 220ms ease, border-color 220ms ease;
 }
+/* The fill slides in from the left on hover, like a container being loaded. */
+.nx-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms var(--ease-out);
+}
+.nx-btn:hover::before { transform: scaleX(1); }
 .nx-btn .nx-arrow { transition: transform 260ms var(--ease-out); }
 .nx-btn:hover .nx-arrow { transform: translateX(4px); }
 
-.nx-btn--seal { background: var(--gold); color: #0F1B2D; }
-.nx-btn--seal:hover { background: #CDB67E; }
-.nx-btn--ink { background: var(--ink); color: var(--paper-light); }
-.nx-btn--ink:hover { background: var(--seal); }
-.nx-btn--line { background: transparent; color: var(--ink); border-color: var(--rule-strong); }
-.nx-btn--line:hover { border-color: var(--ink); }
-.nx-btn--paper { background: var(--paper-light); color: var(--ink); }
-.nx-btn--paper:hover { background: #fff; }
+.nx-btn--seal  { background: var(--blue); color: #fff; border-color: var(--blue); }
+.nx-btn--seal::before { background: var(--ink); }
+.nx-btn--seal:hover { border-color: var(--ink); }
+.nx-btn--ink   { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.nx-btn--ink::before { background: var(--blue); }
+.nx-btn--ink:hover { border-color: var(--blue); }
+.nx-btn--line  { background: transparent; color: var(--ink); border-color: var(--ink); }
+.nx-btn--line::before { background: var(--yellow); }
+.nx-btn--paper { background: var(--paper-light); color: var(--ink); border-color: var(--paper-light); }
+.nx-btn--paper::before { background: var(--yellow); }
 
 .nx-link {
   background: none;
@@ -166,13 +209,14 @@ button {
   padding: 0;
   color: inherit;
   font: inherit;
+  font-weight: 700;
   text-decoration: underline;
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  text-decoration-color: var(--rule-strong);
-  transition: text-decoration-color 160ms ease, color 160ms ease;
+  text-decoration-color: var(--blue);
+  transition: background-color 160ms ease;
 }
-.nx-link:hover { text-decoration-color: currentColor; color: var(--seal); }
+.nx-link:hover { background: var(--yellow); color: var(--ink); text-decoration-color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

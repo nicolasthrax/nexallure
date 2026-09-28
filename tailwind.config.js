@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Cormorant Garamond"', '"Songti SC"', 'serif'],
-        mono: ['"IBM Plex Mono"', 'monospace'],
+        display: ['"Anybody Variable"', '"PingFang SC"', 'sans-serif'],
+        mono: ['"Atkinson Hyperlegible Mono Variable"', 'monospace'],
       },
     },
   },

@@ -108,28 +108,27 @@ export default function RegisterPage({ t, setPage }) {
 
   const labelStyle = {
     display: 'block',
-    fontSize: '11px',
-    letterSpacing: '0.12em',
-    color: 'rgba(238,233,221,0.55)',
+    fontSize: '14px',
+    color: 'var(--ink-2)',
     marginBottom: '8px',
-    fontFamily: "'IBM Plex Mono', monospace",
+    fontFamily: "var(--font-mono)",
   }
 
   const inputBase = {
     width: '100%',
-    background: '#16243A',
-    border: '1px solid rgba(255,255,255,0.12)',
+    background: '#fff',
+    border: '2px solid var(--rule-strong)',
     borderRadius: '4px',
     padding: '14px 16px',
-    color: 'var(--on-ink)',
+    color: 'var(--ink)',
     fontSize: '15px',
     outline: 'none',
     transition: 'border-color 0.2s ease',
-    fontFamily: "'IBM Plex Sans', sans-serif",
+    fontFamily: "var(--font-body)",
   }
 
-  const handleFocus = (e) => { e.target.style.borderColor = 'var(--seal-on-ink)' }
-  const handleBlur = (e) => { e.target.style.borderColor = 'rgba(255,255,255,0.12)' }
+  const handleFocus = (e) => { e.target.style.borderColor = 'var(--blue)' }
+  const handleBlur = (e) => { e.target.style.borderColor = 'var(--rule-strong)' }
 
   const selectStyle = {
     ...inputBase,
@@ -161,32 +160,34 @@ export default function RegisterPage({ t, setPage }) {
       >
         <p
           style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: '11px',
+            fontFamily: "var(--font-mono)",
+            fontSize: '13px',
             color: 'var(--signal-gold)',
-            letterSpacing: '0.15em',
             textAlign: 'center',
             marginBottom: '12px',
           }}
         >
-          Early Access
+          {t.register_eyebrow}
         </p>
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: '32px',
-            color: 'var(--warm-white)',
+            fontSize: '44px',
+            fontWeight: 800,
+            fontStretch: '90%',
+            lineHeight: 1.05,
+            color: 'var(--ink)',
             textAlign: 'center',
             marginBottom: '40px',
             letterSpacing: '-0.01em',
           }}
         >
-          Join Nexallure
+          {t.register_h1}
         </h1>
 
         {submitted ? (
           <div style={{ padding: '24px', border: '1px solid var(--green)', background: 'var(--green-bg)' }}>
-            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '13px', color: 'var(--green)' }}>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: '15px', color: 'var(--green)' }}>
               {t.form_success}
             </div>
           </div>
@@ -200,16 +201,16 @@ export default function RegisterPage({ t, setPage }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label htmlFor="f-form-field3-label" style={labelStyle}>{t.form_field3_label}</label>
               <select id="f-form-field3-label" required value={industry} onChange={(e) => setIndustry(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
-                <option value="" disabled style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.form_field3_placeholder}</option>
-                <option value="automotive" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_automotive}</option>
-                <option value="electronics" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_electronics}</option>
-                <option value="machinery" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_machinery}</option>
-                <option value="textiles" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_textiles}</option>
-                <option value="chemicals" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_chemicals}</option>
-                <option value="pharma" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_pharma}</option>
-                <option value="food" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_food}</option>
-                <option value="logistics" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_logistics}</option>
-                <option value="other" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_other}</option>
+                <option value="" disabled style={{ background: '#fff', color: 'var(--ink)' }}>{t.form_field3_placeholder}</option>
+                <option value="automotive" style={{ background: '#fff', color: 'var(--ink)' }}>{t.industry_automotive}</option>
+                <option value="electronics" style={{ background: '#fff', color: 'var(--ink)' }}>{t.industry_electronics}</option>
+                <option value="machinery" style={{ background: '#fff', color: 'var(--ink)' }}>{t.industry_machinery}</option>
+                <option value="textiles" style={{ background: '#fff', color: 'var(--ink)' }}>{t.industry_textiles}</option>
+                <option value="chemicals" style={{ background: '#fff', color: 'var(--ink)' }}>{t.industry_chemicals}</option>
+                <option value="pharma" style={{ background: '#fff', color: 'var(--ink)' }}>{t.industry_pharma}</option>
+                <option value="food" style={{ background: '#fff', color: 'var(--ink)' }}>{t.industry_food}</option>
+                <option value="logistics" style={{ background: '#fff', color: 'var(--ink)' }}>{t.industry_logistics}</option>
+                <option value="other" style={{ background: '#fff', color: 'var(--ink)' }}>{t.industry_other}</option>
               </select>
             </div>
 
@@ -227,29 +228,29 @@ export default function RegisterPage({ t, setPage }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label htmlFor="f-form-field4-label" style={labelStyle}>{t.form_field4_label}</label>
               <select id="f-form-field4-label" required value={size} onChange={(e) => setSize(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
-                <option value="" disabled style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.form_field4_placeholder}</option>
-                <option value="size_1" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_1}</option>
-                <option value="size_2" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_2}</option>
-                <option value="size_3" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_3}</option>
-                <option value="size_4" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_4}</option>
-                <option value="size_5" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_5}</option>
+                <option value="" disabled style={{ background: '#fff', color: 'var(--ink)' }}>{t.form_field4_placeholder}</option>
+                <option value="size_1" style={{ background: '#fff', color: 'var(--ink)' }}>{t.size_1}</option>
+                <option value="size_2" style={{ background: '#fff', color: 'var(--ink)' }}>{t.size_2}</option>
+                <option value="size_3" style={{ background: '#fff', color: 'var(--ink)' }}>{t.size_3}</option>
+                <option value="size_4" style={{ background: '#fff', color: 'var(--ink)' }}>{t.size_4}</option>
+                <option value="size_5" style={{ background: '#fff', color: 'var(--ink)' }}>{t.size_5}</option>
               </select>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label htmlFor="f-form-field5-label" style={labelStyle}>{t.form_field5_label}</label>
-              <MultiSelect id="f-form-field5-label" selected={markets} onChange={setMarkets} t={t} variant="dark" />
+              <MultiSelect id="f-form-field5-label" selected={markets} onChange={setMarkets} t={t} />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label htmlFor="f-form-field6-label" style={labelStyle}>{t.form_field6_label}</label>
               <select id="f-form-field6-label" required value={volume} onChange={(e) => setVolume(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
-                <option value="" disabled style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.form_field6_placeholder}</option>
-                <option value="volume_1" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_1}</option>
-                <option value="volume_2" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_2}</option>
-                <option value="volume_3" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_3}</option>
-                <option value="volume_4" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_4}</option>
-                <option value="volume_5" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_5}</option>
+                <option value="" disabled style={{ background: '#fff', color: 'var(--ink)' }}>{t.form_field6_placeholder}</option>
+                <option value="volume_1" style={{ background: '#fff', color: 'var(--ink)' }}>{t.volume_1}</option>
+                <option value="volume_2" style={{ background: '#fff', color: 'var(--ink)' }}>{t.volume_2}</option>
+                <option value="volume_3" style={{ background: '#fff', color: 'var(--ink)' }}>{t.volume_3}</option>
+                <option value="volume_4" style={{ background: '#fff', color: 'var(--ink)' }}>{t.volume_4}</option>
+                <option value="volume_5" style={{ background: '#fff', color: 'var(--ink)' }}>{t.volume_5}</option>
               </select>
             </div>
 
@@ -267,14 +268,13 @@ export default function RegisterPage({ t, setPage }) {
               <label htmlFor="f-form-field-confirm-label" style={labelStyle}>{t.form_field_confirm_label}</label>
               <input id="f-form-field-confirm-label" type="password" required minLength={8} value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value); if (confirmError) setConfirmError('') }} className="register-input" style={inputBase} onFocus={handleFocus} onBlur={handleBlur} />
               {confirmError && (
-                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', color: '#e05555' }}>
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: '13px', color: 'var(--danger)' }}>
                   {confirmError}
                 </div>
               )}
             </div>
 
             <ConsentCheckbox
-              tone="dark"
               t={t}
               checked={consent}
               onChange={(v) => { setConsent(v); if (v) setConsentError('') }}
@@ -282,7 +282,6 @@ export default function RegisterPage({ t, setPage }) {
               error={consentError}
             />
             <ConsentCheckbox
-              tone="dark"
               t={t}
               label={t.cross_border_consent_label}
               checked={crossBorderConsent}
@@ -301,7 +300,7 @@ export default function RegisterPage({ t, setPage }) {
             </div>
 
             {errorMsg && (
-              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', color: '#e05555', background: 'rgba(220,50,50,0.08)', border: '1px solid rgba(220,50,50,0.3)', borderRadius: '4px', padding: '10px 12px' }}>
+              <div style={{ fontFamily: "var(--font-mono)", fontSize: '14px', color: 'var(--danger)', background: 'var(--danger-bg)', border: '1px solid rgba(220,50,50,0.3)', borderRadius: '4px', padding: '10px 12px' }}>
                 {errorMsg}
               </div>
             )}
@@ -311,17 +310,16 @@ export default function RegisterPage({ t, setPage }) {
               disabled={submitting}
               style={{
                 width: '100%',
-                background: 'var(--seal-on-ink)',
-                color: '#0d1117',
+                background: 'var(--blue)',
+                color: '#fff',
                 border: 'none',
                 borderRadius: '4px',
                 padding: '16px',
-                fontSize: '13px',
-                fontWeight: '600',
-                letterSpacing: '0.12em',
+                fontSize: '15px',
+                fontWeight: '700',
                 cursor: submitting ? 'wait' : 'pointer',
                 transition: 'opacity 0.2s ease',
-                fontFamily: "'IBM Plex Sans', sans-serif",
+                fontFamily: "var(--font-body)",
               }}
               onMouseEnter={(e) => { if (!submitting) e.target.style.opacity = '0.88' }}
               onMouseLeave={(e) => { e.target.style.opacity = '1' }}
@@ -331,9 +329,9 @@ export default function RegisterPage({ t, setPage }) {
           </form>
         )}
 
-        <p className="text-center text-sm mt-8" style={{ color: 'var(--on-ink-2)' }}>
+        <p className="text-center text-sm mt-8" style={{ color: 'var(--ink-2)' }}>
           {t.account_signin_prompt}{' '}
-          <button type="button" className="nx-link" style={{ color: 'var(--on-ink)', minHeight: 44 }} onClick={() => setPage?.('login')}>
+          <button type="button" className="nx-link" style={{ color: 'var(--ink)', minHeight: 44 }} onClick={() => setPage?.('login')}>
             {t.nav_signin} →
           </button>
         </p>

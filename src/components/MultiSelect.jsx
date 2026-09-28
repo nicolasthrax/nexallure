@@ -83,7 +83,7 @@ export default function MultiSelect({
               style={{
                 ...chipStyle,
                 padding: '4px 4px 4px 10px',
-                fontSize: '13px',
+                fontSize: '15px',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '4px',
@@ -192,7 +192,7 @@ export default function MultiSelect({
                     background: 'transparent',
                     textAlign: 'left',
                     cursor: 'pointer',
-                    fontSize: '14px',
+                    fontSize: '16px',
                     color: itemText,
                   }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = itemHover }}

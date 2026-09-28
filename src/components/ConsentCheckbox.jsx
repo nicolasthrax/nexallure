@@ -70,8 +70,8 @@ export default function ConsentCheckbox({
           display: 'flex',
           alignItems: 'flex-start',
           gap: '10px',
-          fontFamily: "'IBM Plex Sans', sans-serif",
-          fontSize: '13px',
+          fontFamily: "var(--font-body)",
+          fontSize: '15px',
           color: dark ? 'var(--on-ink-2)' : 'var(--ink-2)',
           lineHeight: 1.55,
           cursor: 'pointer',
@@ -103,8 +103,8 @@ export default function ConsentCheckbox({
       {error && (
         <div
           style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: '11px',
+            fontFamily: "var(--font-mono)",
+            fontSize: '13px',
             color: dark ? '#F08A7A' : 'var(--danger)',
             paddingLeft: '26px',
           }}
