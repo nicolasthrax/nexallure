@@ -4,14 +4,14 @@ import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/re
 // A chainable fake of the Supabase query builder. Every call is recorded so the
 // tests can assert on what the component asked the database to do.
 const calls = []
-let lookupResult = { data: null, error: { code: 'PGRST116' } }
+let lookupResult = { data: null, error: null }
 let insertResult = { error: null }
 
 function builder(table) {
   const chain = {
     select: (...a) => { calls.push([table, 'select', ...a]); return chain },
     eq: (...a) => { calls.push([table, 'eq', ...a]); return chain },
-    single: () => Promise.resolve(lookupResult),
+    maybeSingle: () => Promise.resolve(lookupResult),
     insert: (row) => { calls.push([table, 'insert', row]); return Promise.resolve(insertResult) },
     delete: () => { calls.push([table, 'delete']); return chain },
     match: (m) => { calls.push([table, 'match', m]); return Promise.resolve({ error: null }) },
@@ -28,7 +28,7 @@ const t = translations.EN
 
 beforeEach(() => {
   calls.length = 0
-  lookupResult = { data: null, error: { code: 'PGRST116' } }
+  lookupResult = { data: null, error: null }
   insertResult = { error: null }
 })
 afterEach(cleanup)

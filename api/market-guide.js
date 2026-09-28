@@ -28,23 +28,25 @@ function getCorsOrigin(req) {
 }
 
 // ---------------------------------------------------------------------------
-// TODO: Rate Limiting with Vercel KV
+// TODO: Rate Limiting with Redis (Upstash, from the Vercel Marketplace)
 // ---------------------------------------------------------------------------
 // This endpoint should be rate-limited to prevent Denial-of-Wallet attacks
-// against our Groq API quota. Implementation plan:
+// against our Groq API quota. Vercel KV is no longer offered; use a Redis
+// store from the Marketplace instead. Implementation plan:
 //
-// 1. Install:  npm i @vercel/kv
+// 1. Add the Upstash Redis integration to the project in the Vercel
+//    dashboard, then `vercel env pull` to get its REST URL and token.
 //
-// 2. Set up a Vercel KV store (redis) in your Vercel dashboard and ensure
-//    the KV_REST_API_URL and KV_REST_API_TOKEN env vars are available.
+// 2. Install:  npm i @upstash/redis
 //
 // 3. At the top of the handler (after auth check), add:
 //
-//    import { kv } from '@vercel/kv'
+//    import { Redis } from '@upstash/redis'
+//    const redis = Redis.fromEnv()
 //
 //    const userKey = `ratelimit:market-guide:${user.id}`
-//    const count   = await kv.incr(userKey)
-//    if (count === 1) await kv.expire(userKey, 60)   // 1-minute window
+//    const count   = await redis.incr(userKey)
+//    if (count === 1) await redis.expire(userKey, 60)   // 1-minute window
 //    if (count > 5) {
 //      return res.status(429).json({ error: 'Rate limit exceeded', detail: 'Please wait a minute before requesting another guide.' })
 //    }

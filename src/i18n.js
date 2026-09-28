@@ -1,3 +1,5 @@
+import { toolStrings } from './tools/strings.js'
+
 export const translations = {
   EN: {
     /* ============== NAV ============== */
@@ -31,7 +33,7 @@ export const translations = {
     /* ============== ABOUT / ROADMAP ============== */
     about_h2: 'Built for Manufacturers Who Export',
     about_p1: 'Nexallure makes software for Chinese manufacturers who sell abroad. Each tool handles one job an export team does every week.',
-    about_p2: "We started with Market Intelligence because blind outreach wastes time. Next comes a Sample & After-Sales Tracker, then a Quoting Engine. Each tool is validated with real manufacturers before it's built.",
+    about_p2: 'We started with Market Intelligence because blind outreach wastes time. The Sample & After-Sales Tracker and the Export Quoting Engine are now live. Both work in your browser without an account, and sync to your account when you sign in.',
     about_tool_mg: 'Market Intelligence Guide',
     about_tool_sample: 'Sample & After-Sales Tracker',
     about_tool_quoting: 'Export Quoting Engine',
@@ -39,7 +41,7 @@ export const translations = {
 
     /* ============== SUPPLIER FORM ============== */
     form_h2: 'Create Your Manufacturer Account',
-    form_body: 'Sign up to use the Market Intelligence Guide now. The sample tracker and quoting engine will be added to the same account when they launch.',
+    form_body: 'Sign up to use the Market Intelligence Guide, and to keep your quotes, samples and after-sales cases in step across every computer and phone.',
     form_trust1: 'No listing fee during pre-launch',
     form_trust2: 'Priority onboarding for early applicants',
     form_trust3: 'Compliance review included',
@@ -255,10 +257,9 @@ export const translations = {
     port_us: 'Los Angeles', port_eu: 'Rotterdam', port_uk: 'Felixstowe',
     port_asean: 'Singapore', port_gcc: 'Jebel Ali', port_latam: 'Santos',
     port_africa: 'Mombasa', port_sa: 'Nhava Sheva', port_anz: 'Sydney',
-    about_status_dev: 'In development',
     tool_mg_desc: 'Pick a product and a region. See where buyers are, which platforms they use, and how to reach them.',
-    tool_sample_desc: 'Every sample and after-sales request in one pipeline, so buyer conversations don\'t go cold.',
-    tool_quoting_desc: 'Export quotes you can stand behind, sent faster.',
+    tool_sample_desc: 'Every sample and complaint on one board, a daily list of which buyers to chase, and an 8D clock on every after-sales case.',
+    tool_quoting_desc: 'Price every Incoterm at once, with the VAT rebate, the container load and the exchange-rate risk worked out.',
     story_sample: 'Sample brief · illustrative figures',
     score_size: 'Market size', score_entry: 'Entry ease', score_growth: 'Growth rate',
     sample_country: 'Germany',
@@ -339,14 +340,14 @@ export const translations = {
 
     about_h2: '为出口制造商而生',
     about_p1: 'Nexallure 为做外贸的中国制造商开发软件。每个工具只负责外贸团队每周都要做的一件事。',
-    about_p2: '我们从市场情报起步，因为盲目拓展纯属浪费时间。接下来是样品与售后追踪器，然后是报价引擎。每个工具在开发前都经过真实制造商验证。',
+    about_p2: '我们从市场情报起步，因为盲目拓展纯属浪费时间。样品与售后追踪器和出口报价引擎现已上线：无需注册即可在浏览器中使用，登录后自动同步到你的账户。',
     about_tool_mg: '市场情报指南',
     about_tool_sample: '样品与售后追踪器',
     about_tool_quoting: '出口报价引擎',
     about_status_live: '已上线',
 
     form_h2: '创建您的制造商账户',
-    form_body: '注册后即可使用市场情报指南。样品追踪器和报价引擎上线后，会加入同一个账户。',
+    form_body: '注册后即可使用市场情报指南，报价、样品和售后记录也会在你的电脑和手机之间保持同步。',
     form_trust1: '预发布期间免登记费',
     form_trust2: '早期申请者享优先入驻',
     form_trust3: '附赠合规初审',
@@ -554,10 +555,9 @@ export const translations = {
     port_us: '洛杉矶', port_eu: '鹿特丹', port_uk: '费利克斯托',
     port_asean: '新加坡', port_gcc: '杰贝阿里', port_latam: '桑托斯',
     port_africa: '蒙巴萨', port_sa: '那瓦舍瓦', port_anz: '悉尼',
-    about_status_dev: '开发中',
     tool_mg_desc: '选择产品和地区，查看买家在哪里、使用哪些平台，以及如何联系他们。',
-    tool_sample_desc: '所有样品与售后请求集中在一条管线中，买家沟通不再中断。',
-    tool_quoting_desc: '更快发出站得住脚的出口报价。',
+    tool_sample_desc: '所有样品和客诉集中在一块看板上，每天告诉你该跟进哪些买家，每个售后案件都有 8D 时限。',
+    tool_quoting_desc: '一次算出所有贸易术语的价格，出口退税、装柜方案和汇率风险一并算清。',
     story_sample: '简报样本 · 数据仅作示意',
     score_size: '市场规模', score_entry: '进入难度', score_growth: '增长速度',
     sample_country: '德国',
@@ -638,14 +638,14 @@ export const translations = {
 
     about_h2: '為出口製造商而生',
     about_p1: 'Nexallure 為做外貿的中國製造商開發軟體。每個工具只負責外貿團隊每週都要做的一件事。',
-    about_p2: '我們從市場情報起步，因為盲目拓展純屬浪費時間。接下來是樣品與售後追蹤器，然後是報價引擎。每個工具在開發前都經過真實製造商驗證。',
+    about_p2: '我們從市場情報起步，因為盲目拓展純屬浪費時間。樣品與售後追蹤器和出口報價引擎現已上線：無需註冊即可在瀏覽器中使用，登入後自動同步到你的帳戶。',
     about_tool_mg: '市場情報指南',
     about_tool_sample: '樣品與售後追蹤器',
     about_tool_quoting: '出口報價引擎',
     about_status_live: '已上線',
 
     form_h2: '建立您的製造商帳戶',
-    form_body: '註冊後即可使用市場情報指南。樣品追蹤器和報價引擎上線後，會加入同一個帳戶。',
+    form_body: '註冊後即可使用市場情報指南，報價、樣品和售後紀錄也會在你的電腦和手機之間保持同步。',
     form_trust1: '預發布期間免登記費',
     form_trust2: '早期申請者享優先入駐',
     form_trust3: '附贈合規初審',
@@ -853,10 +853,9 @@ export const translations = {
     port_us: '洛杉磯', port_eu: '鹿特丹', port_uk: '費利克斯托',
     port_asean: '新加坡', port_gcc: '傑貝阿里', port_latam: '桑托斯',
     port_africa: '蒙巴薩', port_sa: '那瓦舍瓦', port_anz: '雪梨',
-    about_status_dev: '開發中',
     tool_mg_desc: '選擇產品與地區，查看買家在哪裡、使用哪些平台，以及如何聯繫他們。',
-    tool_sample_desc: '所有樣品與售後請求集中在一條管線中，買家溝通不再中斷。',
-    tool_quoting_desc: '更快送出站得住腳的出口報價。',
+    tool_sample_desc: '所有樣品和客訴集中在一塊看板上，每天告訴你該跟進哪些買家，每個售後案件都有 8D 時限。',
+    tool_quoting_desc: '一次算出所有貿易術語的價格，出口退稅、裝櫃方案和匯率風險一併算清。',
     story_sample: '簡報樣本 · 數據僅作示意',
     score_size: '市場規模', score_entry: '進入難度', score_growth: '成長速度',
     sample_country: '德國',
@@ -911,4 +910,5 @@ export const translations = {
   },
 };
 
-export default translations;
+// The export tools keep their text in their own module.
+for (const lang of Object.keys(translations)) Object.assign(translations[lang], toolStrings[lang])

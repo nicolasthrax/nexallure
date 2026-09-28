@@ -101,11 +101,11 @@ function Container({ color, code, children, index, wide }) {
   )
 }
 
-function Status({ live, t }) {
+function Status({ t }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 16, fontWeight: 700, color: live ? 'var(--green)' : 'var(--ink-3)' }}>
-      <span aria-hidden="true" style={{ width: 10, height: 10, borderRadius: '50%', background: live ? 'var(--green)' : 'transparent', border: live ? 0 : '2px solid var(--ink-3)' }} />
-      {live ? t.about_status_live : t.about_status_dev}
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 16, fontWeight: 700, color: 'var(--green)' }}>
+      <span aria-hidden="true" style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--green)' }} />
+      {t.about_status_live}
     </span>
   )
 }
@@ -155,15 +155,23 @@ function Tools({ t, setPage }) {
             <Status t={t} />
             <h3 className="nx-display">{t.about_tool_sample}</h3>
             <p className="nx-prose" style={{ fontSize: 17 }}>{t.tool_sample_desc}</p>
+            <button className="nx-btn nx-btn--ink" onClick={() => setPage('tracker')}>
+              {t.home_tracker_cta}
+              <Arrow />
+            </button>
           </Container>
           <Container color="var(--green)" code="NXLU 000003 · 7" index={1}>
             <Status t={t} />
             <h3 className="nx-display">{t.about_tool_quoting}</h3>
             <p className="nx-prose" style={{ fontSize: 17 }}>{t.tool_quoting_desc}</p>
+            <button className="nx-btn nx-btn--ink" onClick={() => setPage('quoting')}>
+              {t.home_quoting_cta}
+              <Arrow />
+            </button>
           </Container>
           <Container color="var(--blue)" code="NXLU 000001 · 4" index={2} wide>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <Status live t={t} />
+              <Status t={t} />
               <h3 className="nx-display">{t.about_tool_mg}</h3>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18, alignItems: 'flex-start' }}>
