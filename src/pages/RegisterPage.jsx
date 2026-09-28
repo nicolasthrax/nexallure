@@ -51,11 +51,26 @@ export default function RegisterPage({ t, setPage }) {
     }
 
     if (!turnstileToken) {
-      setErrorMsg('Please complete the security verification.')
+      setErrorMsg(t.register_verify_required)
       return
     }
 
     setSubmitting(true)
+
+    // Create the account first: it is what the visitor asked for, and its
+    // errors (e.g. an email that is already registered) must be shown. The
+    // application details are sent afterwards; if that step is not configured
+    // or fails, the account still exists.
+    // When email confirmation is off, signUp also signs the visitor in.
+    if (supabase) {
+      const { error } = await supabase.auth.signUp({ email, password })
+      if (error) {
+        setSubmitting(false)
+        setErrorMsg(error.message)
+        return
+      }
+    }
+
     const payload = {
       company_name: companyName,
       industry: industry === 'other' ? `Other: ${industryOther}` : industry,
@@ -75,23 +90,16 @@ export default function RegisterPage({ t, setPage }) {
     const result = await submitForm('Supplier Application', payload)
     setSubmitting(false)
 
-    if (result.ok) {
+    if (result.ok || supabase) {
       setSubmitted(true)
       // crypto.randomUUID() is universally available in secure (HTTPS) contexts.
       // No Math.random() fallback — predictable tokens are unacceptable.
       try {
         const token = crypto.randomUUID()
         localStorage.setItem('nexallure_device_token', token)
+        window.dispatchEvent(new Event('nexallure:device-token'))
       } catch (e) {
         console.warn('Could not save device token', e)
-      }
-
-      if (supabase) {
-        supabase.auth.signUp({ email, password }).then(({ error }) => {
-          if (!error) {
-            supabase.auth.signInWithPassword({ email, password })
-          }
-        })
       }
       return
     }
@@ -109,7 +117,7 @@ export default function RegisterPage({ t, setPage }) {
 
   const inputBase = {
     width: '100%',
-    background: '#1D2027',
+    background: '#16243A',
     border: '1px solid rgba(255,255,255,0.12)',
     borderRadius: '4px',
     padding: '14px 16px',
@@ -192,16 +200,16 @@ export default function RegisterPage({ t, setPage }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label htmlFor="f-form-field3-label" style={labelStyle}>{t.form_field3_label}</label>
               <select id="f-form-field3-label" required value={industry} onChange={(e) => setIndustry(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
-                <option value="" disabled style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.form_field3_placeholder}</option>
-                <option value="automotive" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_automotive}</option>
-                <option value="electronics" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_electronics}</option>
-                <option value="machinery" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_machinery}</option>
-                <option value="textiles" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_textiles}</option>
-                <option value="chemicals" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_chemicals}</option>
-                <option value="pharma" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_pharma}</option>
-                <option value="food" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_food}</option>
-                <option value="logistics" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_logistics}</option>
-                <option value="other" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.industry_other}</option>
+                <option value="" disabled style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.form_field3_placeholder}</option>
+                <option value="automotive" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_automotive}</option>
+                <option value="electronics" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_electronics}</option>
+                <option value="machinery" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_machinery}</option>
+                <option value="textiles" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_textiles}</option>
+                <option value="chemicals" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_chemicals}</option>
+                <option value="pharma" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_pharma}</option>
+                <option value="food" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_food}</option>
+                <option value="logistics" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_logistics}</option>
+                <option value="other" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.industry_other}</option>
               </select>
             </div>
 
@@ -219,12 +227,12 @@ export default function RegisterPage({ t, setPage }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label htmlFor="f-form-field4-label" style={labelStyle}>{t.form_field4_label}</label>
               <select id="f-form-field4-label" required value={size} onChange={(e) => setSize(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
-                <option value="" disabled style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.form_field4_placeholder}</option>
-                <option value="size_1" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_1}</option>
-                <option value="size_2" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_2}</option>
-                <option value="size_3" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_3}</option>
-                <option value="size_4" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_4}</option>
-                <option value="size_5" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.size_5}</option>
+                <option value="" disabled style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.form_field4_placeholder}</option>
+                <option value="size_1" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_1}</option>
+                <option value="size_2" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_2}</option>
+                <option value="size_3" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_3}</option>
+                <option value="size_4" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_4}</option>
+                <option value="size_5" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.size_5}</option>
               </select>
             </div>
 
@@ -236,12 +244,12 @@ export default function RegisterPage({ t, setPage }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label htmlFor="f-form-field6-label" style={labelStyle}>{t.form_field6_label}</label>
               <select id="f-form-field6-label" required value={volume} onChange={(e) => setVolume(e.target.value)} style={selectStyle} onFocus={handleFocus} onBlur={handleBlur}>
-                <option value="" disabled style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.form_field6_placeholder}</option>
-                <option value="volume_1" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_1}</option>
-                <option value="volume_2" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_2}</option>
-                <option value="volume_3" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_3}</option>
-                <option value="volume_4" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_4}</option>
-                <option value="volume_5" style={{ background: '#1D2027', color: 'var(--on-ink)' }}>{t.volume_5}</option>
+                <option value="" disabled style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.form_field6_placeholder}</option>
+                <option value="volume_1" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_1}</option>
+                <option value="volume_2" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_2}</option>
+                <option value="volume_3" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_3}</option>
+                <option value="volume_4" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_4}</option>
+                <option value="volume_5" style={{ background: '#16243A', color: 'var(--on-ink)' }}>{t.volume_5}</option>
               </select>
             </div>
 

@@ -27,7 +27,7 @@ export default function WatchlistDashboard({ userId, t = {}, setPage }) {
         if (!cancelled) setMarkets(data || []);
       } catch (err) {
         console.error("Failed to fetch monitored markets:", err);
-        toast.error("Could not load your monitored markets");
+        toast.error(t.mon_load_failed);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -35,7 +35,7 @@ export default function WatchlistDashboard({ userId, t = {}, setPage }) {
 
     fetchMonitoredMarkets();
     return () => { cancelled = true; };
-  }, [userId]);
+  }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleRemove(id) {
     // Optimistic update
@@ -50,10 +50,10 @@ export default function WatchlistDashboard({ userId, t = {}, setPage }) {
 
       if (error) throw error;
       
-      toast.success("Market removed from Monitor");
+      toast.success(t.mon_removed);
     } catch (err) {
       console.error(err);
-      toast.error("Failed to remove market");
+      toast.error(t.mon_remove_failed);
       setMarkets(previousMarkets); // rollback
     }
   }
@@ -67,7 +67,7 @@ export default function WatchlistDashboard({ userId, t = {}, setPage }) {
   if (loading) {
     return (
       <div style={{ ...shell, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <span className="w-6 h-6 border-2 border-[#A8321F]/30 border-t-[#A8321F] rounded-full animate-spin" />
+        <span role="status" aria-label={t.nav_monitor} className="w-6 h-6 border-2 rounded-full animate-spin" style={{ borderColor: "var(--rule-strong)", borderTopColor: "var(--seal)" }} />
       </div>
     );
   }
@@ -94,10 +94,7 @@ export default function WatchlistDashboard({ userId, t = {}, setPage }) {
           }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <span className="nx-label">
-              {markets.length} · {t.nav_monitor || "Monitor"}
-            </span>
-            <h1 className="nx-display" style={{ fontSize: "clamp(48px, 6vw, 88px)" }}>Market Monitor</h1>
+            <h1 className="nx-display" style={{ fontSize: "clamp(48px, 6vw, 88px)" }}>{t.nav_monitor}</h1>
           </div>
           <button className="nx-btn nx-btn--seal" onClick={() => setPage?.("marketGuide")}>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -141,9 +138,9 @@ export default function WatchlistDashboard({ userId, t = {}, setPage }) {
               gap: 12,
             }}
           >
-            <p style={{ fontSize: 18, fontWeight: 600 }}>No markets monitored yet</p>
+            <p style={{ fontSize: 18, fontWeight: 600 }}>{t.mon_empty_title}</p>
             <p style={{ fontSize: 15, color: "var(--ink-2)", maxWidth: 440, lineHeight: 1.6 }}>
-              Open any Market Guide report and press “Monitor this market” to start tracking it here.
+              {t.mon_empty_body}
             </p>
           </div>
         ) : (
@@ -174,34 +171,24 @@ export default function WatchlistDashboard({ userId, t = {}, setPage }) {
                   }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--go)" }}>
-                      NXLU {String(markets.length - i).padStart(3, "0")}
+                    <span style={{ fontSize: 13, color: "var(--ink-3)" }}>
+                      {(t.mon_added_on || "").replace("{date}", fmt(market.created_at))}
                     </span>
                     <button
                       className="nx-link"
                       style={{ fontSize: 13, color: "var(--ink-3)", minHeight: 44 }}
                       onClick={() => handleRemove(market.id)}
                     >
-                      Remove
+                      {t.mon_remove_short}
                     </button>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <h2 className="nx-display" style={{ fontSize: 36, lineHeight: 1, textTransform: "capitalize" }}>
-                      {market.category}
+                    <h2 className="nx-display" style={{ fontSize: 32, lineHeight: 1.05 }}>
+                      {t[market.category] || market.category}
                     </h2>
-                    <span style={{ fontSize: 15, color: "var(--ink-2)" }}>{market.region || "Global"}</span>
-                  </div>
-                  <div
-                    style={{
-                      marginTop: "auto",
-                      paddingTop: 16,
-                      borderTop: "1px solid var(--rule)",
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 12,
-                      color: "var(--ink-3)",
-                    }}
-                  >
-                    Added {fmt(market.created_at)}
+                    <span style={{ fontSize: 15, color: "var(--ink-2)" }}>
+                      {!market.region || market.region === "any" ? t.mg_global : t[market.region] || market.region}
+                    </span>
                   </div>
                 </motion.article>
               ))}

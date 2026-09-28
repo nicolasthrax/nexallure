@@ -81,7 +81,12 @@ export default async function handler(req, res) {
   }
 
   // Safe request body parsing to guard against undefined body or raw strings
-  const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {})
+  let body
+  try {
+    body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {})
+  } catch {
+    return res.status(400).json({ error: 'Invalid JSON body' })
+  }
   const { industry, market, language } = body
 
   // Server-side validation allowlist
@@ -103,8 +108,10 @@ export default async function handler(req, res) {
   }
 
   let langInstruction = ''
-  if (language === 'ZH') langInstruction = 'ALL string values in the JSON must be written in Simplified Chinese (中文简体). Do not use English for any values, only keys stay in English.'
-  if (language === 'TW') langInstruction = 'ALL string values in the JSON must be written in Traditional Chinese (中文繁體). Do not use English for any values, only keys stay in English.'
+  // The "severity" and "tier" codes drive the report's styling, so they stay in English.
+  const keepCodes = ' Exception: "severity" must stay exactly HIGH, MED or LOW, and "tier" must stay exactly PRIMARY, SECONDARY or NICHE, in English.'
+  if (language === 'ZH') langInstruction = 'ALL string values in the JSON must be written in Simplified Chinese (中文简体). Do not use English for any values, only keys stay in English.' + keepCodes
+  if (language === 'TW') langInstruction = 'ALL string values in the JSON must be written in Traditional Chinese (中文繁體). Do not use English for any values, only keys stay in English.' + keepCodes
 
   const systemPrompt = `You are a senior B2B export intelligence analyst with 20+ years advising Chinese manufacturers on entering foreign markets. You have deep insider knowledge of trade flows, procurement behavior, platform algorithms, and common failure modes.
 
@@ -152,7 +159,7 @@ Structural Rules for Lists:
 - "platform_scores": Provide 6-8 real platforms specific to the industry/market, scored by actual buyer traffic and conversion. Use tiers: PRIMARY, SECONDARY, or NICHE.
 - "outreach_channels": Provide 3-6 short action-oriented channel names.
 - "outreach_detail": Provide 3-4 specific insider tactics with concrete detail.
-- "mistakes_structured": Provide 5-6 mistakes total, at least 2 HIGH severity (HIGH or MED), specific to this industry/market.
+- "mistakes_structured": Provide 5-6 mistakes total, each with severity HIGH, MED or LOW, at least 2 of them HIGH, specific to this industry/market.
 
 Be ruthlessly specific. Name real trade shows, real platforms, real certification requirements (CE, FCC, ISO numbers), real countries with real import data context. This should read like a briefing from someone who has done this for 20 years, not a generic overview.`
 

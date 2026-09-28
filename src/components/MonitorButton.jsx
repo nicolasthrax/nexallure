@@ -3,14 +3,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "../lib/supabase.js";
 import { toast } from "react-hot-toast";
 
-export function MonitorButton({ industry, region, userId, onMonitorChange }) {
+// `industry` and `region` are translation keys (e.g. "industry_machinery",
+// "market_eu", or "any"), never translated labels: rows saved in one language
+// must still match when the reader switches to another.
+export function MonitorButton({ industry, region, userId, t = {}, onMonitorChange }) {
   const [state, setState] = useState("idle");
   const [showModal, setShowModal] = useState(false);
   const [isMonitored, setIsMonitored] = useState(false);
 
+  const industryLabel = t[industry] || industry;
+  const regionLabel = region === "any" ? t.mg_global || region : t[region] || region;
+
   useEffect(() => {
     async function checkMonitorStatus() {
-      if (!userId || !industry || !region) return;
+      if (!userId || !industry || !region || !supabase) return;
 
       const { data, error } = await supabase
         .from("monitored_markets")
@@ -19,7 +25,7 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
         .eq("category", industry)
         .eq("region", region)
         .single();
-      
+
       if (error && error.code !== "PGRST116") {
         console.error("Error checking monitor status:", error);
       }
@@ -29,11 +35,8 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
   }, [userId, industry, region]);
 
   async function handleMonitor() {
-    if (!userId) {
-      toast.error("Please sign in to monitor markets");
-      return;
-    }
-    
+    if (!userId || !supabase) return;
+
     setShowModal(false);
     setState("loading");
 
@@ -44,38 +47,35 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
           user_id: userId,
           category: industry,
           region: region,
-          created_at: new Date().toISOString()
+          created_at: new Date().toISOString(),
         });
 
       if (error) {
         if (error.code === "23505") {
-          toast.error("This market is already being monitored");
-          setState("idle");
+          toast.error(t.mon_exists);
+          setState("active");
+          setIsMonitored(true);
           return;
         }
-          throw error;
-        }
+        throw error;
+      }
 
-        setState("active");
-        setIsMonitored(true);
-        toast.success("Market added to Monitor");
-        // Instead of calling onMonitorChange directly here,
-        // the useEffect in WatchlistDashboard will refetch when `isMonitored` changes.
-        // if (onMonitorChange) onMonitorChange(); 
-      
+      setState("active");
+      setIsMonitored(true);
+      toast.success(t.mon_added);
       if (onMonitorChange) onMonitorChange();
     } catch (err) {
       console.error(err);
-      toast.error("Failed to monitor this market");
+      toast.error(t.mon_add_failed);
       setState("idle");
     }
   }
 
   async function handleRemove() {
-    if (!userId) return;
-    
+    if (!userId || !supabase) return;
+
     setState("loading");
-    
+
     try {
       const { error } = await supabase
         .from("monitored_markets")
@@ -86,15 +86,11 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
 
       setState("idle");
       setIsMonitored(false);
-      toast.success("Market removed from Monitor");
-      // Instead of calling onMonitorChange directly here,
-      // the useEffect in WatchlistDashboard will refetch when `isMonitored` changes.
-      // if (onMonitorChange) onMonitorChange();
-      
+      toast.success(t.mon_removed);
       if (onMonitorChange) onMonitorChange();
     } catch (err) {
       console.error(err);
-      toast.error("Failed to remove market");
+      toast.error(t.mon_remove_failed);
       setState("active");
     }
   }
@@ -115,32 +111,34 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [showModal]);
 
-  // If already monitored, show remove button. Ensure isMonitored is checked.
+  const buttonStyle = {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 8,
+    minHeight: 40,
+    padding: "0 16px",
+    background: "transparent",
+    border: "1px solid var(--ink-rule)",
+    borderRadius: 2,
+    color: "var(--on-ink)",
+    fontSize: 13,
+    fontWeight: 500,
+    cursor: "pointer",
+  };
+
   if (isMonitored) {
     return (
-      <button
-        onClick={handleRemove}
-        disabled={state === "loading"}
-        className="flex items-center gap-2 px-4 py-2 border border-red-500/40 text-red-400 hover:bg-red-500/10 font-mono text-xs tracking-widest transition-colors disabled:opacity-50"
-      >
-        {state === "loading" ? "REMOVING..." : "REMOVE FROM MONITOR"}
+      <button onClick={handleRemove} disabled={state === "loading"} style={{ ...buttonStyle, opacity: state === "loading" ? 0.5 : 1 }}>
+        {state === "loading" ? t.mon_removing : t.mon_remove}
       </button>
     );
   }
 
   return (
     <>
-      <button
-        onClick={openModal}
-        disabled={state === "loading"}
-        className="flex items-center gap-2 px-4 py-2 border border-white/20 hover:border-[#E8826A]/60 text-white/70 hover:text-[#E8826A] font-mono text-xs tracking-widest transition-colors disabled:opacity-50"
-      >
-        {state === "loading" ? (
-          <span className="w-3 h-3 border border-[#E8826A]/40 border-t-[#E8826A] rounded-full animate-spin" />
-        ) : (
-          <span className="text-[#E8826A]">+</span>
-        )}
-        {state === "loading" ? "ADDING..." : "MONITOR THIS MARKET"}
+      <button onClick={openModal} disabled={state === "loading"} style={{ ...buttonStyle, opacity: state === "loading" ? 0.5 : 1 }}>
+        <span aria-hidden="true" style={{ color: "var(--seal-on-ink)" }}>+</span>
+        {state === "loading" ? t.mon_adding : t.mon_add}
       </button>
 
       <AnimatePresence>
@@ -150,45 +148,48 @@ export function MonitorButton({ industry, region, userId, onMonitorChange }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeModal}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm"
+            style={{
+              position: "fixed", inset: 0, zIndex: 9999,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              background: "rgba(6, 12, 22, 0.72)", padding: 16,
+            }}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 12 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 12 }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 12 }}
               onClick={(e) => e.stopPropagation()}
               role="dialog"
               aria-modal="true"
               aria-labelledby="monitor-dialog-title"
-              className="relative bg-[#1D2027] border border-[#E8826A]/20 p-10 max-w-[480px] w-full mx-4"
+              style={{
+                position: "relative", width: "100%", maxWidth: 460,
+                padding: 40, background: "var(--paper-light)", color: "var(--ink)",
+                border: "1px solid var(--rule-strong)", outline: "1px solid var(--gold)", outlineOffset: -7,
+              }}
             >
               <button
                 type="button"
                 onClick={closeModal}
-                aria-label="Close"
-                className="absolute top-3 right-3 w-11 h-11 flex items-center justify-center text-white/60 hover:text-white text-xl"
+                aria-label={t.nav_close || "Close"}
+                style={{
+                  position: "absolute", top: 12, right: 12, width: 44, height: 44,
+                  background: "none", border: 0, fontSize: 22, color: "var(--ink-3)", cursor: "pointer",
+                }}
               >
                 ×
               </button>
 
-              <div className="font-mono text-[#E8826A] text-xs tracking-[3px] uppercase mb-5">
-                MARKET INTELLIGENCE
-              </div>
-
-              <h3 id="monitor-dialog-title" className="font-display font-extrabold text-2xl text-[#EEE9DD] mb-4 leading-tight">
-                Initialize Market Monitor?
+              <h3 id="monitor-dialog-title" className="nx-display" style={{ fontSize: 30, marginBottom: 14, paddingRight: 32 }}>
+                {t.mon_dialog_title}
               </h3>
 
-              <p className="text-white/70 text-sm leading-relaxed mb-8">
-                This will add <strong>{industry}</strong> in <strong>{region}</strong> to your Monitor page. 
-                You will receive updates and alerts for this market.
+              <p style={{ fontSize: 15, lineHeight: 1.65, color: "var(--ink-2)", marginBottom: 28 }}>
+                {(t.mon_dialog_body || "").replace("{industry}", industryLabel).replace("{region}", regionLabel)}
               </p>
 
-              <button
-                onClick={handleMonitor}
-                className="w-full border border-[#E8826A]/50 text-[#E8826A] py-3.5 font-mono text-xs tracking-[2px] hover:bg-[#E8826A]/10 hover:border-[#E8826A] transition"
-              >
-                CONFIRM MONITORING
+              <button onClick={handleMonitor} className="nx-btn nx-btn--ink" style={{ width: "100%" }}>
+                {t.mon_confirm}
               </button>
             </motion.div>
           </motion.div>

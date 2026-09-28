@@ -72,10 +72,16 @@ function AppInner() {
     localStorage.setItem('nexallure_lang', lang)
   }, [lang])
 
+  // The forms save a device token after a successful submission; pick it up
+  // straight away instead of only on the next page load.
   useEffect(() => {
-    const token = localStorage.getItem('nexallure_device_token')
-    if (token) {
-      setHasDeviceToken(true)
+    const check = () => setHasDeviceToken(!!localStorage.getItem('nexallure_device_token'))
+    check()
+    window.addEventListener('nexallure:device-token', check)
+    window.addEventListener('storage', check)
+    return () => {
+      window.removeEventListener('nexallure:device-token', check)
+      window.removeEventListener('storage', check)
     }
   }, [])
 

@@ -77,11 +77,13 @@ function RadarChart({ data, size = 260 }) {
 }
 
 // ─── Heatmap ─────────────────────────────────────────────────────────────────
-function PlatformHeatmap({ platforms }) {
+function PlatformHeatmap({ platforms, t }) {
   if (!platforms?.length) return null
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      {platforms.map((p, i) => (
+      {platforms.map((p, i) => {
+        const tier = normalizeTier(p.tier)
+        return (
         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
             fontFamily: "'IBM Plex Mono', monospace",
@@ -113,10 +115,11 @@ function PlatformHeatmap({ platforms }) {
           <div style={{
             width: '60px', flexShrink: 0,
             fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px',
-            color: p.tier === 'PRIMARY' ? 'var(--seal-on-ink)' : p.tier === 'SECONDARY' ? 'rgba(201,178,122,0.6)' : 'rgba(255,255,255,0.3)',
-          }}>{p.tier}</div>
+            color: tier === 'PRIMARY' ? 'var(--seal-on-ink)' : tier === 'SECONDARY' ? 'rgba(201,178,122,0.6)' : 'rgba(255,255,255,0.3)',
+          }}>{t?.[TIER_LABEL[tier]] || tier}</div>
         </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
@@ -258,6 +261,21 @@ function BlurGateOverlay({ t, setPage }) {
   )
 }
 
+// The model is asked to keep these codes in English, but when it writes the
+// report in Chinese it sometimes translates them too. Map both back to codes.
+const SEVERITY_CODES = { HIGH: 'HIGH', 高: 'HIGH', MED: 'MED', MEDIUM: 'MED', 中: 'MED', LOW: 'LOW', 低: 'LOW' }
+const TIER_CODES = { PRIMARY: 'PRIMARY', 主要: 'PRIMARY', 首选: 'PRIMARY', 首選: 'PRIMARY', SECONDARY: 'SECONDARY', 次要: 'SECONDARY', NICHE: 'NICHE', 小众: 'NICHE', 小眾: 'NICHE', 细分: 'NICHE', 細分: 'NICHE', 利基: 'NICHE' }
+const SEVERITY_LABEL = { HIGH: 'sev_high', MED: 'sev_med', LOW: 'sev_low' }
+const TIER_LABEL = { PRIMARY: 'tier_primary', SECONDARY: 'tier_secondary', NICHE: 'tier_niche' }
+function normalizeSeverity(v) {
+  const s = String(v || '').trim()
+  return SEVERITY_CODES[s.toUpperCase()] || SEVERITY_CODES[s] || 'MED'
+}
+function normalizeTier(v) {
+  const s = String(v || '').trim()
+  return TIER_CODES[s.toUpperCase()] || TIER_CODES[s] || 'NICHE'
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function MarketGuidePage({ setPage, t }) {
   const { session, loading: authLoading } = useAuth()
@@ -289,7 +307,7 @@ export default function MarketGuidePage({ setPage, t }) {
       return
     }
     if (!isAuthenticated) {
-      setError(t?.mg_blur_body || 'Please sign in or create an account to generate the market guide.')
+      setError(t?.mg_auth_required)
       return
     }
     setLoading(true)
@@ -321,25 +339,25 @@ export default function MarketGuidePage({ setPage, t }) {
           // Non-JSON body (e.g. an HTML error page): keep the generic message.
         }
         if (response.status === 401) {
-          throw new Error('Authentication required. Please sign in to generate market guides.')
+          throw new Error(t?.mg_auth_required)
         }
-        throw new Error(serverMsg
-          ? `${serverMsg} (Status ${response.status})`
-          : `Server error (Status ${response.status}). Please try again later.`)
+        if (serverMsg) console.error('Market guide server error:', response.status, serverMsg)
+        throw new Error(t?.mg_server_error)
       }
 
       const parsed = await response.json()
-      if (parsed.error) throw new Error(parsed.error)
+      if (parsed.error) throw new Error(t?.mg_server_error)
       
       // Check if the backend returned an empty fallback layout
       if (!parsed.opportunity_scores || parsed.opportunity_scores.length === 0) {
-        throw new Error('The AI engine returned an empty report. Please try generating it again.')
+        throw new Error(t?.mg_empty_report)
       }
 
       setResult(parsed)
     } catch (err) {
       console.error(err)
-      setError(err.message || t?.mg_error || 'Could not load market data. Please try again.')
+      // Network failures surface as a TypeError with an English browser message.
+      setError(err instanceof TypeError ? t?.mg_error : err.message || t?.mg_error)
       // Ensure the result is cleared on error to prevent displaying stale data
       setResult(null)
     } finally {
@@ -545,7 +563,7 @@ export default function MarketGuidePage({ setPage, t }) {
                 {error && <div role="alert" style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', color: 'var(--signal-gold)', marginBottom: '16px' }}>{error}</div>}
                 {loading && (
                   <AnimatePresence>
-                    <MarketLoader text="Analyzing export markets..." />
+                    <MarketLoader text={t?.mg_loading} />
                   </AnimatePresence>
                 )}
                 {!loading && (
@@ -569,18 +587,14 @@ export default function MarketGuidePage({ setPage, t }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px', paddingBottom: '20px', borderBottom: '1px solid rgba(201,178,122,0.15)' }}>
                       <div>
                         <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', color: 'rgba(201,178,122,0.5)', letterSpacing: '0.1em', marginBottom: '6px' }}>
-                          INTELLIGENCE REPORT · {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
+                          {t?.mg_report_label} · {new Date().toLocaleDateString(t?._lang === 'EN' ? 'en-GB' : t?._lang === 'TW' ? 'zh-TW' : 'zh-CN', { day: '2-digit', month: 'short', year: 'numeric' })}
                         </div>
                         <h2 style={{ fontFamily: "var(--font-display)", fontSize: '28px', color: 'var(--warm-white)', margin: 0 }}>
-                          {t?.[industry]} → {market === 'any' ? (t?._lang === 'ZH' || t?._lang === 'TW' ? '全球市场' : 'Global Markets') : t?.[market]}
+                          {t?.[industry]} → {market === 'any' ? t?.mg_global : t?.[market]}
                         </h2>
                       </div>
                       <div style={{ display: 'flex', gap: '12px' }} className="no-print">
-                        <MonitorButton 
-                          industry={t?.[industry] || industry} 
-                          region={market === 'any' ? (t?._lang === 'ZH' || t?._lang === 'TW' ? '全球市场' : 'Global Markets') : (t?.[market] || market)} 
-                          userId={session?.user?.id} 
-                        />
+                        <MonitorButton industry={industry} region={market} userId={session?.user?.id} t={t} />
                         <button onClick={handlePrint} style={{ background: 'transparent', color: 'var(--seal-on-ink)', border: '1px solid rgba(201,178,122,0.3)', padding: '9px 18px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '11px', cursor: 'pointer', letterSpacing: '0.05em' }}>
                           ↓ PDF
                         </button>
@@ -594,7 +608,7 @@ export default function MarketGuidePage({ setPage, t }) {
                     {result.opportunity_scores && (
                       <div className="card mg-full">
                         <div className="card-label">
-                          {t?._lang === 'ZH' || t?._lang === 'TW' ? '市场机会评分' : 'MARKET OPPORTUNITY SCORES'}
+                          {t?.mg_scores_title}
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: '16px', paddingTop: '8px' }}>
                           {result.opportunity_scores.map((s, i) => (
@@ -648,7 +662,7 @@ export default function MarketGuidePage({ setPage, t }) {
                       <div className="card">
                         <div className="card-label">{t?.mg_section_platforms}</div>
                         {result.platform_scores && result.platform_scores.length > 0 ? (
-                          <PlatformHeatmap platforms={result.platform_scores} />
+                          <PlatformHeatmap platforms={result.platform_scores} t={t} />
                         ) : (
                           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                             {(result.platforms || []).map((item, i) => (
@@ -688,10 +702,10 @@ export default function MarketGuidePage({ setPage, t }) {
                         {(result.mistakes_structured || result.mistakes_to_avoid || []).map((item, i) => {
   const isObj = typeof item === 'object'
   const text = isObj ? item.mistake : item
-  const sev = isObj ? item.severity : (i < 2 ? 'HIGH' : 'MED')
+  const sev = normalizeSeverity(isObj ? item.severity : (i < 2 ? 'HIGH' : 'MED'))
   return (
     <div key={i} className="mistake-row">
-      <span className={`mistake-sev ${sev === 'HIGH' ? 'sev-high' : sev === 'LOW' ? 'sev-low' : 'sev-med'}`}>{sev}</span>
+      <span className={`mistake-sev ${sev === 'HIGH' ? 'sev-high' : sev === 'LOW' ? 'sev-low' : 'sev-med'}`}>{t?.[SEVERITY_LABEL[sev]] || sev}</span>
       <span style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '13px', color: 'var(--warm-white)', lineHeight: 1.5 }}>{text}</span>
     </div>
   )

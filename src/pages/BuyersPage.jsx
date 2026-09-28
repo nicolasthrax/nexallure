@@ -69,6 +69,7 @@ export default function BuyersPage({ setPage, t }) {
           ? crypto.randomUUID() 
           : Math.random().toString(36).slice(2) + Date.now().toString(36)
         localStorage.setItem('nexallure_device_token', token)
+        window.dispatchEvent(new Event('nexallure:device-token'))
       } catch (e) {
         console.warn('Could not save device token', e)
       }
