@@ -36,8 +36,7 @@ export default function Footer({ t, setPage, hasDeviceToken }) {
         .nx-ft__brand { grid-column: 1 / span 4; display: flex; flex-direction: column; gap: 16px; }
         .nx-ft__col { grid-column: span 2; display: flex; flex-direction: column; gap: 4px; }
         .nx-ft__status { grid-column: 9 / span 4; }
-        .nx-ft h2 { font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-        :lang(zh) .nx-ft h2 { font-size: 13px; letter-spacing: 0.1em; }
+        .nx-ft h2 { font-size: 13px; font-weight: 600; color: var(--on-ink); margin-bottom: 12px; }
         .nx-ft__brand p { font-family: var(--font-display); font-size: 22px !important; line-height: 1.35 !important; color: var(--on-ink); }
         .nx-ft__col button {
           text-align: left; background: none; border: 0; padding: 0; min-height: 36px;

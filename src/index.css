@@ -38,18 +38,13 @@
 
   /* Legacy names, remapped so every older page picks up the new palette */
   --midnight-navy:  var(--ink);
-  --charcoal:       #16243A;
-  --slate-gray:     var(--ink-3);
   --warm-white:     var(--on-ink);
   --signal-gold:    var(--seal-on-ink);
   --gold-shadow:    var(--seal-deep);
-  --verified-green: var(--go);
   --border-dark:    var(--ink-rule);
   --text-light:     var(--on-ink-2);
   --off-white:      var(--paper);
   --pure-white:     var(--paper-light);
-  --border:         var(--rule);
-  --gold-dim:       rgba(183, 160, 106, 0.14);
   --green:          var(--go);
   --green-bg:       rgba(47, 107, 79, 0.08);
   --text-primary:   var(--ink);
@@ -132,19 +127,6 @@ button {
 }
 :lang(zh) .nx-display { font-weight: 600; letter-spacing: 0.02em; line-height: 1.22; }
 
-/* Small spaced capitals, the way the logo sets NEXALLURE */
-.nx-eyebrow {
-  display: inline-flex; align-items: center; gap: 14px;
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--seal);
-}
-.nx-eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; }
-:lang(zh) .nx-eyebrow { letter-spacing: 0.16em; font-size: 13px; }
-
 .nx-label {
   font-family: var(--font-mono);
   font-size: 13px;
@@ -157,18 +139,15 @@ button {
   justify-content: center;
   gap: 12px;
   min-height: 52px;
-  padding: 0 28px;
-  border-radius: 1px;
+  padding: 0 24px;
+  border-radius: 2px;
   border: 1px solid transparent;
   font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 500;
   text-decoration: none;
   transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
 }
-:lang(zh) .nx-btn { font-size: 15px; letter-spacing: 0.06em; }
 .nx-btn .nx-arrow { transition: transform 260ms var(--ease-out); }
 .nx-btn:hover .nx-arrow { transform: translateX(4px); }
 

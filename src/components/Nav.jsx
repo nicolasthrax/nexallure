@@ -72,21 +72,20 @@ export default function Nav({ setPage, lang, setLang, t }) {
           display: flex; align-items: center; min-height: 44px;
           background: none; border: 0; padding: 0; color: var(--on-ink);
         }
-        .nx-links { display: flex; gap: 36px; flex: 1; justify-content: center; }
+        .nx-links { display: flex; gap: 32px; flex: 1; }
         .nx-links button {
           position: relative; background: none; border: 0; padding: 8px 0;
-          font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+          font-size: 14px; font-weight: 500;
           color: var(--on-ink-2);
           transition: color 200ms ease;
         }
-        :lang(zh) .nx-links button { font-size: 14px; letter-spacing: 0.08em; }
         .nx-links button::after {
-          content: ''; position: absolute; left: 50%; bottom: 0; width: 5px; height: 5px; border-radius: 50%;
-          background: var(--gold); transform: translateX(-50%) scale(0);
+          content: ''; position: absolute; left: 0; right: 0; bottom: 2px; height: 1px;
+          background: var(--gold); transform: scaleX(0); transform-origin: left;
           transition: transform 260ms var(--ease-out);
         }
         .nx-links button:hover, .nx-links button[aria-current="page"] { color: var(--on-ink); }
-        .nx-links button:hover::after, .nx-links button[aria-current="page"]::after { transform: translateX(-50%) scale(1); }
+        .nx-links button[aria-current="page"]::after { transform: scaleX(1); }
         .nx-right { display: flex; align-items: center; gap: 18px; }
         .nx-lang { display: flex; gap: 2px; }
         .nx-lang button {
@@ -102,7 +101,7 @@ export default function Nav({ setPage, lang, setLang, t }) {
           min-height: 44px; padding: 0 4px;
         }
         .nx-plain:hover { color: var(--gold); }
-        .nx-nav .nx-btn { min-height: 40px; padding: 0 18px; font-size: 12px; }
+        .nx-nav .nx-btn { min-height: 40px; padding: 0 16px; font-size: 14px; }
         .nx-burger { display: none; }
         .nx-sheet {
           position: fixed; inset: 64px 0 0 0; z-index: 99; background: var(--ink); color: var(--on-ink);
@@ -123,7 +122,7 @@ export default function Nav({ setPage, lang, setLang, t }) {
           .nx-burger {
             display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px;
             border: 1px solid var(--ink-rule); border-radius: 1px; background: transparent;
-            color: var(--on-ink); font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--on-ink); font-size: 14px; font-weight: 500;
           }
         }
       `}</style>
@@ -154,7 +153,7 @@ export default function Nav({ setPage, lang, setLang, t }) {
                 </button>
               ))}
             </div>
-            {session && <NotificationFeed userId={session.user?.id} />}
+            {session && <NotificationFeed userId={session.user?.id} t={t} />}
             {session ? (
               <button className="nx-plain nx-hide-sm" onClick={signOut}>{t.nav_signout}</button>
             ) : (
