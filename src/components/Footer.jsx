@@ -10,6 +10,8 @@ export default function Footer({ t, setPage, hasDeviceToken }) {
 
   const platformLinks = [
     { label: t.nav_market_guide, onClick: () => setPage?.('marketGuide') },
+    { label: t.about_tool_quoting, onClick: () => setPage?.('quoting') },
+    { label: t.about_tool_sample, onClick: () => setPage?.('tracker') },
     { label: t.nav_monitor,      onClick: () => setPage?.('monitor') },
     { label: t.nav_buyers,       onClick: () => setPage?.('buyers') },
   ]

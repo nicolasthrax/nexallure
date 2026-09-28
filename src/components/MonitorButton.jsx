@@ -24,9 +24,9 @@ export function MonitorButton({ industry, region, userId, t = {}, onMonitorChang
         .eq("user_id", userId)
         .eq("category", industry)
         .eq("region", region)
-        .single();
+        .maybeSingle();
 
-      if (error && error.code !== "PGRST116") {
+      if (error) {
         console.error("Error checking monitor status:", error);
       }
       setIsMonitored(!!data);

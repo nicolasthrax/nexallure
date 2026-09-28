@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import { Route, Switch, useLocation } from 'wouter'
 import { translations } from './i18n'
 import { AuthProvider, useAuth } from './context/Auth'
@@ -15,11 +15,18 @@ import RegisterPage from './pages/RegisterPage'
 import ErrorBoundary from './components/ErrorBoundary'
 import WatchlistDashboard from './components/WatchlistDashboard.jsx'
 
+// The export tools are large and only some visitors open them: load on demand.
+const QuotePage = lazy(() => import('./tools/quote/QuotePage.jsx'))
+const TrackerPage = lazy(() => import('./tools/tracker/TrackerPage.jsx'))
+const toolFallback = <main style={{ minHeight: '100vh' }} aria-busy="true" />
+
 const pagePaths = {
   home: '/',
   buyers: '/buyers',
   marketGuide: '/market-guide',
   monitor: '/monitor',
+  quoting: '/quoting',
+  tracker: '/tracker',
   privacy: '/privacy',
   terms: '/terms',
   login: '/login',
@@ -54,6 +61,8 @@ function AppInner() {
       '/buyers': t.buyers_h1,
       '/market-guide': t.nav_market_guide,
       '/monitor': t.nav_monitor,
+      '/quoting': t.about_tool_quoting,
+      '/tracker': t.about_tool_sample,
       '/privacy': t.privacy_title,
       '/terms': t.terms_title,
       '/login': t.nav_signin,
@@ -61,7 +70,7 @@ function AppInner() {
     }
     const page = titles[location]
     document.title = page ? `${page} · Nexallure` : `Nexallure · ${t.hero_h1}`
-  }, [location, t.buyers_h1, t.nav_market_guide, t.nav_monitor, t.privacy_title, t.terms_title, t.nav_signin, t.mg_blur_signup, t.hero_h1])
+  }, [location, t.buyers_h1, t.nav_market_guide, t.nav_monitor, t.about_tool_quoting, t.about_tool_sample, t.privacy_title, t.terms_title, t.nav_signin, t.mg_blur_signup, t.hero_h1])
 
   useEffect(() => {
     const map = { EN: 'en', ZH: 'zh-CN', TW: 'zh-TW' }
@@ -101,6 +110,17 @@ function AppInner() {
           {/* Watchlist Dashboard Page Route */}
           <Route path="/monitor">
             <WatchlistDashboard userId={session?.user?.id} t={t} setPage={setPage} />
+          </Route>
+
+          <Route path="/quoting">
+            <Suspense fallback={toolFallback}>
+              <QuotePage t={t} setPage={setPage} />
+            </Suspense>
+          </Route>
+          <Route path="/tracker">
+            <Suspense fallback={toolFallback}>
+              <TrackerPage t={t} setPage={setPage} />
+            </Suspense>
           </Route>
 
           <Route path="/privacy">

@@ -39,7 +39,7 @@ export default function Nav({ setPage, lang, setLang, t }) {
 
   const go = (target) => {
     setMenuOpen(false)
-    if (target === 'marketGuide' || target === 'monitor' || target === 'buyers') {
+    if (['marketGuide', 'quoting', 'tracker', 'monitor', 'buyers'].includes(target)) {
       setPage(target)
       return
     }
@@ -52,6 +52,8 @@ export default function Nav({ setPage, lang, setLang, t }) {
 
   const links = [
     { label: t.nav_market_guide, target: 'marketGuide', path: '/market-guide' },
+    { label: t.nav_quoting, target: 'quoting', path: '/quoting' },
+    { label: t.nav_tracker, target: 'tracker', path: '/tracker' },
     { label: t.nav_monitor, target: 'monitor', path: '/monitor' },
     { label: t.nav_compliance, target: 'compliance' },
     { label: t.nav_buyers, target: 'buyers', path: '/buyers' },
@@ -67,15 +69,15 @@ export default function Nav({ setPage, lang, setLang, t }) {
           color: var(--ink);
           border-bottom: 2px solid var(--ink);
         }
-        .nx-nav__row { height: 62px; display: flex; align-items: center; gap: 40px; }
+        .nx-nav__row { height: 62px; display: flex; align-items: center; gap: 32px; }
         .nx-brand {
           display: flex; align-items: center; min-height: 44px;
           background: none; border: 0; padding: 0; color: var(--ink);
         }
-        .nx-links { display: flex; gap: 6px; flex: 1; }
+        .nx-links { display: flex; gap: 2px; flex: 1; }
         .nx-links button {
           position: relative; background: none; border: 0; padding: 8px 10px;
-          font-size: 16px; font-weight: 600; color: var(--ink-2);
+          font-size: 16px; font-weight: 600; color: var(--ink-2); white-space: nowrap;
           transition: color 150ms ease;
         }
         /* A highlighter stroke that sweeps under the link. */
@@ -87,7 +89,7 @@ export default function Nav({ setPage, lang, setLang, t }) {
         .nx-links button { isolation: isolate; }
         .nx-links button:hover, .nx-links button[aria-current="page"] { color: var(--ink); }
         .nx-links button:hover::before, .nx-links button[aria-current="page"]::before { transform: scaleX(1); }
-        .nx-right { display: flex; align-items: center; gap: 12px; }
+        .nx-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; white-space: nowrap; }
         .nx-lang { display: flex; border: 2px solid var(--ink); }
         .nx-lang button {
           min-width: 38px; height: 34px; border: 0;
@@ -118,7 +120,7 @@ export default function Nav({ setPage, lang, setLang, t }) {
           font-size: 40px; line-height: 1; color: var(--ink);
         }
         .nx-sheet .nx-lang button { min-width: 56px; height: 44px; }
-        @media (max-width: 960px) {
+        @media (max-width: 1180px) {
           .nx-links, .nx-right .nx-hide-sm { display: none; }
           .nx-nav__row { justify-content: space-between; gap: 12px; }
           .nx-burger {
