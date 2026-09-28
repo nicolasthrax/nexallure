@@ -3,58 +3,87 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------ */
-/*  Nexallure — "Manifest" design system                               */
-/*  Paper, ink and one seal-red accent, taken from export paperwork.   */
-/*  Chinese text uses the reader's system CJK face (PingFang / YaHei), */
-/*  which is fast and reliable inside mainland China.                  */
+/*  Nexallure — "Harbour" design system                                */
+/*  Built for reading first: white pages, near-black text, generous    */
+/*  size and spacing. Atkinson Hyperlegible (designed by the Braille   */
+/*  Institute for legibility) sets the text; Anybody, a variable face  */
+/*  whose letters can widen and narrow, sets the headlines; the mono   */
+/*  cut drives the departures board. Colour comes from shipping        */
+/*  containers and is used to label things, never to decorate them.   */
+/*  Chinese uses the reader's system face (PingFang / YaHei), which    */
+/*  is fast and reliable inside mainland China.                        */
 /* ------------------------------------------------------------------ */
 :root {
-  --paper:        #F2EEE4;
-  --paper-deep:   #E7E1D2;
-  --paper-light:  #FAF8F2;
-  --ink:          #15171C;
-  --ink-2:        #3B3F48;
-  --ink-3:        #5C616B;
-  --rule:         #D3CCBA;
-  --rule-strong:  #B9B09B;
-  --seal:         #A8321F;
-  --seal-deep:    #862614;
-  --seal-tint:    #F4E3DC;
-  --seal-on-ink:  #E8826A;
-  --go:           #2C6A48;
-  --on-ink:       #EEE9DD;
-  --on-ink-2:     #A9ADB6;
-  --ink-rule:     #2C3039;
+  --paper:        #FFFFFF;
+  --paper-deep:   #F2F3F5;
+  --paper-light:  #FFFFFF;
+  --ink:          #0E1116;
+  --ink-2:        #2B313B;
+  --ink-3:        #545C69;
+  --rule:         #DADDE3;
+  --rule-strong:  #B4BAC5;
 
-  --font-display: 'Big Shoulders Display', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-  --font-body:    'IBM Plex Sans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-  --font-mono:    'IBM Plex Mono', 'PingFang SC', 'Microsoft YaHei', monospace;
+  /* Container colours */
+  --blue:         #1F4FBF;
+  --blue-deep:    #173C92;
+  --blue-tint:    #E8EEFB;
+  --rust:         #B4471F;
+  --rust-tint:    #FBEDE7;
+  --green:        #1E6B4E;
+  --green-tint:   #E4F2EC;
+  --yellow:       #F2B705;
+
+  --seal:         var(--blue);
+  --seal-deep:    var(--blue-deep);
+  --seal-tint:    var(--blue-tint);
+  --seal-on-ink:  var(--blue);
+  --go:           var(--green);
+
+  --on-ink:       #F4F5F7;
+  --on-ink-2:     #B9C0CC;
+  --ink-rule:     #2A303A;
+  --ink-deep:     #07090C;
+
+  --font-display: 'Anybody Variable', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-body:    'Atkinson Hyperlegible Next Variable', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-mono:    'Atkinson Hyperlegible Mono Variable', 'PingFang SC', 'Microsoft YaHei', monospace;
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --gutter: clamp(20px, 5vw, 96px);
+  --gutter: clamp(20px, 5vw, 80px);
+  --measure: 62ch;
 
-  /* Legacy names, remapped so every older page picks up the new palette */
-  --midnight-navy:  var(--ink);
-  --charcoal:       #22252C;
-  --slate-gray:     var(--ink-3);
-  --warm-white:     var(--on-ink);
-  --signal-gold:    var(--seal-on-ink);
-  --gold-shadow:    var(--seal-deep);
-  --verified-green: var(--go);
-  --border-dark:    var(--ink-rule);
-  --text-light:     var(--on-ink-2);
-  --off-white:      var(--paper);
+  /* Names used by the older inner pages, pointed at the light palette */
+  --midnight-navy:  var(--paper-deep);
+  --warm-white:     var(--ink);
+  --text-light:     var(--ink-2);
+  --border-dark:    var(--rule-strong);
+  --signal-gold:    var(--blue);
+  --gold-shadow:    var(--blue-deep);
+  --off-white:      var(--paper-deep);
   --pure-white:     var(--paper-light);
-  --border:         var(--rule);
-  --gold:           var(--seal);
-  --gold-dim:       rgba(168, 50, 31, 0.1);
-  --green:          var(--go);
-  --green-bg:       rgba(44, 106, 72, 0.08);
+  --green-bg:       var(--green-tint);
   --text-primary:   var(--ink);
   --text-secondary: var(--ink-2);
   --text-muted:     var(--ink-3);
-  --danger:         #8B1A1A;
-  --danger-bg:      rgba(139, 26, 26, 0.06);
+  --danger:         #A1261B;
+  --danger-bg:      #FBECEA;
+}
+
+/* Dark blocks (footer, the departures board): components inside that read
+   the tokens re-colour themselves. */
+.nx-night {
+  --paper:       #0E1116;
+  --paper-deep:  #07090C;
+  --paper-light: #161A21;
+  --ink:         #F4F5F7;
+  --ink-2:       #D5DAE2;
+  --ink-3:       #A3ABB8;
+  --rule:        #2A303A;
+  --rule-strong: #3B4350;
+  --seal:        #8FB0FF;
+  --seal-on-ink: #8FB0FF;
+  background: var(--paper);
+  color: var(--ink);
 }
 
 * {
@@ -65,16 +94,23 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
   background: var(--paper);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+:lang(zh) body { line-height: 1.8; letter-spacing: 0.01em; }
+
+/* Tailwind's reset leaves headings at body weight; a heading should look like one. */
+h1, h2, h3, h4 { font-weight: 700; }
 
 button {
   font-family: inherit;
@@ -82,24 +118,23 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--seal);
-  outline-offset: 3px;
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
 }
 
 ::selection {
-  background: var(--seal);
-  color: var(--paper-light);
+  background: var(--yellow);
+  color: var(--ink);
 }
 
-/* Register page input placeholders */
 .register-input::placeholder {
-  color: rgba(238, 233, 221, 0.4);
+  color: var(--ink-3);
 }
 
 /* ------------------------------ Shared pieces ------------------------------ */
 .nx-wrap {
   width: 100%;
-  max-width: 1360px;
+  max-width: 1240px;
   margin: 0 auto;
   padding-left: var(--gutter);
   padding-right: var(--gutter);
@@ -108,42 +143,65 @@ button {
 .nx-display {
   font-family: var(--font-display);
   font-weight: 800;
-  letter-spacing: -0.01em;
-  line-height: 0.92;
+  font-stretch: 100%;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  text-wrap: balance;
 }
+:lang(zh) .nx-display { font-weight: 700; letter-spacing: 0.01em; line-height: 1.25; }
+
+/* Text set to be read: capped line length, comfortable leading. */
+.nx-prose { max-width: var(--measure); font-size: 18px; line-height: 1.65; color: var(--ink-2); }
+:lang(zh) .nx-prose { line-height: 1.85; }
 
 .nx-label {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--ink-3);
 }
 
 .nx-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   min-height: 52px;
   padding: 0 24px;
-  border-radius: 4px;
-  border: 1px solid transparent;
+  border-radius: 0;
+  border: 2px solid var(--ink);
   font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   text-decoration: none;
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition: color 220ms ease, border-color 220ms ease;
 }
-.nx-btn .nx-arrow { transition: transform 220ms var(--ease-out); }
+/* The fill slides in from the left on hover, like a container being loaded. */
+.nx-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms var(--ease-out);
+}
+.nx-btn:hover::before { transform: scaleX(1); }
+.nx-btn .nx-arrow { transition: transform 260ms var(--ease-out); }
 .nx-btn:hover .nx-arrow { transform: translateX(4px); }
 
-.nx-btn--seal { background: var(--seal); color: #fff; }
-.nx-btn--seal:hover { background: var(--seal-deep); }
-.nx-btn--ink { background: var(--ink); color: var(--paper-light); }
-.nx-btn--ink:hover { background: #000; }
-.nx-btn--line { background: transparent; color: var(--ink); border-color: var(--ink); }
-.nx-btn--line:hover { background: var(--ink); color: var(--paper-light); }
-.nx-btn--paper { background: var(--paper-light); color: var(--ink); }
-.nx-btn--paper:hover { background: #fff; }
+.nx-btn--seal  { background: var(--blue); color: #fff; border-color: var(--blue); }
+.nx-btn--seal::before { background: var(--ink); }
+.nx-btn--seal:hover { border-color: var(--ink); }
+.nx-btn--ink   { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.nx-btn--ink::before { background: var(--blue); }
+.nx-btn--ink:hover { border-color: var(--blue); }
+.nx-btn--line  { background: transparent; color: var(--ink); border-color: var(--ink); }
+.nx-btn--line::before { background: var(--yellow); }
+.nx-btn--paper { background: var(--paper-light); color: var(--ink); border-color: var(--paper-light); }
+.nx-btn--paper::before { background: var(--yellow); }
 
 .nx-link {
   background: none;
@@ -151,13 +209,14 @@ button {
   padding: 0;
   color: inherit;
   font: inherit;
+  font-weight: 700;
   text-decoration: underline;
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  text-decoration-color: var(--rule-strong);
-  transition: text-decoration-color 160ms ease, color 160ms ease;
+  text-decoration-color: var(--blue);
+  transition: background-color 160ms ease;
 }
-.nx-link:hover { text-decoration-color: currentColor; color: var(--seal); }
+.nx-link:hover { background: var(--yellow); color: var(--ink); text-decoration-color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

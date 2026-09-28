@@ -90,6 +90,8 @@ describe('POST /api/market-guide', () => {
     const sent = JSON.parse(fetchMock.mock.calls[0][1].body)
     expect(sent.response_format).toEqual({ type: 'json_object' })
     expect(sent.messages[0].content).toMatch(/Simplified Chinese/)
+    // Styling depends on these codes, so they must not be translated.
+    expect(sent.messages[0].content).toMatch(/"severity" must stay exactly HIGH, MED or LOW/)
     expect(fetchMock.mock.calls[0][1].headers.Authorization).toBe('Bearer test-key')
   })
 
@@ -98,6 +100,11 @@ describe('POST /api/market-guide', () => {
     const res = await call({ headers: auth, body: JSON.stringify(validBody) })
     expect(res.statusCode).toBe(200)
     expect(res.payload.buyer_regions[0].country).toBe('Germany')
+  })
+
+  it('rejects a malformed JSON body with 400 instead of crashing', async () => {
+    const res = await call({ headers: auth, body: '{"industry": ' })
+    expect(res.statusCode).toBe(400)
   })
 
   it('falls back to an empty report when the model returns broken JSON', async () => {

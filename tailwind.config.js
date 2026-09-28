@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Big Shoulders Display"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'monospace'],
+        display: ['"Anybody Variable"', '"PingFang SC"', 'sans-serif'],
+        mono: ['"Atkinson Hyperlegible Mono Variable"', 'monospace'],
       },
     },
   },

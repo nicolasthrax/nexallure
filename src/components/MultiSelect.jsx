@@ -52,12 +52,12 @@ export default function MultiSelect({
     ? { background: '#2A2D35', color: 'var(--on-ink)', border: '1px solid rgba(255,255,255,0.15)' }
     : { background: 'var(--ink)', color: 'var(--paper-light)', border: '1px solid var(--ink)' }
 
-  const triggerBg = isDark ? '#1D2027' : 'var(--paper-light)'
+  const triggerBg = isDark ? '#16243A' : 'var(--paper-light)'
   const triggerBorder = isDark ? '1px solid rgba(255,255,255,0.12)' : '1px solid var(--rule-strong)'
   const triggerText = isDark ? 'var(--on-ink)' : 'var(--ink)'
   const triggerPlaceholder = isDark ? 'var(--on-ink-2)' : 'var(--ink-3)'
 
-  const dropdownBg = isDark ? '#1D2027' : 'var(--paper-light)'
+  const dropdownBg = isDark ? '#16243A' : 'var(--paper-light)'
   const dropdownBorder = isDark ? '1px solid rgba(255,255,255,0.12)' : '1px solid var(--rule)'
   const itemText = isDark ? 'var(--on-ink)' : 'var(--ink)'
   const itemHover = isDark ? 'rgba(255,255,255,0.06)' : 'var(--paper)'
@@ -83,7 +83,7 @@ export default function MultiSelect({
               style={{
                 ...chipStyle,
                 padding: '4px 4px 4px 10px',
-                fontSize: '13px',
+                fontSize: '15px',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '4px',
@@ -192,7 +192,7 @@ export default function MultiSelect({
                     background: 'transparent',
                     textAlign: 'left',
                     cursor: 'pointer',
-                    fontSize: '14px',
+                    fontSize: '16px',
                     color: itemText,
                   }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = itemHover }}
@@ -214,7 +214,7 @@ export default function MultiSelect({
                   >
                     {checked && (
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                        <path d="M1 5l3 3 5-6" stroke={isDark ? '#1D2027' : '#fff'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M1 5l3 3 5-6" stroke={isDark ? '#16243A' : '#fff'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </span>

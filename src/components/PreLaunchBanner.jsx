@@ -1,3 +1,5 @@
+// A safety-yellow strip, like the tape on a quay edge: impossible to miss,
+// and dark text on yellow reads clearly.
 export default function PreLaunchBanner({ t }) {
   return (
     <div
@@ -9,11 +11,10 @@ export default function PreLaunchBanner({ t }) {
         right: 0,
         zIndex: 95,
         height: '36px',
-        background: 'var(--paper-deep)',
-        borderTop: '1px solid var(--rule)',
-        borderBottom: '1px solid var(--rule)',
-        color: 'var(--ink-2)',
-        fontSize: '13px',
+        background: 'var(--yellow)',
+        borderBottom: '2px solid var(--ink)',
+        color: 'var(--ink)',
+        fontSize: '15px',
       }}
     >
       <div
@@ -21,18 +22,15 @@ export default function PreLaunchBanner({ t }) {
         style={{ height: '100%', display: 'flex', alignItems: 'center', gap: '12px', whiteSpace: 'nowrap', overflow: 'hidden' }}
       >
         <span
+          aria-hidden="true"
           style={{
             flexShrink: 0,
-            fontFamily: 'var(--font-mono)',
-            fontSize: '12px',
-            color: 'var(--seal)',
-            border: '1px solid var(--seal)',
-            borderRadius: '2px',
-            padding: '1px 6px',
+            width: 28,
+            height: 14,
+            background: 'repeating-linear-gradient(-45deg, var(--ink) 0 5px, transparent 5px 10px)',
           }}
-        >
-          {t.prelaunch_badge}
-        </span>
+        />
+        <strong style={{ flexShrink: 0, fontWeight: 700 }}>{t.prelaunch_badge}</strong>
         <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{t.prelaunch_text}</span>
       </div>
     </div>

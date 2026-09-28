@@ -63,11 +63,11 @@ export default function LoginPage({ t, setPage }) {
   const inputStyle = {
     width: '100%',
     height: '48px',
-    border: '1px solid var(--border-dark)',
-    background: 'var(--midnight-navy)',
+    border: '2px solid var(--rule-strong)',
+    background: '#fff',
     color: 'var(--warm-white)',
-    fontFamily: "'IBM Plex Sans', sans-serif",
-    fontSize: '14px',
+    fontFamily: "var(--font-body)",
+    fontSize: '16px',
     padding: '12px 16px',
     outline: 'none',
     borderRadius: 0,
@@ -75,14 +75,14 @@ export default function LoginPage({ t, setPage }) {
   }
 
   const labelStyle = {
-    fontFamily: "'IBM Plex Mono', monospace",
-    fontSize: '11px',
+    fontFamily: "var(--font-mono)",
+    fontSize: '13px',
     color: 'var(--text-light)',
     letterSpacing: '0.06em',
   }
 
-  // Tab button — match nav link style: uppercase IBM Plex Sans 13px,
-  // gold underline on active, var(--on-ink-2) inactive, no background / border-radius.
+  // Tab button:
+  // underline on the active tab, muted text on the inactive one, no background.
   const tabButtonStyle = (active) => ({
     flex: 1,
     background: 'none',
@@ -90,11 +90,11 @@ export default function LoginPage({ t, setPage }) {
     borderBottom: active ? '2px solid var(--signal-gold)' : '2px solid transparent',
     borderRadius: 0,
     padding: '12px 0',
-    fontFamily: "'IBM Plex Sans', sans-serif",
-    fontSize: '13px',
+    fontFamily: "var(--font-body)",
+    fontSize: '15px',
     fontWeight: active ? 600 : 500,
     letterSpacing: '0.08em',
-    color: active ? 'var(--signal-gold)' : 'var(--on-ink-2)',
+    color: active ? 'var(--ink)' : 'var(--ink-3)',
     cursor: 'pointer',
     transition: 'color 0.2s ease, border-color 0.2s ease',
   })
@@ -102,12 +102,12 @@ export default function LoginPage({ t, setPage }) {
   const primaryButtonStyle = (loading) => ({
     width: '100%',
     height: '52px',
-    background: loading ? 'rgba(232,130,106,0.4)' : 'var(--signal-gold)',
-    color: 'var(--midnight-navy)',
+    background: loading ? 'rgba(31,79,191,0.48)' : 'var(--signal-gold)',
+    color: '#fff',
     border: '1px solid var(--gold-shadow)',
     padding: '14px 28px',
-    fontFamily: "'IBM Plex Sans', sans-serif",
-    fontSize: '14px',
+    fontFamily: "var(--font-body)",
+    fontSize: '16px',
     fontWeight: 600,
     cursor: loading ? 'wait' : 'pointer',
     letterSpacing: '0.04em',
@@ -115,11 +115,11 @@ export default function LoginPage({ t, setPage }) {
   })
 
   const errorBoxStyle = {
-    fontFamily: "'IBM Plex Mono', monospace",
-    fontSize: '12px',
-    color: '#F87171',
-    background: 'rgba(248,113,113,0.08)',
-    border: '1px solid rgba(248,113,113,0.3)',
+    fontFamily: "var(--font-mono)",
+    fontSize: '14px',
+    color: 'var(--danger)',
+    background: 'var(--danger-bg)',
+    border: '1px solid var(--danger)',
     padding: '10px 14px',
   }
 
@@ -143,23 +143,25 @@ export default function LoginPage({ t, setPage }) {
         {/* Eyebrow */}
         <div
           style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: '11px',
+            fontFamily: "var(--font-mono)",
+            fontSize: '13px',
             color: 'var(--signal-gold)',
-            letterSpacing: '0.15em',
-            marginBottom: '16px',
+            marginBottom: '12px',
             textAlign: 'center',
           }}
         >
-          MEMBER ACCESS
+          {t.login_eyebrow}
         </div>
 
         {/* Heading */}
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: '36px',
-            color: 'var(--warm-white)',
+            fontSize: '44px',
+            fontWeight: 800,
+            fontStretch: '90%',
+            lineHeight: 1.05,
+            color: 'var(--ink)',
             marginBottom: '32px',
             textAlign: 'center',
             letterSpacing: '-0.01em',
@@ -218,11 +220,11 @@ export default function LoginPage({ t, setPage }) {
             {magicSent && (
               <div
                 style={{
-                  fontFamily: "'IBM Plex Mono', monospace",
-                  fontSize: '12px',
+                  fontFamily: "var(--font-mono)",
+                  fontSize: '14px',
                   color: 'var(--signal-gold)',
-                  background: 'rgba(232,130,106,0.08)',
-                  border: '1px solid rgba(232,130,106,0.3)',
+                  background: 'rgba(31,79,191,0.10)',
+                  border: '1px solid rgba(31,79,191,0.36)',
                   padding: '10px 14px',
                 }}
               >
@@ -274,8 +276,8 @@ export default function LoginPage({ t, setPage }) {
         {/* Get early access link */}
         <div
           style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: '13px',
+            fontFamily: "var(--font-body)",
+            fontSize: '15px',
             color: 'var(--signal-gold)',
             textAlign: 'center',
             marginTop: '24px',
